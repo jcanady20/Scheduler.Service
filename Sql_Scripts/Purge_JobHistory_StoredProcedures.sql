@@ -1,10 +1,10 @@
-IF OBJECT_ID('[Scheduler].[PurgeJobHistoryByJobId]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PurgeJobHistoryByJobId]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [Scheduler].[PurgeJobHistoryByJobId];
+	DROP PROCEDURE [dbo].[PurgeJobHistoryByJobId];
 END
 GO
 
-CREATE PROCEDURE [Scheduler].[PurgeJobHistoryByJobId]
+CREATE PROCEDURE [dbo].[PurgeJobHistoryByJobId]
 	@JobId UniqueIdentifier,
 	@MaxRecords INT
 AS
@@ -16,7 +16,7 @@ BEGIN
 		SELECT
 			ROW_NUMBER() OVER (ORDER BY RunDateTime DESC) RowId
 			,*
-		FROM [Scheduler].[JobHistory]
+		FROM [dbo].[JobHistory]
 		WHERE JobId = @JobId
 	)
 
@@ -26,20 +26,20 @@ END
 GO
 
 
-IF OBJECT_ID('[Scheduler].[PurgeJobHistory]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[PurgeJobHistory]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [Scheduler].[PurgeJobHistory];
+	DROP PROCEDURE [dbo].[PurgeJobHistory];
 END
 GO
 
-CREATE PROCEDURE [Scheduler].[PurgeJobHistory]
+CREATE PROCEDURE [dbo].[PurgeJobHistory]
 AS
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE @PurgeRecords BIT, @MaxRecords INT, @MaxRecordsPerJob INT
-	SET @PurgeRecords = (SELECT CAST(CASE ISNULL(LOWER([Value]), '1') WHEN '1' THEN 1 WHEN 'true' THEN 1 WHEN '0' THEN 0 WHEN 'false' THEN 0 END AS BIT) AS [Value] FROM [Scheduler].[Settings] WHERE (1=1) AND [Section] = 'JobHistory' AND [Key] = 'PurgeRecords');
-	SET @MaxRecords = (SELECT Cast([Value] AS INT) FROM [Scheduler].[Settings] WHERE [Section] = 'JobHistory' AND [Key] = 'MaxRecords');
-	SET @MaxRecordsPerJob = (SELECT Cast([Value] AS INT) FROM [Scheduler].[Settings] WHERE [Section] = 'JobHistory' AND [Key] = 'MaxRecordsPerJob');
+	SET @PurgeRecords = (SELECT CAST(CASE ISNULL(LOWER([Value]), '1') WHEN '1' THEN 1 WHEN 'true' THEN 1 WHEN '0' THEN 0 WHEN 'false' THEN 0 END AS BIT) AS [Value] FROM [dbo].[Settings] WHERE (1=1) AND [Section] = 'JobHistory' AND [Key] = 'PurgeRecords');
+	SET @MaxRecords = (SELECT Cast([Value] AS INT) FROM [dbo].[Settings] WHERE [Section] = 'JobHistory' AND [Key] = 'MaxRecords');
+	SET @MaxRecordsPerJob = (SELECT Cast([Value] AS INT) FROM [dbo].[Settings] WHERE [Section] = 'JobHistory' AND [Key] = 'MaxRecordsPerJob');
 
 	--	Purging of records is disabled
 	--	Notihng to do so exit the procedure
@@ -51,7 +51,7 @@ BEGIN
 		DECLARE _cp CURSOR READ_ONLY
 		FOR 
 			SELECT DISTINCT [JobId]
-			FROM [Scheduler].[JobHistory]
+			FROM [dbo].[JobHistory]
 
 		DECLARE @id UNIQUEIDENTIFIER
 		OPEN _cp
@@ -61,7 +61,7 @@ BEGIN
 		BEGIN
 			IF (@@fetch_status <> -2)
 			BEGIN
-				EXEC [Scheduler].[PurgeJobHistoryByJobId] @id, @MaxRecordsPerJob
+				EXEC [dbo].[PurgeJobHistoryByJobId] @id, @MaxRecordsPerJob
 			END
 			FETCH NEXT FROM _cp INTO @id
 		END
@@ -78,7 +78,7 @@ BEGIN
 			SELECT
 				ROW_NUMBER() OVER (ORDER BY RunDateTime DESC) RowId
 				,*
-				FROM [Scheduler].[JobHistory]
+				FROM [dbo].[JobHistory]
 		)
 
 		DELETE FROM Records WHERE RowId > @MaxRecords

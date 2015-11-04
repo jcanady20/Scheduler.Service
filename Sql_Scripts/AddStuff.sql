@@ -1,37 +1,37 @@
 /*	Test JOb that Executes and Empty Task (Waits 10seconds then reports Success) */
 SET NOCOUNT ON;
 DECLARE @JobId UNIQUEIDENTIFIER, @ScheduleId UNIQUEIDENTIFIER
-
+DECLARE @dbname sysname = DB_NAME();
 SELECT
 	@JobId = NEWID(),
 	@ScheduleId = NEWID();
 
-INSERT INTO [Scheduler].[Jobs] ([Id], [Name], [Description], [StartStep])
-VALUES (@JobId, 'Test Task', 'Test Task', 1);
+INSERT INTO [dbo].[Jobs] ([Id], [Name], [Description])
+VALUES (@JobId, 'Test Task', 'Test Task');
 
-INSERT INTO [Scheduler].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename])
-VALUES (@JobId, 1, 'Step 1', 'EmptyTask', '', 'ApplicationCenter')
+INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename])
+VALUES (@JobId, 1, 'Step 1', 'EmptyTask', '', @dbname)
 
-INSERT INTO [Scheduler].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDateTime], [EndDateTime],  [LastRunOutCome])
-VALUES (@JobId, 'Daily Schedule',  4, 1, 4, 5, 0, 0, '02/26/2015 09:00:00', '12/31/2099 21:00:00', 5);
+INSERT INTO [dbo].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
+VALUES (@JobId, 'Daily Schedule',  4, 1, 4, 5, 0, 0, '02/26/2015', ' 09:00:00', '12/31/2099', '21:00:00');
 GO
 
 /*	Purge Job History */
 SET NOCOUNT ON;
 DECLARE @JobId UNIQUEIDENTIFIER, @ScheduleId UNIQUEIDENTIFIER
-
+DECLARE @dbname sysname = DB_NAME();
 SELECT
 	@JobId = NEWID(),
 	@ScheduleId = NEWID();
 
-INSERT INTO [Scheduler].[Jobs] ([Id], [Name], [Description], [StartStep])
-VALUES (@JobId, 'Purge Job History', 'Purges Job History based on Specified settings', 1);
+INSERT INTO [dbo].[Jobs] ([Id], [Name], [Description])
+VALUES (@JobId, 'Purge Job History', 'Purges Job History based on Specified settings');
 
-INSERT INTO [Scheduler].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isUserDefined])
-VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [Scheduler].[PurgeJobHistory]', 'ApplicationCenter', 0)
+INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isUserDefined])
+VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [dbo].[PurgeJobHistory]', @dbname, 0)
 
-INSERT INTO [Scheduler].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDateTime], [EndDateTime], [LastRunOutCome])
-VALUES (@JobId,'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015 09:00:00', '12/31/2099 23:59:59', 5);
+INSERT INTO [dbo].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
+VALUES (@JobId,'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015', '09:00:00', '12/31/2099', '23:59:59');
 GO
 
 SET NOCOUNT ON;
@@ -48,7 +48,7 @@ AS
 	SELECT * FROM @tmp
 )
 
-MERGE [Scheduler].[Settings] AS [trg]
+MERGE [dbo].[Settings] AS [trg]
 USING [Settings] AS [src]
 ON ([trg].[Section] = [src].[Section] AND [trg].[Key] = [src].[Key])
 WHEN MATCHED THEN

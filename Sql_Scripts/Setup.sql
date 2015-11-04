@@ -1,52 +1,46 @@
-IF NOT EXISTS(SELECT [name] FROM [sys].[schemas] WHERE [name] = 'Scheduler')
+IF OBJECT_ID('[dbo].[Jobs]', 'U') IS NOT NULL
 BEGIN
-	EXEC ('CREATE SCHEMA [Scheduler];');
+	DROP TABLE [dbo].[Jobs]
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Jobs]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[Schedules]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[Jobs]
+	DROP TABLE [dbo].[Schedules]
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Schedules]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobSchedules]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[Schedules]
+	DROP TABLE [dbo].[JobSchedules]
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[JobSchedules]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobSteps]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[JobSchedules]
+	DROP TABLE [dbo].[JobSteps]
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[JobSteps]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobHistory]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[JobSteps]
+	DROP TABLE [dbo].[JobHistory]
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[JobHistory]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[Settings]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[JobHistory]
+	DROP TABLE [dbo].[Settings];
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Settings]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[Activity]', 'U') IS NOT NULL
 BEGIN
-	DROP TABLE [Scheduler].[Settings];
+	DROP TABLE [dbo].[Activity];
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Activity]', 'U') IS NOT NULL
-BEGIN
-	DROP TABLE [Scheduler].[Activity];
-END
-GO
-
-CREATE TABLE [Scheduler].[Jobs]
+CREATE TABLE [dbo].[Jobs]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_Id_Jobs] DEFAULT(NEWID()),
 	[Name] varchar(60) NOT NULL,
@@ -59,20 +53,22 @@ CREATE TABLE [Scheduler].[Jobs]
 )
 GO
 
-CREATE TABLE [Scheduler].[JobSchedules]
+CREATE TABLE [dbo].[JobSchedules]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL  CONSTRAINT [DF_Id_JobSchedules] DEFAULT(NEWID()),
 	[JobId] UNIQUEIDENTIFIER NOT NULL,
 	[Name] varchar(60) NOT NULL,
-	[Enabled] BIT NOT NULL Constraint [DF_Enabled_Schedule] DEFAULT(1),
-	[Type] INT NOT NULL CONSTRAINT [DF_Type_Schedules] DEFAULT(4),
+	[Enabled] BIT NOT NULL Constraint [DF_Enabled_JobSchedules] DEFAULT(1),
+	[Type] INT NOT NULL CONSTRAINT [DF_Type_JobSchedules] DEFAULT(4),
 	[Interval] INT NOT NULL,
-	[SubdayType] INT NOT NULL CONSTRAINT [DF_SubdayType_Schedules] DEFAULT(8),
+	[SubdayType] INT NOT NULL CONSTRAINT [DF_SubdayType_JobSchedules] DEFAULT(8),
 	[SubdayInterval] INT NOT NULL,
 	[RelativeInterval] INT NOT NULL,
-	[RecurrenceFactor] INT NOT NULL CONSTRAINT [DF_RecurrenceFactor_Schedules] DEFAULT(0),
-	[StartDateTime] DATETIME NOT NULL CONSTRAINT [DF_StartDate_Schedule] DEFAULT('01/01/1980 00:00:00'),
-	[EndDateTime] DATETIME NOT NULL CONSTRAINT [DF_StartTime_Schedule] DEFAULT('12/31/9999 23:59:59'),
+	[RecurrenceFactor] INT NOT NULL CONSTRAINT [DF_RecurrenceFactor_JobSchedules] DEFAULT(0),
+	[StartDate] DATETIME NOT NULL CONSTRAINT [DF_StartDate_JobSchedules] DEFAULT('01/01/1980'),
+	[StartTime] TIME NOT NULL CONSTRAINT [DF_StartTime_JobSchedules] DEFAULT('00:00:00'),
+	[EndDate] DATE NOT NULL CONSTRAINT [DF_EndDate_JobSchedules] DEFAULT('12/31/9999'),
+	[EndTime] TIME NOT NULL CONSTRAINT [DF_EndTime_JobSchedules] DEFAULT('23:59:59'),
 	[LastRunDateTime] DATETIME NOT NULL CONSTRAINT [DF_LastRunDateTime_JobSchedules] DEFAULT('01/01/1980 00:00:00'),
 	CONSTRAINT [PK_JobSchedules] PRIMARY KEY NONCLUSTERED
 	(
@@ -81,7 +77,7 @@ CREATE TABLE [Scheduler].[JobSchedules]
 )
 GO
 
-CREATE TABLE [Scheduler].[JobHistory]
+CREATE TABLE [dbo].[JobHistory]
 (
 	[Id] INT NOT NULL IDENTITY(1,1),
 	[JobId] UNIQUEIDENTIFIER NOT NULL,
@@ -98,7 +94,7 @@ CREATE TABLE [Scheduler].[JobHistory]
 )
 GO
 
-CREATE TABLE [Scheduler].[JobSteps]
+CREATE TABLE [dbo].[JobSteps]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_Id_JobSteps] DEFAULT(NEWID()),
 	[JobId] UNIQUEIDENTIFIER NOT NULL,
@@ -118,7 +114,7 @@ CREATE TABLE [Scheduler].[JobSteps]
 )
 GO
 
-CREATE TABLE [Scheduler].[Settings]
+CREATE TABLE [dbo].[Settings]
 (
 	[Id] INT NOT NULL IDENTITY(1,1),
 	[Section] Varchar(100),
@@ -131,10 +127,10 @@ CREATE TABLE [Scheduler].[Settings]
 )
 GO
 
-CREATE UNIQUE INDEX [UIDX_SectionKey_Scheduler_Settings] ON [Scheduler].[Settings] ([Section], [Key]);
+CREATE UNIQUE INDEX [UIDX_SectionKey_Scheduler_Settings] ON [dbo].[Settings] ([Section], [Key]);
 GO
 
-CREATE TABLE [Scheduler].[Activity]
+CREATE TABLE [dbo].[Activity]
 (
 	[JobId] UNIQUEIDENTIFIER NOT NULL,
 	[RunSource] INT NOT NULL CONSTRAINT [DF_RunSource_Activity] DEFAULT(1),
@@ -157,21 +153,21 @@ CREATE TABLE [Scheduler].[Activity]
 );
 GO
 
-IF OBJECT_ID('[Scheduler].[JobActivity]', 'V') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobActivity]', 'V') IS NOT NULL
 BEGIN
-	DROP VIEW [Scheduler].[JobActivity];
+	DROP VIEW [dbo].[JobActivity];
 END
 GO
 
 
-CREATE VIEW [Scheduler].[JobActivity]
+CREATE VIEW [dbo].[JobActivity]
 AS
 	SELECT
 		 [j].[Name]
 		,[j].[Id]
 		,[j].[Enabled]
-		,[Scheduler].[RunREquestSource]([a].[RunSource]) AS [RunSource]
-		,[Scheduler].[JobStatus]([a].[Status]) AS [Status]
+		,[dbo].[RunRequestSource]([a].[RunSource]) AS [RunSource]
+		,[dbo].[JobStatus]([a].[Status]) AS [Status]
 		,[a].[LastExecutedStep]
 		,[a].[LastStepExecutedDateTime]
 		,[a].[LastStepDuration]
@@ -179,10 +175,10 @@ AS
 		,[a].[StartDateTime]
 		,[a].[CompletedDateTime]
 		,[a].[NextRunDateTime]
-		,[Scheduler].[JobStepOutCome]([a].[LastRunOutCome]) AS [LastRunOutCome]
+		,[dbo].[JobStepOutCome]([a].[LastRunOutCome]) AS [LastRunOutCome]
 		,[a].[LastOutComeMessage]
 		,[a].[LastRunDateTime]
 		,[a].[LastRunDuration]
-	FROM [Scheduler].[Jobs] AS [j]
-	LEFT JOIN [Scheduler].[Activity] AS [a] ON [a].[JobId] = [j].[Id]
+	FROM [dbo].[Jobs] AS [j]
+	LEFT JOIN [dbo].[Activity] AS [a] ON [a].[JobId] = [j].[Id]
 GO

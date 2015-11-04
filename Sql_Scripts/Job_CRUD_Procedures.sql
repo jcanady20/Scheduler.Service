@@ -1,34 +1,34 @@
 
-IF OBJECT_ID('[Scheduler].[Job_Delete]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[Job_Delete]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [Scheduler].[Job_Delete];
+	DROP PROCEDURE [dbo].[Job_Delete];
 END
 GO
 
-CREATE PROCEDURE [Scheduler].[Job_Delete]
+CREATE PROCEDURE [dbo].[Job_Delete]
 	@id UNIQUEIDENTIFIER
 AS
 BEGIN
 
-	DELETE FROM [Scheduler].[Activity] WHERE [JobId] = @id;
+	DELETE FROM [dbo].[Activity] WHERE [JobId] = @id;
 
-	DELETE FROM [Scheduler].[JobHistory] WHERE [JobId] = @id;
+	DELETE FROM [dbo].[JobHistory] WHERE [JobId] = @id;
 	
-	DELETE FROM [Scheduler].[JobSteps] WHERE [JobId] = @id;
+	DELETE FROM [dbo].[JobSteps] WHERE [JobId] = @id;
 	
-	DELETE FROM [Scheduler].[JobSchedules] WHERE [JobId] = @id;
+	DELETE FROM [dbo].[JobSchedules] WHERE [JobId] = @id;
 
-	DELETE FROM [Scheduler].[Jobs] WHERE [Id] = @id;
+	DELETE FROM [dbo].[Jobs] WHERE [Id] = @id;
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Job_Insert]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[Job_Insert]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [Scheduler].[Job_Insert];
+	DROP PROCEDURE [dbo].[Job_Insert];
 END
 GO
 
-CREATE PROCEDURE [Scheduler].[Job_Insert]
+CREATE PROCEDURE [dbo].[Job_Insert]
 	@name varchar(60),
 	@description varchar(500),
 	@enabled bit
@@ -41,22 +41,22 @@ BEGIN
 		DROP TABLE #tmp;
 	END
 	/*	Create Temp Table */
-	SELECT * INTO #tmp FROM [Scheduler].[Jobs] WHERE 1=0
+	SELECT * INTO #tmp FROM [dbo].[Jobs] WHERE 1=0
 
-	INSERT INTO [Scheduler].[Jobs] ([Name], [Description], [Enabled])
+	INSERT INTO [dbo].[Jobs] ([Name], [Description], [Enabled])
 	OUTPUT inserted.* INTO #tmp
 	VALUES (@name, @description, @enabled);
 	SELECT * FROM #tmp;
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[Job_Update]', 'P') IS NOT NULL
+IF OBJECT_ID('[dbo].[Job_Update]', 'P') IS NOT NULL
 BEGIN
-	DROP PROCEDURE [Scheduler].[Job_Update];
+	DROP PROCEDURE [dbo].[Job_Update];
 END
 GO
 
-CREATE PROCEDURE [Scheduler].[Job_Update]
+CREATE PROCEDURE [dbo].[Job_Update]
 	@id UNIQUEIDENTIFIER,
 	@name varchar(60),
 	@description varchar(500),
@@ -64,7 +64,7 @@ CREATE PROCEDURE [Scheduler].[Job_Update]
 AS
 BEGIN
 	
-	UPDATE [Scheduler].[Jobs]
+	UPDATE [dbo].[Jobs]
 		SET
 			 [Name] = @name
 			,[Description] = @description
@@ -75,17 +75,17 @@ END
 GO
 
 
-IF OBJECT_ID('[Scheduler].[TR_Job_Insert]', 'TR') IS NOT NULL
+IF OBJECT_ID('[dbo].[TR_Job_Insert]', 'TR') IS NOT NULL
 BEGIN
-	DROP TRIGGER [Scheduler].[TR_Job_Insert];
+	DROP TRIGGER [dbo].[TR_Job_Insert];
 END
 GO
 
-CREATE TRIGGER [Scheduler].[TR_Job_Insert] ON [Scheduler].[Jobs]
+CREATE TRIGGER [dbo].[TR_Job_Insert] ON [dbo].[Jobs]
 FOR INSERT
 AS
 BEGIN
-	INSERT INTO [Scheduler].[Activity] ([JobId])
+	INSERT INTO [dbo].[Activity] ([JobId])
 	SELECT
 		[Id]
 	FROM inserted;

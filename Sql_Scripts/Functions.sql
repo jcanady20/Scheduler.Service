@@ -1,11 +1,11 @@
 
-IF OBJECT_ID('[Scheduler].[JobStatus]', 'FN') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobStatus]', 'FN') IS NOT NULL
 BEGIN
-	DROP FUNCTION [Scheduler].[JobStatus];
+	DROP FUNCTION [dbo].[JobStatus];
 END
 GO
 
-CREATE FUNCTION [Scheduler].[JobStatus] (@Status INT)
+CREATE FUNCTION [dbo].[JobStatus] (@Status INT)
 RETURNS varchar(50)
 AS
 BEGIN
@@ -30,12 +30,12 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[JobStepOutCome]', 'FN') IS NOT NULL
+IF OBJECT_ID('[dbo].[JobStepOutCome]', 'FN') IS NOT NULL
 BEGIN
-	DROP FUNCTION [Scheduler].[JobStepOutCome];
+	DROP FUNCTION [dbo].[JobStepOutCome];
 END
 GO
-CREATE FUNCTION [Scheduler].[JobStepOutCome] (@OutCome INT)
+CREATE FUNCTION [dbo].[JobStepOutCome] (@OutCome INT)
 RETURNS varchar(50)
 AS
 BEGIN
@@ -57,13 +57,13 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('[Scheduler].[RunRequestSource]', 'FN') IS NOT NULL
+IF OBJECT_ID('[dbo].[RunRequestSource]', 'FN') IS NOT NULL
 BEGIN
-	DROP FUNCTION [Scheduler].[RunRequestSource];
+	DROP FUNCTION [dbo].[RunRequestSource];
 END
 GO
 
-CREATE FUNCTION [Scheduler].[RunRequestSource] (@source INT)
+CREATE FUNCTION [dbo].[RunRequestSource] (@source INT)
 RETURNS varchar(50)
 AS
 BEGIN

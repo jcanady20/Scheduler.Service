@@ -11,22 +11,32 @@ namespace Scheduler.Data.Extensions
 {
 	public static class JobScheduleExtensions
 	{
-		static readonly DateTime m_maxDateTime = new DateTime(2099, 12, 31, 23, 59, 59);
+		private static readonly DateTime m_maxDateTime = new DateTime(2099, 12, 31, 23, 59, 59);
 		private static readonly DateTime m_minDateTime = new DateTime(1980, 1, 1, 0, 0, 0);
-		public static DateTime CalculateNextRun(this JobSchedule schedule, DateTime lastRunDateTime)
+        public static DateTime MaxDateTime(this JobSchedule schedule)
+        {
+            return m_maxDateTime;
+        }
+        public static DateTime MinDateTime(this JobSchedule schedule)
+        {
+            return m_minDateTime;
+        }
+        public static DateTime CalculateNextRun(this JobSchedule schedule, DateTime lastRunDateTime)
 		{
-			//	If the schedule isn't active
-			//	Or the Schedule EndDateTime has already passed
-			//	Return DateTime.MinValue
-			if (schedule.Enabled == false || schedule.EndDateTime < DateTime.Now)
+            //	If the schedule isn't active
+            //	Or the Schedule EndDateTime has already passed
+            //	Return DateTime.MinValue
+            var endDateTime = schedule.EndDate + schedule.EndTime;
+            var startDateTime = schedule.StartDate + schedule.StartTime;
+			if (schedule.Enabled == false || endDateTime < DateTime.Now)
 			{
 				return m_maxDateTime;
 			}
 			//	If the schedule hasn't started yet
 			//	Return the StartDatetime value instead
-			if (DateTime.Now < schedule.StartDateTime)
+			if (DateTime.Now < startDateTime)
 			{
-				return schedule.StartDateTime;
+				return startDateTime;
 			}
 
 			DateTime sdt = m_minDateTime;
@@ -52,7 +62,7 @@ namespace Scheduler.Data.Extensions
 		}
 		private static DateTime CalculateOnTimeOnly(this JobSchedule scheudle, DateTime lastRunDateTime)
 		{
-			var startDateTime = scheudle.StartDateTime;
+			var startDateTime = scheudle.StartDate + scheudle.StartTime;
 			//	If the Last Run DateTime is greater or equal to the Start DateTime the job has already ran
 			//	Return the Max Value so the job wont run again.
 			if(lastRunDateTime >= startDateTime)
@@ -63,36 +73,32 @@ namespace Scheduler.Data.Extensions
 		}
 		private static DateTime CalculateDaily(this JobSchedule schedule, DateTime lastRunDateTime)
 		{
-			var startDateTime = schedule.StartDateTime;
-			var endDateTime = schedule.EndDateTime;
 			var dt = schedule.CalculateSubDayInterval(lastRunDateTime);
 
 			// Check to see if we need to roll to the next interval day
-			if (dt.TimeOfDay > endDateTime.TimeOfDay || dt.Day != lastRunDateTime.Day)
+			if (dt.TimeOfDay > schedule.EndTime || dt.Day != lastRunDateTime.Day)
 			{
 				lastRunDateTime = lastRunDateTime.AddDays(schedule.Interval);
-				lastRunDateTime = lastRunDateTime.Date + startDateTime.TimeOfDay;
+				lastRunDateTime = lastRunDateTime.Date + schedule.StartTime;
 				return lastRunDateTime;
 			}
 			else
 			{
-				if (dt.TimeOfDay < startDateTime.TimeOfDay)
+				if (dt.TimeOfDay < schedule.StartTime)
 				{
-					dt = dt.Date + startDateTime.TimeOfDay;
+					dt = dt.Date + schedule.StartTime;
 				}
 				return dt;
 			}
 		}
 		private static DateTime CalculateWeekly(this JobSchedule schedule, DateTime lastRunDateTime)
 		{
-			var startDateTime = schedule.StartDateTime;
-			var endDateTime = schedule.EndDateTime;
 			var dt = schedule.CalculateSubDayInterval(lastRunDateTime);
 
 			// Check to see if we need to roll to the next interval day
-			if (dt.TimeOfDay > endDateTime.TimeOfDay || dt.Day != lastRunDateTime.Day)
+			if (dt.TimeOfDay > schedule.EndTime || dt.Day != lastRunDateTime.Day)
 			{
-				lastRunDateTime = lastRunDateTime.Date + schedule.StartDateTime.TimeOfDay;
+				lastRunDateTime = lastRunDateTime.Date + schedule.StartTime;
 
 				// Assume we'll reach the end of the week without a match
 				bool iswithinWeek = false;
@@ -152,42 +158,20 @@ namespace Scheduler.Data.Extensions
 		}
 		private static DateTime CalculateMonthly(this JobSchedule schedule, DateTime lastRunDateTime)
 		{
-			var intrval = schedule.Interval;
-			var endtime = schedule.EndDateTime.TimeOfDay;
-
-			var subdayType = schedule.SubdayType;
-			var subdayInterval = schedule.SubdayInterval;
-			var dt = schedule.CalculateSubDayInterval(lastRunDateTime);
-
-			var rst = dt.TimeOfDay;
-			// Check to see if we need to roll to the next interval day
-			if (rst > endtime || dt.Day != lastRunDateTime.Day)
-			{
-				lastRunDateTime = lastRunDateTime + schedule.StartDateTime.TimeOfDay;
-
-				// Day of Month every X Months
-				// How many Days are in the current Month
-				var nmonths = schedule.RecurrenceFactor;
-				var i = 0;
-				while (i < nmonths)
-				{
-					dt = dt.AddDays(((dt.Day - DateTime.DaysInMonth(dt.Year, dt.Month)) * -1) + 1);
-					i++;
-				}
-				// Now Add the Number of Days into the month
-				dt = dt.AddDays(intrval);
-				lastRunDateTime = dt;
-			}
-			else // We haven't exceeded the end time range yet so increment the time and continue.
-			{
-				lastRunDateTime = lastRunDateTime + rst;
-			}
-			return lastRunDateTime;
-		}
+            //  Get the Time when the Job is Supposed to Start
+            var timeOfDay = schedule.StartTime;
+            var dt = lastRunDateTime;
+            //  Add the Recurrence Factory (Number of months between Runs) to the Last Run Date
+            //  Add the timeOfDay value to it
+            dt = dt.AddMonths(schedule.RecurrenceFactor).Date + timeOfDay;
+            //  Create a new DateTime object with the Correct Interval (day of the month) Value
+            dt = new DateTime(dt.Year, dt.Month, schedule.Interval, dt.Hour, dt.Minute, dt.Second);
+            return dt;
+        }
 		private static DateTime CalculateMonthlyRelative(this JobSchedule schedule, DateTime lastRunDateTime)
 		{
 			var intrval = schedule.Interval;
-			var endtime = schedule.EndDateTime.TimeOfDay;
+			var endtime = schedule.EndTime;
 
 			var subdayType = schedule.SubdayType;
 			var subdayInterval = schedule.SubdayInterval;
@@ -199,7 +183,7 @@ namespace Scheduler.Data.Extensions
 			if (rst > endtime || dt.Day != lastRunDateTime.Day)
 			{
 				// Set the Next Run Time to the Active Start Time Value
-				lastRunDateTime = lastRunDateTime + schedule.StartDateTime.TimeOfDay;
+				lastRunDateTime = lastRunDateTime + schedule.StartTime;
 
 				//	How many months should be skipped
 				var nmonths = schedule.RecurrenceFactor;
@@ -276,7 +260,7 @@ namespace Scheduler.Data.Extensions
 			switch (schedule.SubdayType)
 			{
 				case SubIntervalType.SpecificTime:
-					dt = dt.AddDays(1).Date + schedule.StartDateTime.TimeOfDay;
+					dt = dt.AddDays(1).Date + schedule.StartTime;
 					break;
 				case SubIntervalType.Hours:
 					dt = dt.AddHours(schedule.SubdayInterval);
@@ -303,7 +287,7 @@ namespace Scheduler.Data.Extensions
 		}
 		public static string Description(this JobSchedule schedule)
 		{
-			var startDateTime = schedule.StartDateTime;
+			var startDateTime = schedule.StartDate + schedule.StartTime;
 			var msg = new StringBuilder();
 
 			msg.Append("Occurs");
@@ -328,12 +312,12 @@ namespace Scheduler.Data.Extensions
 		private static StringBuilder GetSubIntervalDescription(this JobSchedule schedule)
 		{
 			var msg = new StringBuilder();
-			var startDateTime = schedule.StartDateTime;
-			var endDatetime = schedule.EndDateTime;
+			var startDateTime = schedule.StartDate + schedule.StartTime;
+			var endDatetime = schedule.EndDate + schedule.EndTime;
 			switch (schedule.SubdayType)
 			{
 				case SubIntervalType.SpecificTime:
-					msg.AppendFormat(" at {0}", schedule.StartDateTime.ToShortTimeString());
+					msg.AppendFormat(" at {0}", startDateTime.ToShortTimeString());
 					break;
 				case SubIntervalType.Minutes:
 				case SubIntervalType.Hours:

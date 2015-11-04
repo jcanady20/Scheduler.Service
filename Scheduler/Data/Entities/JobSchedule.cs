@@ -14,8 +14,8 @@ namespace Scheduler.Data.Entities
 			Type = Data.FrequencyType.Daily;
 			SubdayType = SubIntervalType.Minutes;
 			RelativeInterval = RelativeInterval.NotUsed;
-			StartDateTime = new DateTime(1980, 1, 1, 0, 0, 0);
-			EndDateTime = new DateTime(2099, 12, 31, 23, 59, 59);
+			StartDate = new DateTime(1980, 1, 1, 0, 0, 0);
+			EndDate = new DateTime(2099, 12, 31, 23, 59, 59);
 			LastRunDateTime = new DateTime(1980, 1, 1, 0, 0, 0);
 		}
 		public Guid Id { get; set; }
@@ -28,8 +28,10 @@ namespace Scheduler.Data.Entities
 		public int SubdayInterval { get; set; }
 		public RelativeInterval RelativeInterval { get; set; }
 		public int RecurrenceFactor { get; set; }
-		public DateTime StartDateTime { get; set; }
-		public DateTime EndDateTime { get; set; }
+		public DateTime StartDate { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public DateTime EndDate { get; set; }
+        public TimeSpan EndTime { get; set; }
 		public DateTime LastRunDateTime { get; set; }
 	}
 }
