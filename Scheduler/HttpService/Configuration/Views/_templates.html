@@ -1,708 +1,708 @@
 ﻿<!-- Templates -->
 <script id="job-edit-tmpl" type="text/x-jquery-tmpl">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12">
-				<a href="#/jobs" class="close pull-right" title="Cancel"><i class="fa fa-fw fa-times"></i></a>
-				<h4 class="panel-title"><%= name %></h4>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-3">
-				<div class="list-group">
-					<a href="#/jobs/edit/<%= id %>" class="list-group-item lstgrp-general"><i class="fa fa-fw fa-2x fa-info"></i>General</a>
-					<a href="#/jobs/steps/<%= id %>" class="list-group-item lstgrp-steps"><i class="fa fa-fw fa-2x fa-tasks"></i>Steps</a>
-					<a href="#/jobs/schedules/<%= id %>" class="list-group-item lstgrp-schedules"><i class="fa fa-fw fa-2x fa-calendar"></i>Schedules</a>
-				</div>
-			</div>
-			<div class="col-xs-9" id="job-content"></div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="#/jobs" class="close pull-right" title="Cancel"><i class="fa fa-fw fa-times"></i></a>
+                <h4 class="panel-title"><%= name %></h4>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="list-group">
+                    <a href="#/jobs/edit/<%= id %>" class="list-group-item lstgrp-general"><i class="fa fa-fw fa-2x fa-info"></i>General</a>
+                    <a href="#/jobs/steps/<%= id %>" class="list-group-item lstgrp-steps"><i class="fa fa-fw fa-2x fa-tasks"></i>Steps</a>
+                    <a href="#/jobs/schedules/<%= id %>" class="list-group-item lstgrp-schedules"><i class="fa fa-fw fa-2x fa-calendar"></i>Schedules</a>
+                </div>
+            </div>
+            <div class="col-xs-9" id="job-content"></div>
+        </div>
+    </div>
 </script>
 
 <script id="job-steps-tmpl" type="text/x-jquery-tmpl">
-	<div class="panel panel-default panel-shadowed panel-primary">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title pull-left" style="padding-top: 8px;"><i class="fa fa-fw fa-tasks"></i>Steps</h4>
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-success btn-newStep" title="Create Job Step"><i class="fa fa-fw fa-plus"></i></button>
-				</div>
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
-				</div>
-			</div>
-		</div>
-		<table class="table table-condensed table-hover">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Step</th>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody id="tbl-body"></tbody>
-			<tfoot>
-				<tr>
-					<td colspan="3">
-						<div class="btn-toolbar">
-							<div class="btn-group btn-group-sm">
-								<button type="button" class="btn btn-default btn-moveup"><i class="fa fa-fw fa-chevron-up"></i></button>
-								<button type="button" class="btn btn-default btn-movedown"><i class="fa fa-fw fa-chevron-down"></i></button>
-							</div>
-							<div class="btn-group btn-group-sm pull-right">
-								<button type="button" class="btn btn-default btn-editStep"><i class="fa fa-fw fa-pencil"></i></button>
-								<button type="button" class="btn btn-danger btn-deleteStep"><i class="fa fa-fw fa-trash-o"></i></button>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+    <div class="panel panel-default panel-shadowed panel-primary">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 8px;"><i class="fa fa-fw fa-tasks"></i>Steps</h4>
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-success btn-newStep" title="Create Job Step"><i class="fa fa-fw fa-plus"></i></button>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Step</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-body"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <div class="btn-toolbar">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-default btn-moveup"><i class="fa fa-fw fa-chevron-up"></i></button>
+                                <button type="button" class="btn btn-default btn-movedown"><i class="fa fa-fw fa-chevron-down"></i></button>
+                            </div>
+                            <div class="btn-group btn-group-sm pull-right">
+                                <button type="button" class="btn btn-default btn-editStep"><i class="fa fa-fw fa-pencil"></i></button>
+                                <button type="button" class="btn btn-danger btn-deleteStep"><i class="fa fa-fw fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </script>
 
 <script id="job-step-detail-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td><%= name %></td>
-		<td><%= stepId %></td>
-		<td><%= subSystem %></td>
-	</tr>
+    <tr>
+        <td><%= name %></td>
+        <td><%= stepId %></td>
+        <td><%= subSystem %></td>
+    </tr>
 </script>
 
 <script id="job-schedules-tmpl" type="text/x-jquery-tmpl">
-	<div class="panel panel-default panel-shadowed panel-primary">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title pull-left" style="padding-top: 8px;"><i class="fa fa-fw fa-calendar"></i>Schedules</h4>
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-success btn-newSchedule" title="Create Job Step"><i class="fa fa-fw fa-plus"></i></button>
-				</div>
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
-				</div>
-			</div>
-		</div>
-		<table class="table table-condensed table-hover">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Enabled</th>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody id="tbl-body"></tbody>
-			<tfoot>
-				<tr>
-					<td colspan="3">
-						<div class="btn-toolbar">
-							<div class="btn-group btn-group-sm pull-right">
-								<button type="button" class="btn btn-default btn-editSchedule" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>
-								<button type="button" class="btn btn-danger btn-deleteSchedule" title="Remove"><i class="fa fa-fw fa-trash-o"></i></button>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+    <div class="panel panel-default panel-shadowed panel-primary">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 8px;"><i class="fa fa-fw fa-calendar"></i>Schedules</h4>
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-success btn-newSchedule" title="Create Job Step"><i class="fa fa-fw fa-plus"></i></button>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Enabled</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-body"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <div class="btn-toolbar">
+                            <div class="btn-group btn-group-sm pull-right">
+                                <button type="button" class="btn btn-default btn-editSchedule" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>
+                                <button type="button" class="btn btn-danger btn-deleteSchedule" title="Remove"><i class="fa fa-fw fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </script>
 
 <script id="job-schedule-detail-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td><%= name %></td>
-		<td><i class="<% if(enabled === true) { print('fa fa-check'); } %>"></i></td>
-		<td><% print(_.keys(_.pick(enums.FrequencyType, function(item) { return (item & type) !== 0; })).join(',')) %></td>
-	</tr>
+    <tr>
+        <td><%= name %></td>
+        <td><i class="<% if(enabled === true) { print('fa fa-check'); } %>"></i></td>
+        <td><% print(_.keys(_.pick(enums.FrequencyType, function(item) { return (item & type) !== 0; })).join(',')) %></td>
+    </tr>
 </script>
 
 <script id="jobactivity-tmpl" type="text/x-jquery-tmpl">
-	<div class="panel panel-default panel-shadowed panel-primary">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title pull-left" style="padding-top: 8px;">Jobs</h4>
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-success btn-createJob" title="Create Job"><i class="fa fa-fw fa-plus"></i></button>
-				</div>
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
-				</div>
-			</div>
-		</div>
-		<table class="table table-condensed table-stripped table-hover">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Enabled</th>
-					<th>Status</th>
-					<th class="visible-lg">Started</th>
-					<th class="visible-lg">Completed</th>
-					<th>Next Run Date</th>
-					<th class="visible-lg visible-md">Last OutCome</th>
-					<th class="visible-lg">Last Run Date</th>
-					<th class="visible-lg">Last Run Duration</th>
-					<th>&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody id="tbl-body"></tbody>
-		</table>
-	</div>
+    <div class="panel panel-default panel-shadowed panel-primary">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 8px;">Jobs</h4>
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-success btn-createJob" title="Create Job"><i class="fa fa-fw fa-plus"></i></button>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Enabled</th>
+                    <th>Status</th>
+                    <th class="visible-lg">Started</th>
+                    <th class="visible-lg">Completed</th>
+                    <th>Next Run Date</th>
+                    <th class="visible-lg visible-md">Last OutCome</th>
+                    <th class="visible-lg">Last Run Date</th>
+                    <th class="visible-lg">Last Run Duration</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-body"></tbody>
+        </table>
+    </div>
 </script>
 
 <script id="jobactivity-item-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td style="text-align: left; vertical-align: middle;"><a href="#/jobs/edit/<%= id %>" title="Edit <%= name %>"><%= name %></a></td>
-		<td><i class="<% if(enabled === true) { print('fa fa-check'); } %>"></i></td>
-		<td><%= status %></td>
-		<td class="visible-lg"><% if(startDateTime) { print(moment(startDateTime).format("L LTS")); } %></td>
-		<td class="visible-lg"><% if(completedDateTime) { print(moment(completedDateTime).format("L LTS")); } %></td>
-		<td><% if(nextRunDateTime) { print(moment(nextRunDateTime).format("L LTS")); } %></td>
-		<td class="visible-lg visible-md"><%= lastRunOutCome %></td>
-		<td class="visible-lg"><% if(lastRunDateTime) { print(moment(lastRunDateTime).format("L LTS")); } %></td>
-		<td class="visible-lg"><%= lastRunDuration %></td>
-		<td style="text-align: right;">
-			<div class="btn-group btn-group-sm">
-				<button type="button" class="btn btn-default btn-startJob" title="Start Job"><i class="fa fa-fw fa-play" style="color: #5cb85c;"></i></button>
-				<a href="#/jobs/history/<%= id %>" class="btn btn-default" title="Job History"><i class="fa fa-fw fa-history"></i></a>
-				<a href="#/jobs/edit/<%= id %>" class="btn btn-default" title="Edit Job"><i class="fa fa-fw fa-pencil"></i></a>
-				<button type="button" class="btn btn-default btn-deleteJob" title="Delete Job"><i class="fa fa-fw fa-trash-o"></i></button>
-			</div>
-		</td>
-	</tr>
+    <tr>
+        <td style="text-align: left; vertical-align: middle;"><a href="#/jobs/edit/<%= id %>" title="Edit <%= name %>"><%= name %></a></td>
+        <td><i class="<% if(enabled === true) { print('fa fa-check'); } %>"></i></td>
+        <td><%= status %></td>
+        <td class="visible-lg"><% if(startDateTime) { print(moment(startDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg"><% if(completedDateTime) { print(moment(completedDateTime).format("L LTS")); } %></td>
+        <td><% if(nextRunDateTime) { print(moment(nextRunDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg visible-md"><%= lastRunOutCome %></td>
+        <td class="visible-lg"><% if(lastRunDateTime) { print(moment(lastRunDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg"><%= lastRunDuration %></td>
+        <td style="text-align: right;">
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-default btn-startJob" title="Start Job"><i class="fa fa-fw fa-play" style="color: #5cb85c;"></i></button>
+                <a href="#/jobs/history/<%= id %>" class="btn btn-default" title="Job History"><i class="fa fa-fw fa-history"></i></a>
+                <a href="#/jobs/edit/<%= id %>" class="btn btn-default" title="Edit Job"><i class="fa fa-fw fa-pencil"></i></a>
+                <button type="button" class="btn btn-default btn-deleteJob" title="Delete Job"><i class="fa fa-fw fa-trash-o"></i></button>
+            </div>
+        </td>
+    </tr>
 </script>
 
 <!-- Job Detail Editor -->
 <script id="job-editor-tmpl" type="text/x-jquery-tmpl">
-	<div class="panel panel-primary panel-shadowed">
-		<div class="panel-heading">
-			<h4 class="panel-title"><i class="fa fa-fw fa-info"></i><span data-bind="text: name"></span></h4>
-		</div>
-		<div class="panel-body">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label class="control-label col-xs-2">Name</label>
-					<div class="col-xs-4">
-						<input type="text" class="form-control input-sm" name="name" data-bind="textInput: name" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-xs-2">Description</label>
-					<div class="col-xs-4">
-						<textarea class="form-control" name="description" data-bind="textInput: description"></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-xs-2">Enabled</label>
-					<div class="col-xs-4">
-						<input type="checkbox" name="enabled" data-bind="checked: enabled" />
-					</div>
-				</div>
+    <div class="panel panel-primary panel-shadowed">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-fw fa-info"></i><span data-bind="text: name"></span></h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Name</label>
+                    <div class="col-xs-4">
+                        <input type="text" class="form-control input-sm" name="name" data-bind="textInput: name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Description</label>
+                    <div class="col-xs-4">
+                        <textarea class="form-control" name="description" data-bind="textInput: description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Enabled</label>
+                    <div class="col-xs-4">
+                        <input type="checkbox" name="enabled" data-bind="checked: enabled" />
+                    </div>
+                </div>
 
-				<% if(id) {%>
-				<div class="form-group">
-					<div class="col-xs-offset-2 col-xs-4">
-						<a href="#/jobs/history/<%= id %>" class="btn btn-link">View Job History</a>
-					</div>
-				</div>
-				<%} %>
+                <% if(id) {%>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-4">
+                        <a href="#/jobs/history/<%= id %>" class="btn btn-link">View Job History</a>
+                    </div>
+                </div>
+                <%} %>
 
-				<div class="form-group">
-					<div class="col-xs-offset-2 col-xs-4">
-						<button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
-						<a href="#/jobs" class="btn btn-default">Cancel</a>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-4">
+                        <button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
+                        <a href="#/jobs" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </script>
 
 <!-- Confirm Job Deletion Template -->
 <script id="job-confirm-delete-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Schedule - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure you would like to delete this job?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Schedule - <span data-bind="text: name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you would like to delete this job?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
+                <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <!-- Confirm JobStep Deletion Template -->
 <script id="jobstep-confirm-delete-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Schedule - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure you would like to delete this Step?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4>Schedule - <span data-bind="text: name"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you would like to delete this Step?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
+                    <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <!-- Confirm Schedule Deletion -->
 <script id="schedule-confirm-delete-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Schedule - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure you would like to delete this Schedule?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Schedule - <span data-bind="text: name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you would like to delete this Schedule?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-accept"><i class="fa fa-fw fa-trash-o"></i> Accept</button>
+                <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <!-- Job History -->
 <script id="job-history-tmpl" type="text/x-jquery-tmpl">
-	<div class="panel panel-default panel-shadowed panel-primary">
-		<div class="panel-heading clearfix">
-			<h4 class="panel-title pull-left" style="padding-top: 8px;"><%= name %> History</h4>
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group btn-group-sm">
-					<button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
-				</div>
-				<div class="btn-group btn-group-sm">
-					<a href="#/jobs" class="btn btn-default" title="Close"><i class="fa fa-fw fa-times"></i></a>
-				</div>
-			</div>
-		</div>
-		<table class="table table-condensed table-stripped">
-			<thead>
-				<tr>
-					<th>Step</th>
-					<th>Step Name</th>
-					<th>Message</th>
-					<th>Status</th>
-					<th>Run Date</th>
-					<th>Duration</th>
-				</tr>
-			</thead>
-			<tbody id="tbl-body"></tbody>
-			<tfoot>
-				<tr><td colspan="6" id="results-pager"></td></tr>
-			</tfoot>
-		</table>
-	</div>
+    <div class="panel panel-default panel-shadowed panel-primary">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title pull-left" style="padding-top: 8px;"><%= name %> History</h4>
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default btn-refresh" title="Refresh"><i class="fa fa-fw fa-refresh"></i></button>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <a href="#/jobs" class="btn btn-default" title="Close"><i class="fa fa-fw fa-times"></i></a>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-stripped">
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Step Name</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Run Date</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody id="tbl-body"></tbody>
+            <tfoot>
+                <tr><td colspan="6" id="results-pager"></td></tr>
+            </tfoot>
+        </table>
+    </div>
 </script>
 
 <!-- Job History Detail -->
 <script id="job-history-detail-tmpl" type="text/x-jquery-tmpl">
-	<tr class="<% if(runStatus === 0) { print('danger'); }%>">
-		<td><%= stepId %></td>
-		<td><%= stepName %></td>
-		<td><%= message %></td>
-		<td><%= runStatus %></td>
-		<td><% print(moment(runDateTime).format("L LTS")) %></td>
-		<td><%= runDuration %></td>
-	</tr>
+    <tr class="<% if(runStatus === 0) { print('danger'); }%>">
+        <td><%= stepId %></td>
+        <td><%= stepName %></td>
+        <td><%= message %></td>
+        <td><%= runStatus %></td>
+        <td><% print(moment(runDateTime).format("L LTS")) %></td>
+        <td><%= runDuration %></td>
+    </tr>
 </script>
 
 <!-- Job Step Editor -->
 <script id="jobstep-edit-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Job Step - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="control-label col-xs-2">Name</label>
-							<div class="col-xs-6">
-								<input type="text" class="form-control input-sm" data-bind="textInput: name, disable: isVisShipped" autofocus="autofocus" />
-							</div>
-							<div class="checkbox col-xs-2">
-								<label>
-									<input type="checkbox" data-bind="checked: enabled" /> Enabled
-								</label>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-2">Type</label>
-							<div class="col-xs-8">
-								<select class="form-control" data-bind="options: subSystems, optionsText: 'displayName', optionsValue: 'subSystem', value: subSystem, disable: isVisShipped"></select>
-							</div>
-						</div>
-						<div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
-							<label class="control-label col-xs-2">Database</label>
-							<div class="col-xs-8">
-								<input type="text" class="form-control input-sm" data-bind="textInput: databaseName, disable: isVisShipped" />
-							</div>
-						</div>
-						<div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
-							<label class="control-label col-xs-offset-1 col-xs-3">User Name</label>
-							<div class="col-xs-6">
-								<input type="text" class="form-control input-sm" data-bind="textInput: userName, disable: isVisShipped" />
-							</div>
-						</div>
-						<div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
-							<label class="control-label col-xs-offset-1 col-xs-3">Password</label>
-							<div class="col-xs-6">
-								<input type="password" class="form-control input-sm" data-bind="textInput: password, disable: isVisShipped" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-2">Command</label>
-							<div class="col-xs-8">
-								<textarea class="form-control" data-bind="value: command, disable: isVisShipped"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Job Step - <span data-bind="text: name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Name</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control input-sm" data-bind="textInput: name, disable: isVisShipped" autofocus="autofocus" />
+                        </div>
+                        <div class="checkbox col-xs-2">
+                            <label>
+                                <input type="checkbox" data-bind="checked: enabled" /> Enabled
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Type</label>
+                        <div class="col-xs-8">
+                            <select class="form-control" data-bind="options: subSystems, optionsText: 'displayName', optionsValue: 'subSystem', value: subSystem, disable: isVisShipped"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
+                        <label class="control-label col-xs-2">Database</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control input-sm" data-bind="textInput: databaseName, disable: isVisShipped" />
+                        </div>
+                    </div>
+                    <div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
+                        <label class="control-label col-xs-offset-1 col-xs-3">User Name</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control input-sm" data-bind="textInput: userName, disable: isVisShipped" />
+                        </div>
+                    </div>
+                    <div class="form-group" data-bind="visible: subSystem() === 'SqlTask'">
+                        <label class="control-label col-xs-offset-1 col-xs-3">Password</label>
+                        <div class="col-xs-6">
+                            <input type="password" class="form-control input-sm" data-bind="textInput: password, disable: isVisShipped" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Command</label>
+                        <div class="col-xs-8">
+                            <textarea class="form-control" data-bind="value: command, disable: isVisShipped"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
+                <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <!-- Schedule Editor -->
 <script id="schedule-edit-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade" id="schedule-editor">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Schedule - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<!-- Name -->
-						<div class="form-group">
-							<label class="control-label col-xs-2">Name</label>
-							<div class="col-xs-6">
-								<input type="text" class="form-control input-sm" data-bind="textInput: name" autofocus />
-							</div>
-						</div>
 
-						<!-- Type -->
-						<div class="form-group">
-							<label class="control-label col-xs-2">Schedule Type</label>
-							<div class="col-xs-6">
-								<select name="type" class="form-control input-sm" data-bind="value: type">
-									<option value="64">Runs when the Scheduler Agent Starts</option>
-									<option value="4">Daily</option>
-									<option value="8">Weekly</option>
-									<option value="16">Monthly</option>
-									<option value="32">Monthly Relative</option>
-									<option value="1">One Time Only</option>
-								</select>
-							</div>
-							<div class="col-xs-4">
-								<label class="checkbox">
-									<input type="checkbox" name="enabled" data-bind="checked: enabled" /> Enabled
-								</label>
-							</div>
-						</div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Schedule - <span data-bind="text: name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Name</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control input-sm" data-bind="textInput: name" autofocus />
+                        </div>
+                    </div>
 
-						<!-- One time Occurrence -->
-						<div data-bind="if: type() == 1">
-							<div class="form-group">
-								<label class="control-label col-xs-2">Date</label>
-								<div class="col-xs-2">
-									<input type="text" class="form-control input-sm" data-bind="dateInput: startDate" />
-								</div>
-								<label class="control-label col-xs-2">Time</label>
-								<div class="col-xs-2">
-									<div class="input-group">
-										<input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
-									</div>
-								</div>
-							</div>
-						</div>
+                    <!-- Type -->
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Schedule Type</label>
+                        <div class="col-xs-6">
+                            <select name="type" class="form-control input-sm" data-bind="value: type">
+                                <option value="64">Runs when the Scheduler Agent Starts</option>
+                                <option value="4">Daily</option>
+                                <option value="8">Weekly</option>
+                                <option value="16">Monthly</option>
+                                <option value="32">Monthly Relative</option>
+                                <option value="1">One Time Only</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4">
+                            <label class="checkbox">
+                                <input type="checkbox" name="enabled" data-bind="checked: enabled" /> Enabled
+                            </label>
+                        </div>
+                    </div>
 
-						<!-- Daily Frequency -->
-						<div data-bind="if: type() == 4">
-							<!-- Daily -->
-							<div class="form-group">
-								<label class="control-label col-xs-2">Recurs Every</label>
-								<div class="col-xs-1">
-									<input type="text" class="form-control input-sm" data-bind="numericOnly: interval" />
-								</div>
-								<div class="col-xs-3" style="padding-top: 7px;">day(s)</div>
-							</div>
-						</div>
+                    <!-- One time Occurrence -->
+                    <div data-bind="if: type() == 1">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Date</label>
+                            <div class="col-xs-2">
+                                <input type="text" class="form-control input-sm" data-bind="dateInput: startDate" />
+                            </div>
+                            <label class="control-label col-xs-2">Time</label>
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Weekly Frequency -->
-						<div data-bind="if: type() == 8">
-							<div class="form-group">
-								<label class="control-label col-xs-2">Recurs every</label>
-								<div class="col-xs-1">
-									<input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
-								</div>
-								<div class="col-xs-3" style="padding-top: 7px; height: 32px; padding-left: 0 !important;">Week(s)</div>
-							</div>
-							<div class="row">
-								<label class="control-label col-xs-2">On</label>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 2" /> Monday
-									</label>
-								</div>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 8" /> Wednesday
-									</label>
-								</div>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 32" /> Friday
-									</label>
-								</div>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 64" /> Saturday
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-offset-2 col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 4" /> Tuesday
-									</label>
-								</div>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 16" /> Thursday
-									</label>
-								</div>
-								<div class="col-xs-2"></div>
-								<div class="col-xs-2">
-									<label class="checkbox-inline">
-										<input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 1" /> Sunday
-									</label>
-								</div>
-							</div>
-						</div>
+                    <!-- Daily Frequency -->
+                    <div data-bind="if: type() == 4">
+                        <!-- Daily -->
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Recurs Every</label>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control input-sm" data-bind="numericOnly: interval" />
+                            </div>
+                            <div class="col-xs-3" style="padding-top: 7px;">day(s)</div>
+                        </div>
+                    </div>
 
-						<!-- Monthly Frequency -->
-						<div data-bind="if: type() == 16">
-							<div class="form-group">
-								<label class="control-label col-xs-2">Day</label>
-								<div class="col-xs-1">
-									<input type="text" class="form-control input-sm" data-bind="textInput: interval" />
-								</div>
-								<label class="control-label col-xs-offset-1 col-xs-2">Of Every</label>
-								<div class="col-xs-1">
-									<input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
-								</div>
-								<div class="col-xs-2" style="padding-top: 7px;">month(s)</div>
-							</div>
-						</div>
+                    <!-- Weekly Frequency -->
+                    <div data-bind="if: type() == 8">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Recurs every</label>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
+                            </div>
+                            <div class="col-xs-3" style="padding-top: 7px; height: 32px; padding-left: 0 !important;">Week(s)</div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-xs-2">On</label>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 2" /> Monday
+                                </label>
+                            </div>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 8" /> Wednesday
+                                </label>
+                            </div>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 32" /> Friday
+                                </label>
+                            </div>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 64" /> Saturday
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-2 col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 4" /> Tuesday
+                                </label>
+                            </div>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 16" /> Thursday
+                                </label>
+                            </div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-2">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" data-bind="checked: weeklyIntervals, checkedValue: 1" /> Sunday
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Monthly Relative Frequency -->
-						<div data-bind="if: type() == 32">
-							<div class="form-group">
-								<label class="control-label col-xs-2">On the</label>
-								<div class="col-xs-2">
-									<select class="form-control input-sm" data-bind="value: relativeInterval">
-										<option value="1">First</option>
-										<option value="2">Second</option>
-										<option value="4">Third</option>
-										<option value="8">Fourth</option>
-										<option value="16">Last</option>
-									</select>
-								</div>
-								<div class="col-xs-2">
-									<select class="form-control input-sm" data-bind="value: interval">
-										<option value="2">Monday</option>
-										<option value="4">Tuesday</option>
-										<option value="8">Wednesday</option>
-										<option value="16">Thursday</option>
-										<option value="32">Friday</option>
-										<option value="64">Saturday</option>
-										<option value="1">Sunday</option>
-										<option value="127">Day</option>
-										<option value="62">Weekday</option>
-										<option value="65">Weekend day</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-xs-2">Of Every</label>
-								<div class="col-xs-1">
-									<input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
-								</div>
-								<div class="col-xs-2" style="padding-top: 7px;">month(s)</div>
-							</div>
-						</div>
+                    <!-- Monthly Frequency -->
+                    <div data-bind="if: type() == 16">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Day</label>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control input-sm" data-bind="textInput: interval" />
+                            </div>
+                            <label class="control-label col-xs-offset-1 col-xs-2">Of Every</label>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
+                            </div>
+                            <div class="col-xs-2" style="padding-top: 7px;">month(s)</div>
+                        </div>
+                    </div>
 
-						<!-- Sub Frequency -->
-						<div data-bind="if: (type() != 1 && type() != 64)">
-							<div class="form-group">
-								<label class="control-label col-xs-2">Occurs</label>
-								<div class="col-xs-2">
-									<select class="form-control input-sm" data-bind="value: subdayType">
-										<option value="1">At</option>
-										<option value="4">Every Minute(s)</option>
-										<option value="8">Every Hour(s)</option>
-									</select>
-								</div>
-								<label class="control-label col-xs-2" data-bind="text: subDayIntervalLabel"></label>
-								<div data-bind="if: subdayType() == 1">
-									<div class="col-xs-2">
-										<input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
-									</div>
-								</div>
-								<div class="col-xs-2" data-bind="if: subdayType() != 1">
-									<div class="input-group">
-										<input type="text" class="form-control input-sm" data-bind="textInput: subdayInterval" />
-									</div>
-								</div>
-							</div>
-							<div class="form-group" data-bind="visible: subdayType() != 1">
-								<label class="control-label col-xs-2">Starting at</label>
-								<div class="col-xs-2">
-									<div class="input-group">
-										<input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
-									</div>
-								</div>
-								<label class="control-label col-xs-2">Ending at</label>
-								<div class="col-xs-2">
-									<div class="input-group">
-										<input type="text" class="form-control input-sm" data-bind="timeInput: endTime" />
-									</div>
-								</div>
-							</div>
-						</div>
+                    <!-- Monthly Relative Frequency -->
+                    <div data-bind="if: type() == 32">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">On the</label>
+                            <div class="col-xs-2">
+                                <select class="form-control input-sm" data-bind="value: relativeInterval">
+                                    <option value="1">First</option>
+                                    <option value="2">Second</option>
+                                    <option value="4">Third</option>
+                                    <option value="8">Fourth</option>
+                                    <option value="16">Last</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-2">
+                                <select class="form-control input-sm" data-bind="value: interval">
+                                    <option value="2">Monday</option>
+                                    <option value="4">Tuesday</option>
+                                    <option value="8">Wednesday</option>
+                                    <option value="16">Thursday</option>
+                                    <option value="32">Friday</option>
+                                    <option value="64">Saturday</option>
+                                    <option value="1">Sunday</option>
+                                    <option value="127">Day</option>
+                                    <option value="62">Weekday</option>
+                                    <option value="65">Weekend day</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Of Every</label>
+                            <div class="col-xs-1">
+                                <input type="text" class="form-control input-sm" data-bind="textInput: recurrenceFactor" />
+                            </div>
+                            <div class="col-xs-2" style="padding-top: 7px;">month(s)</div>
+                        </div>
+                    </div>
 
-						<!-- Duration -->
-						<div data-bind="if: type() != 1">
-							<div class="form-group">
-								<label class="control-label col-xs-2">Start Date</label>
-								<div class="col-xs-2">
+                    <!-- Sub Frequency -->
+                    <div data-bind="if: (type() != 1 && type() != 64)">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Occurs</label>
+                            <div class="col-xs-2">
+                                <select class="form-control input-sm" data-bind="value: subdayType">
+                                    <option value="1">At</option>
+                                    <option value="4">Every Minute(s)</option>
+                                    <option value="8">Every Hour(s)</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-xs-2" data-bind="text: subDayIntervalLabel"></label>
+                            <div data-bind="if: subdayType() == 1">
+                                <div class="col-xs-2">
+                                    <input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
+                                </div>
+                            </div>
+                            <div class="col-xs-2" data-bind="if: subdayType() != 1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" data-bind="textInput: subdayInterval" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" data-bind="visible: subdayType() != 1">
+                            <label class="control-label col-xs-2">Starting at</label>
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" data-bind="timeInput: startTime" />
+                                </div>
+                            </div>
+                            <label class="control-label col-xs-2">Ending at</label>
+                            <div class="col-xs-2">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" data-bind="timeInput: endTime" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-									<input type="text" class="form-control input-sm" data-bind="dateInput: startDate" />
-								</div>
-								<label class="control-label col-xs-2">End Date</label>
-								<div class="col-xs-2">
-									<input type="text" class="form-control input-sm" data-bind="dateInput: endDate" />
-								</div>
-							</div>
-						</div>
+                    <!-- Duration -->
+                    <div data-bind="if: type() != 1">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Start Date</label>
+                            <div class="col-xs-2">
 
-						<!-- Summary -->
-						<div class="form-group">
-							<label class="control-label col-xs-2">Description</label>
-							<div class="col-xs-8">
-								<textarea name="description" class="form-control" readonly="readonly" data-bind="text: description"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                                <input type="text" class="form-control input-sm" data-bind="dateInput: startDate" />
+                            </div>
+                            <label class="control-label col-xs-2">End Date</label>
+                            <div class="col-xs-2">
+                                <input type="text" class="form-control input-sm" data-bind="dateInput: endDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Description</label>
+                        <div class="col-xs-8">
+                            <textarea name="description" class="form-control" readonly="readonly" data-bind="text: description"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
+                <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <!-- Create New Job Dialog -->
 <script id="job-create-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade" id="schedule-editor">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4>Schedule - <span data-bind="text: name"></span></h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="control-label col-xs-2">Name</label>
-							<div class="col-xs-8">
-								<input type="text" class="form-control input-sm" data-bind="textinput: name" autofocus="autofocus" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-xs-2">Description</label>
-							<div class="col-xs-8">
-								<textarea class="form-control" name="description" data-bind="textInput: description"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
-					<button type="button" class="btn btn-default btn-cancel">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close btn-cancel" style="color: white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Schedule - <span data-bind="text: name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Name</label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control input-sm" data-bind="textinput: name" autofocus="autofocus" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Description</label>
+                        <div class="col-xs-8">
+                            <textarea class="form-control" name="description" data-bind="textInput: description"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-save"><i class="fa fa-fw fa-save"></i> Save</button>
+                <button type="button" class="btn btn-default btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <!-- Common Templates -->
 <!-- Loading Template -->
 <script id="loader-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td colspan="<%= colspan %>" style="text-align: center"><span class="fa fa-spinner fa-pulse fa-3x "></span></td>
-	</tr>
+    <tr>
+        <td colspan="<%= colspan %>" style="text-align: center"><span class="fa fa-spinner fa-pulse fa-3x "></span></td>
+    </tr>
 </script>
 
 <!-- No Results Template -->
 <script id="noresults-tmpl" type="text/x-jquery-tmpl">
-	<tr>
-		<td colspan="<%= colspan %>" style="text-align: center"><h4>No Results Found</h4></td>
-	</tr>
+    <tr>
+        <td colspan="<%= colspan %>" style="text-align: center"><h4>No Results Found</h4></td>
+    </tr>
 </script>
 
 <!-- Error Template -->
 <script id="error-tmpl" type="text/x-jquery-tmpl">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger">
-					<h3 class="modal-title">Error: <small><%= title %></small></h3>
-				</div>
-				<div class="modal-body">
-					<p><span><%= status %>::</span><span><%= statusText %></span></p>
-					<% if(data) {%>
-					<div style="max-height: 200px; overflow: auto; margin-bottom: 6px; margin-top: 6px; padding: 6px; word-wrap: break-word;">
-						<% _.forEach(_.keys(data), function(key) {
-						%><p><strong><%= key %>:</strong> <%= data[key] %></p><%
-						});%>
-					</div>
-					<%}%>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h3 class="modal-title">Error: <small><%= title %></small></h3>
+            </div>
+            <div class="modal-body">
+                <p><span><%= status %>::</span><span><%= statusText %></span></p>
+                <% if(data) {%>
+                <div style="max-height: 200px; overflow: auto; margin-bottom: 6px; margin-top: 6px; padding: 6px; word-wrap: break-word;">
+                    <% _.forEach(_.keys(data), function(key) {
+                    %><p><strong><%= key %>:</strong> <%= data[key] %></p><%
+                    });%>
+                </div>
+                <%}%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
 </script>

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Text;
-using Newtonsoft.Json;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Scheduler.Extensions
 {
@@ -25,12 +26,33 @@ namespace Scheduler.Extensions
 			return JsonConvert.DeserializeObject<T>(serialized);
 		}
 
+		public static string ToXml<T>(this T obj)
+		{
+			var xml = String.Empty;
+			if (obj == null)
+			{
+				throw new ArgumentNullException("obj");
+			}
+			var serializer = new XmlSerializer(typeof(T));
+
+			using (var textWriter = new StringWriter())
+			{
+				using (var xmlWriter = XmlWriter.Create(textWriter))
+				{
+					serializer.Serialize(xmlWriter, obj);
+				}
+				xml = textWriter.ToString();
+			}
+
+			return xml;
+		}
+
 		public static string ToJson(this object obj, bool addFormating = false)
 		{
 			var serializer = new JsonStringify(obj);
 			if (addFormating)
 			{
-				serializer.Formatting = Formatting.Indented;
+				serializer.Formatting = Newtonsoft.Json.Formatting.Indented;
 
 			}
 			return serializer.ToString();
@@ -42,30 +64,30 @@ namespace Scheduler.Extensions
 			{
 				this.Formatting = Newtonsoft.Json.Formatting.None;
 			}
-			public JsonStringify(object data)
-				: this()
+			public JsonStringify(object data) : this()
 			{
 				this.Data = data;
 			}
 			private object Data { get; set; }
-			public Formatting Formatting { get; set; }
+			public Newtonsoft.Json.Formatting Formatting { get; set; }
 			public override string ToString()
 			{
 				var objectString = string.Empty;
 				if (Data != null)
 				{
-					var ms = new System.IO.MemoryStream();
-
-					System.IO.TextWriter tw = new System.IO.StreamWriter(ms);
-
-					using (var writer = new JsonTextWriter(tw) { Formatting = Formatting })
+					using (var ms = new System.IO.MemoryStream())
 					{
-						var serializer = JsonSerializer.Create();
-						serializer.Serialize(writer, Data);
-						writer.Flush();
+						using (System.IO.TextWriter tw = new System.IO.StreamWriter(ms))
+						{
+							using (var writer = new JsonTextWriter(tw) { Formatting = Formatting })
+							{
+								var serializer = JsonSerializer.Create();
+								serializer.Serialize(writer, Data);
+								writer.Flush();
+							}
+						}
+						objectString = ASCIIEncoding.ASCII.GetString(ms.ToArray());
 					}
-
-					objectString = ASCIIEncoding.ASCII.GetString(ms.ToArray());
 				}
 				return objectString;
 			}

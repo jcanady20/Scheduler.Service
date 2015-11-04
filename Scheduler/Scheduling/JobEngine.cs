@@ -103,7 +103,11 @@ namespace Scheduler.Scheduling
 				return;
 			}
 			TotalJobsExecuted++;
-			ThreadPool.QueueUserWorkItem(o => { job.Execute(); job.Dispose(); this.RemoveJob(job); });
+			ThreadPool.QueueUserWorkItem(o => {
+                job.Execute();
+                job.Dispose();
+                this.RemoveJob(job);
+            });
 		}
 
 		private void RemoveJob(IJobExecutioner job)

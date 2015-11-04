@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Data.Entity;
 
 using Scheduler.Data;
 using Scheduler.Data.Entities;
@@ -16,11 +17,11 @@ namespace Scheduler.HttpService.api
 	{
 		[Route("{id}")]
 		[HttpGet]
-		public IHttpActionResult Get(Guid id)
+		public async Task<IHttpActionResult> Get(Guid id)
 		{
 			try
 			{
-				var item = m_db.JobSchedules.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.JobSchedules.FirstOrDefaultAsync(x => x.Id == id);
 				return Ok(item);
 			}
 			catch (Exception e)
@@ -32,7 +33,7 @@ namespace Scheduler.HttpService.api
 
 		[Route("")]
 		[HttpPost]
-		public IHttpActionResult Post([FromBody] JobSchedule schedule)
+		public async Task<IHttpActionResult> Post([FromBody] JobSchedule schedule)
 		{
 			try
 			{
@@ -40,7 +41,7 @@ namespace Scheduler.HttpService.api
 				if (validation.IsValid)
 				{
 					m_db.JobSchedules.Add(schedule);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 					return Ok(schedule);
 				}
 				else
@@ -58,7 +59,7 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpPut, HttpPatch]
-		public IHttpActionResult Put(Guid id, [FromBody] JobSchedule schedule)
+		public async Task<IHttpActionResult> Put(Guid id, [FromBody] JobSchedule schedule)
 		{
 			try
 			{
@@ -67,7 +68,7 @@ namespace Scheduler.HttpService.api
 				{
 					m_db.JobSchedules.Attach(schedule);
 					m_db.SetModified(schedule);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 
 					return Ok(schedule);
 				}
@@ -86,11 +87,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpDelete]
-		public IHttpActionResult Delete(Guid id)
+		public async Task<IHttpActionResult> Delete(Guid id)
 		{
 			try
 			{
-				var item = m_db.JobSchedules.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.JobSchedules.FirstOrDefaultAsync(x => x.Id == id);
 				if (item == null)
 				{
 					return NotFound();

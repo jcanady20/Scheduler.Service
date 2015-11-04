@@ -93,6 +93,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -153,9 +154,13 @@
     <Compile Include="Data\Queries\JobQueries.cs" />
     <Compile Include="Data\Queries\JobScheduleQueries.cs" />
     <Compile Include="Data\Queries\JobStepQueries.cs" />
-    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\DataSetExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\IDbCommandExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableDataReader.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\Int32Extensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="HttpService\api\BaseApiController.cs" />
@@ -166,6 +171,9 @@
     <Compile Include="HttpService\App_Start\Startup.cs" />
     <Compile Include="HttpService\Configuration\ConfigurationPageExtensions.cs" />
     <Compile Include="HttpService\Configuration\ConfigurationPageOptions.cs" />
+    <Compile Include="HttpService\Filters\LoggingFilter.cs" />
+    <Compile Include="HttpService\Filters\MemoryCacheFilter.cs" />
+    <Compile Include="HttpService\Formatting\BsonMediaTypeFormatter.cs" />
     <Compile Include="HttpService\OwinService.cs" />
     <Compile Include="HttpService\MessageHandlers\WebApiCorsHandler.cs" />
     <Compile Include="HttpService\ServiceUrl.cs" />
@@ -199,11 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="HttpService\Configuration\Views\bootstrap-datepicker.min.js" />
-    <Content Include="HttpService\Configuration\Views\bootstrap-datepicker3.min.css" />
-    <Content Include="HttpService\Configuration\Views\bootstrap.min.css" />
-    <Content Include="HttpService\Configuration\Views\Combined.min.js" />
-    <Content Include="HttpService\Configuration\Views\font-awesome.min.css" />
     <Content Include="HttpService\Configuration\Views\Scheduler.js" />
     <Content Include="HttpService\Configuration\Views\_templates.html" />
     <None Include="HttpService\Configuration\Views\ConfigurationPage.cshtml" />
@@ -218,9 +221,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

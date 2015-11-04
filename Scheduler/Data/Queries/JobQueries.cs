@@ -16,5 +16,5 @@ namespace Scheduler.Data.Queries
 		{
 			return db.JobSchedules.Where(x => x.JobId == jobId);
 		}
-	}
+    }
 }

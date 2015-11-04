@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -16,11 +17,11 @@ namespace Scheduler.HttpService.api
 	{
 		[Route("{id}")]
 		[HttpGet]
-		public IHttpActionResult Get(Guid id)
+		public async Task<IHttpActionResult> Get(Guid id)
 		{
 			try
 			{
-				var item = m_db.JobSteps.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.JobSteps.FirstOrDefaultAsync(x => x.Id == id);
 				return Ok(item);
 			}
 			catch (Exception e)
@@ -32,7 +33,7 @@ namespace Scheduler.HttpService.api
 		
 		[Route("")]
 		[HttpPost]
-		public IHttpActionResult Post([FromBody] Data.Entities.JobStep taskStep)
+		public async Task<IHttpActionResult> Post([FromBody] Data.Entities.JobStep taskStep)
 		{
 			try
 			{
@@ -40,7 +41,7 @@ namespace Scheduler.HttpService.api
 				if (validation.IsValid)
 				{
 					m_db.JobSteps.Add(taskStep);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 					return Ok(taskStep);
 				}
 				else
@@ -58,7 +59,7 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpPut, HttpPatch]
-		public IHttpActionResult Put(Guid id, [FromBody] Data.Entities.JobStep taskStep)
+		public async Task<IHttpActionResult> Put(Guid id, [FromBody] Data.Entities.JobStep taskStep)
 		{
 			try
 			{
@@ -67,7 +68,7 @@ namespace Scheduler.HttpService.api
 				{
 					m_db.JobSteps.Attach(taskStep);
 					m_db.SetModified(taskStep);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 
 					return Ok(taskStep);
 				}
@@ -86,18 +87,18 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpDelete]
-		public IHttpActionResult Delete(Guid id)
+		public async Task<IHttpActionResult> Delete(Guid id)
 		{
 			try
 			{
-				var item = m_db.JobSteps.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.JobSteps.FirstOrDefaultAsync(x => x.Id == id);
 				if (item == null)
 				{
 					return NotFound();
 				}
 
 				m_db.JobSteps.Remove(item);
-				m_db.SaveChanges();
+				await m_db.SaveChangesAsync();
 				return Ok(item);
 			}
 			catch (Exception e)

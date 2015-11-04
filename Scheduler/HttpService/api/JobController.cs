@@ -20,11 +20,11 @@ namespace Scheduler.HttpService.api
 	{
 		[Route("")]
 		[HttpGet]
-		public IHttpActionResult Get()
+		public async Task<IHttpActionResult> Get()
 		{
 			try
 			{
-				var items = m_db.Jobs;
+				var items = await m_db.Jobs.ToListAsync();
 				return Ok(items);
 			}
 			catch(Exception e)
@@ -36,11 +36,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpGet]
-		public IHttpActionResult Get(Guid id)
+		public async Task<IHttpActionResult> Get(Guid id)
 		{
 			try
 			{
-				var item = m_db.Jobs.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.Jobs.FirstOrDefaultAsync(x => x.Id == id);
 				return Ok(item);
 			}
 			catch (Exception e)
@@ -52,11 +52,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("history")]
 		[HttpGet]
-		public IHttpActionResult GetJobHistory([FromUri] Data.Models.JobHistorySearch model)
+		public async Task<IHttpActionResult> GetJobHistory([FromUri] Data.Models.JobHistorySearch model)
 		{
 			try
 			{
-				var items = m_db.JobHistorySearch(model);
+				var items = await Task.FromResult(m_db.JobHistorySearch(model));
 				return Ok(items);
 			}
 			catch (Exception e)
@@ -68,11 +68,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("activity")]
 		[HttpGet]
-		public IHttpActionResult GetJobActivity()
+		public async Task<IHttpActionResult> GetJobActivity()
 		{
 			try
 			{
-				var items = m_db.JobActivity.ToList();
+				var items = await m_db.JobActivity.ToListAsync();
 				return Ok(items);
 			}
 			catch(Exception e)
@@ -84,11 +84,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("subsystems")]
 		[HttpGet]
-		public IHttpActionResult GetSubSystems()
+		public async Task<IHttpActionResult> GetSubSystems()
 		{
 			try
 			{
-				var items = Scheduling.JobTaskFactory.Instance.TaskPlugins.ToList();
+                var items = await Task.FromResult(Scheduling.JobTaskFactory.Instance.TaskPlugins.ToList());
 				return Ok(items);
 			}
 			catch(Exception e)
@@ -100,11 +100,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("steps/{id}")]
 		[HttpGet]
-		public IHttpActionResult GetJobSteps(Guid id)
+		public async Task<IHttpActionResult> GetJobSteps(Guid id)
 		{
 			try
 			{
-				var items = m_db.JobSteps.Where(x => x.JobId == id);
+				var items = await m_db.JobSteps.Where(x => x.JobId == id).ToListAsync();
 				return Ok(items);
 			}
 			catch (Exception e)
@@ -116,11 +116,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("schedules/{id}")]
 		[HttpGet]
-		public IHttpActionResult GetJobSchedules(Guid id)
+		public async Task<IHttpActionResult> GetJobSchedules(Guid id)
 		{
 			try
 			{
-				var items = m_db.GetJobSchedules(id);
+                var items = await m_db.GetJobSchedules(id).ToListAsync();
 				return Ok(items);
 			}
 			catch(Exception e)
@@ -132,11 +132,11 @@ namespace Scheduler.HttpService.api
 
 		[Route("start/{id}")]
 		[HttpGet]
-		public IHttpActionResult ExecuteJob(Guid id)
+		public async Task<IHttpActionResult> ExecuteJob(Guid id)
 		{
 			try
 			{
-				var job = m_db.Jobs.AsNoTracking().Include(r => r.JobSteps).AsNoTracking().FirstOrDefault(x => x.Id == id);
+				var job = await m_db.Jobs.AsNoTracking().Include(r => r.JobSteps).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 				Scheduling.JobEngine.Instance.Add(job, null);
 				return Ok(new { success = true });
 			}
@@ -149,7 +149,7 @@ namespace Scheduler.HttpService.api
 
 		[Route("")]
 		[HttpPost]
-		public IHttpActionResult Post([FromBody] Data.Entities.Job job)
+		public async Task<IHttpActionResult> Post([FromBody] Data.Entities.Job job)
 		{
 			try
 			{
@@ -157,7 +157,7 @@ namespace Scheduler.HttpService.api
 				if (validation.IsValid)
 				{
 					m_db.Jobs.Add(job);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 					return Ok(job);
 				}
 				else
@@ -191,7 +191,7 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpPut, HttpPatch]
-		public IHttpActionResult Put(Guid id, [FromBody] Data.Entities.Job job)
+		public async Task<IHttpActionResult> Put(Guid id, [FromBody] Data.Entities.Job job)
 		{
 			try
 			{
@@ -200,7 +200,7 @@ namespace Scheduler.HttpService.api
 				{
 					m_db.Jobs.Attach(job);
 					m_db.SetModified(job);
-					m_db.SaveChanges();
+					await m_db.SaveChangesAsync();
 
 					return Ok(job);
 				}
@@ -219,18 +219,18 @@ namespace Scheduler.HttpService.api
 
 		[Route("{id}")]
 		[HttpDelete]
-		public IHttpActionResult Delete(Guid id)
+		public async Task<IHttpActionResult> Delete(Guid id)
 		{
 			try
 			{
-				var item = m_db.Jobs.FirstOrDefault(x => x.Id == id);
+				var item = await m_db.Jobs.FirstOrDefaultAsync(x => x.Id == id);
 				if (item == null)
 				{
 					return NotFound();
 				}
 
 				m_db.Jobs.Remove(item);
-				m_db.SaveChanges();
+				await m_db.SaveChangesAsync();
 				return Ok(item);
 			}
 			catch (Exception e)

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Globalization;
-using System.Threading;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Scheduler.Extensions
 {
@@ -207,26 +205,6 @@ namespace Scheduler.Extensions
 			Byte[] newdata = Encoding.Default.GetBytes(s);
 			Byte[] encrypted = s_md5.ComputeHash(newdata);
 			return BitConverter.ToString(encrypted).Replace("-", "").ToLower();
-		}
-
-		public static string SHA256(this string s)
-		{
-			byte[] bytes = null;
-			using (var sha = HMACSHA256.Create())
-			{
-				var encoding = Encoding.UTF8;
-				bytes = sha.ComputeHash(encoding.GetBytes(s));
-			}
-
-			return Convert.ToBase64String(bytes);
-		}
-
-		public static IEnumerable<String> Chunk(this string str, int chunkSize)
-		{
-			for (int i = 0; i < str.Length; i += chunkSize)
-			{
-				yield return str.Substring(i, chunkSize);
-			}
 		}
 	}
 }
