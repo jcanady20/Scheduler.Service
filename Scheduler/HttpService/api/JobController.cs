@@ -136,6 +136,8 @@ namespace Scheduler.HttpService.api
 		{
 			try
 			{
+                m_db.Configuration.ProxyCreationEnabled = false;
+                m_db.Configuration.AutoDetectChangesEnabled = false;
 				var job = await m_db.Jobs.AsNoTracking().Include(r => r.JobSteps).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 				Scheduling.JobEngine.Instance.Add(job, null);
 				return Ok(new { success = true });

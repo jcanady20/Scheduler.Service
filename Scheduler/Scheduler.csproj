@@ -154,6 +154,10 @@
     <Compile Include="Data\Queries\JobQueries.cs" />
     <Compile Include="Data\Queries\JobScheduleQueries.cs" />
     <Compile Include="Data\Queries\JobStepQueries.cs" />
+    <Compile Include="Diagnostics\IStopwatchWriter.cs" />
+    <Compile Include="Diagnostics\Stopwatch.cs" />
+    <Compile Include="Diagnostics\StopwatchCompleteEventArgs.cs" />
+    <Compile Include="Diagnostics\StopwatchListener.cs" />
     <Compile Include="Extensions\DataSetExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
@@ -186,6 +190,7 @@
     <Compile Include="HttpService\Configuration\Views\BaseView.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\NLogger.cs" />
+    <Compile Include="Scheduling\ScheduleEngine.cs" />
     <Compile Include="Scheduling\WebTaskRespponseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduling\IJobExecutioner.cs" />
@@ -196,11 +201,11 @@
     <Compile Include="Scheduling\Tasks\SqlTask.cs" />
     <Compile Include="Scheduling\Tasks\BaseTask.cs" />
     <Compile Include="Scheduling\JobTaskFactory.cs" />
-    <Compile Include="Scheduling\ServiceInstaller.cs">
+    <Compile Include="Scheduling\Service\ServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Scheduling\JobEngine.cs" />
-    <Compile Include="Scheduling\SchedulerService.cs">
+    <Compile Include="Scheduling\Service\SchedulerService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Scheduling\Tasks\WebTask.cs" />

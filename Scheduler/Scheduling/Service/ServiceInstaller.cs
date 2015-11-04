@@ -21,7 +21,6 @@ namespace Scheduler.Scheduling
 
 			Installers.Add(process);
 			Installers.Add(serviceAdmin);
-
 		}
 	}
 }

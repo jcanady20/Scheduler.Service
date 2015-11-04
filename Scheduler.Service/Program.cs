@@ -4,21 +4,20 @@ using System.Reflection;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Linq;
-using System.Threading;
 using System.ServiceProcess;
 using Scheduler.Scheduling;
 using System.Text.RegularExpressions;
 
 namespace Scheduler.Service
 {
-	public partial class Program
+    public partial class Program
 	{
-		protected static Program m_this;
+        protected const string TITLE = "Schedule Service Host";
+        protected static Program m_this;
 		protected static string m_prompt = ":>";
 		protected static SchedulerService m_service;
-		protected static Type m_type = typeof(Program);
+		protected readonly static Type m_type = typeof(Program);
 		protected static ICollection<MethodInfo> m_methods = null;
 
 		internal Program()
@@ -29,25 +28,24 @@ namespace Scheduler.Service
 		[STAThread]
 		static void Main(string[] args)
 		{
-			AddTraceListeners();
-
-			if (Environment.UserInteractive == false)
+            
+            if (Environment.UserInteractive == false)
 			{
 				ServiceBase[] ServicesToRun = new ServiceBase[] { new SchedulerService() };
 				ServiceBase.Run(ServicesToRun);
 			}
 			else
 			{
-
-				CreateMethodCache();
+                AddConsoleTraceListener();
+                CreateMethodCache();
 
 				Console.Clear();
 				Console.ForegroundColor = ConsoleColor.White;
 				Console.BufferHeight = 300;
 				Console.BufferWidth = 100;
-				Console.Title = "Schedule Service Host";
+                Console.Title = TITLE;
 
-				if (args.Length > 0)
+                if (args.Length > 0)
 				{
 					RunCommand(args);
 					return;
@@ -57,36 +55,39 @@ namespace Scheduler.Service
 				StartService();
 				OpenConfig();
 #endif
-
 				MainLoop();
 			}
 		}
 		static void MainLoop()
 		{
-			bool pContinue = true;
-			while (pContinue)
-			{
-				Console.Write(m_prompt);
-
-				var parms = ParseCommand(Console.ReadLine());
-				if (parms.Length == 0)
-					continue;
-
-				switch (parms[0].ToLower())
-				{
-					case "exit":
-					case "quit":
-						pContinue = false;
-						break;
-					default:
-						RunCommand(parms);
-						break;
-				}
-				Console.WriteLine("");
-			}
+			bool isCanceled = false;
+            while (isCanceled == false)
+            {
+                Console.Write(m_prompt);
+                var parms = ParseCommand(Console.ReadLine());
+                if (parms.Length == 0)
+                {
+                    continue;
+                }
+                switch (parms[0].ToLower())
+                {
+                    case "exit":
+                    case "quit":
+                        isCanceled = true;
+                        break;
+                    default:
+                        RunCommand(parms);
+                        break;
+                }
+                Console.WriteLine("");
+            }
 		}
 		static string[] ParseCommand(string args)
 		{
+            if(args == null)
+            {
+                args = String.Empty;
+            }
 			var parts = Regex.Matches(args, @"[\""].+?[\""]|[^ ]+")
 				.Cast<Match>()
 				.Select(x => x.Value.Replace("\"", ""))
@@ -162,25 +163,16 @@ namespace Scheduler.Service
 			return;
 		}
 
-		[Description("List Local Drives")]
-		static void LocalDrives()
-		{
-			string[] drives = Environment.GetLogicalDrives();
-			IEnumerable<string> strs = drives.Select(s => s.Replace(":\\", ""));
-			foreach (String s in strs)
-			{
-				System.IO.DriveInfo drvi = new System.IO.DriveInfo(s);
-				if (drvi.DriveType == DriveType.CDRom)
-					continue;
-				Console.WriteLine("{0}:\\", s);
-			}
-		}
-
 		[Description("Open Application Log Folder")]
 		static void OpenLogFolder()
 		{
-			Process.Start(Path.Combine(GetCurrentPath(), "ApplicationLogs"));
-		}
+            var logPath = Path.Combine(GetCurrentPath(), "ApplicationLogs");
+            if (Directory.Exists(logPath) == false)
+            {
+                Directory.CreateDirectory(logPath);
+            }
+            Process.Start(logPath);
+        }
 
 		[Description("Open Scheduler Configuration")]
 		static void OpenConfig()
@@ -192,14 +184,11 @@ namespace Scheduler.Service
 
 		static TimeSpan CalculateEta(DateTime startTime, int totalItems, int completeItems)
 		{
-			TimeSpan _eta = TimeSpan.MinValue;
-			//	Avoid Divide by Zero Errors
-			if (completeItems > 0)
-			{
-				int _itemduration = (int)DateTime.Now.Subtract(startTime).TotalMilliseconds / completeItems;
-				_eta = TimeSpan.FromMilliseconds((double)((totalItems - completeItems) * _itemduration));
-			}
-			return _eta;
+            //	Avoid Divide by Zero Errors
+            completeItems = (completeItems == 0) ? 1 : completeItems;
+			var _itemduration = (int)(DateTime.Now.Subtract(startTime).TotalMilliseconds / completeItems);
+            var _estimatedMilliseconds = (double)((totalItems - completeItems) * _itemduration);
+            return TimeSpan.FromMilliseconds(_estimatedMilliseconds);
 		}
 
 		static void WriteExceptions(Exception e)
@@ -232,32 +221,15 @@ namespace Scheduler.Service
 			return fi.DirectoryName;
 		}
 
-		static void HexDump(byte[] bytes)
-		{
-			for (int line = 0; line < bytes.Length; line += 16)
-			{
-				byte[] lineBytes = bytes.Skip(line).Take(16).ToArray();
-				System.Text.StringBuilder sb = new System.Text.StringBuilder();
-				sb.AppendFormat("{0:x8} ", line);
-				sb.Append(string.Join(" ", lineBytes.Select(b => b.ToString("x2")).ToArray()).PadRight(16 * 3));
-				sb.Append(" ");
-				sb.Append(new string(lineBytes.Select(b => b < 32 ? '.' : (char)b).ToArray()));
-				Console.WriteLine(sb);
-			}
-		}
-
 		static void CreateMethodCache()
 		{
 			m_methods = m_type.GetMethods(BindingFlags.Static | BindingFlags.NonPublic).ToList();
 		}
 
-		static void AddTraceListeners()
+		static void AddConsoleTraceListener()
 		{
-			if (Environment.UserInteractive)
-			{
-				TextWriterTraceListener CWriter = new TextWriterTraceListener(Console.Out);
-				Trace.Listeners.Add(CWriter);
-			}
+			var writer = new TextWriterTraceListener(Console.Out);
+			Trace.Listeners.Add(writer);
 		}
 	}
 }

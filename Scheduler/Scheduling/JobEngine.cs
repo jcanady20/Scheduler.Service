@@ -1,35 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading;
+
+using Scheduler.Extensions;
 using Scheduler.Logging;
+using Scheduler.Data;
 using Scheduler.Data.Entities;
+using Scheduler.Data.Context;
+using Scheduler.Data.Extensions;
+
 
 namespace Scheduler.Scheduling
 {
     public class JobEngine
 	{
-		#region Private Fields
-		private ILogger m_logger;
+        #region Private Fields
+        private static readonly TimeSpan WORKER_DELAY = TimeSpan.FromSeconds(1);
+        private ILogger m_logger;
 		private static object m_lockObj = new object();
 		private static JobEngine m_instance;
-		private static bool m_cancel;
+		private bool m_cancel;
+        private bool m_paused;
 		private Thread m_worker;
-		private Queue<IJobExecutioner> m_jobQueue;
+		private ConcurrentQueue<IJobExecutioner> m_jobQueue;
 		private ICollection<IJobExecutioner> m_activeJobs;
-		#endregion
+        #endregion
 
-		private JobEngine()
+        private JobEngine()
 		{
-			m_jobQueue = new Queue<IJobExecutioner>();
+			m_jobQueue = new ConcurrentQueue<IJobExecutioner>();
 			m_activeJobs = new List<IJobExecutioner>();
 			m_logger = new NLogger("Scheduler.Scheduling.JobEngine");
 			Start();
 		}
 
-		/// <summary>
-		/// Performance Counters
-		/// </summary>
-		public int QueuedJobs
+        public static JobEngine Instance
+        {
+            get
+            {
+                lock (m_lockObj)
+                {
+                    if (m_instance == null)
+                    {
+                        m_instance = new JobEngine();
+                    }
+                    return m_instance;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performance Counters
+        /// </summary>
+        public int QueuedJobs
 		{
 			get
 			{
@@ -44,7 +70,6 @@ namespace Scheduler.Scheduling
 				return m_jobQueue.AsEnumerable();
 			}
 		}
-
 		public IEnumerable<IJobExecutioner> CurrentActivity
 		{
 			get
@@ -53,47 +78,77 @@ namespace Scheduler.Scheduling
 			}
 		}
 
-		public void Start()
+        public void Add(Job job, JobSchedule jobSchedule)
+        {
+            if (m_activeJobs.Any(x => x.JobId == job.Id))
+            {
+                return;
+            }
+            m_logger.Info("Enqueueing {0}", job.Name);
+            var je = new JobExecutioner(job, jobSchedule);
+            m_activeJobs.Add(je);
+            m_jobQueue.Enqueue(je);
+        }
+
+        public void Start()
 		{
-			if (m_worker != null && m_worker.IsAlive)
+            m_logger.Trace("Starting Job Engine");
+            m_cancel = false;
+            m_paused = false;
+            if (m_worker != null && m_worker.IsAlive)
 			{
 				return;
 			}
 			m_worker = new Thread(new ThreadStart(DoWork));
 			m_worker.Start();
-		}
+        }
 
 		public void Stop()
 		{
 			m_cancel = true;
 		}
 
+        public void Pause()
+        {
+            m_paused = true;
+        }
+
+        public void Continue()
+        {
+            m_paused = false;
+        }
+
 		private void DoWork()
 		{
-			while(true)
-			{
-				var exec = DeQueueJob();
-				ExecuteJob(exec);
+            while(m_cancel == false)
+            {
+                if(m_paused)
+                {
+                    Sleep();
+                    continue;
+                }
 
-				if(m_cancel)
-				{
-					break;
-				}
-				Thread.Sleep(1000);
-			}
+                DeQueueAllJobs();
+
+                if (m_cancel)
+                {
+                    break;
+                }
+                Sleep();
+            }
 		}
-
-		private IJobExecutioner DeQueueJob()
+        
+		private void DeQueueAllJobs()
 		{
-			IJobExecutioner exec = null;
-			if(m_jobQueue.Count > 0)
-			{
-				lock(m_lockObj)
-				{
-					exec = m_jobQueue.Dequeue();
-				}
-			}
-			return exec;
+            do
+            {
+                IJobExecutioner exec = null;
+                if(m_jobQueue.TryDequeue(out exec))
+                {
+                    ExecuteJob(exec);
+                }
+
+            } while (m_jobQueue.Count != 0);
 		}
 
 		private void ExecuteJob(IJobExecutioner job)
@@ -102,6 +157,7 @@ namespace Scheduler.Scheduling
 			{
 				return;
 			}
+            m_logger.Info("Starting job execution for {0}", job.Name);
 			TotalJobsExecuted++;
 			ThreadPool.QueueUserWorkItem(o => {
                 job.Execute();
@@ -117,34 +173,10 @@ namespace Scheduler.Scheduling
 				m_activeJobs.Remove(job);
 			}
 		}
-
-		public static JobEngine Instance
-		{
-			get
-			{
-				lock(m_lockObj)
-				{
-					if(m_instance == null)
-					{
-						m_instance = new JobEngine();
-					}
-					return m_instance;
-				}
-			}
-		}
-
-		public void Add(Job job, JobSchedule jobSchedule)
-		{
-			if(m_activeJobs.Any(x => x.JobId == job.Id))
-			{
-				return;
-			}
-			lock (m_lockObj)
-			{
-				var je = new JobExecutioner(job, jobSchedule);
-				m_activeJobs.Add(je);
-				m_jobQueue.Enqueue(je);
-			}
-		}
-	}
+        
+        private void Sleep()
+        {
+            Thread.Sleep(WORKER_DELAY);
+        }
+    }
 }

@@ -55,7 +55,7 @@ namespace Scheduler.Scheduling
 				if(value != m_status)
 				{
 					m_status = value;
-					ReportStatusActivity();
+					ReportStatusActivity(value);
 				}				
 			}
 		}
@@ -67,7 +67,7 @@ namespace Scheduler.Scheduling
 
 		public void Execute()
 		{
-			SetupExecute();
+			StartExecute();
 
 			foreach(var task in JobTasks())
 			{
@@ -77,17 +77,18 @@ namespace Scheduler.Scheduling
 					break;
 				}
 				this.m_lastJobTask = task;
-				this.OutCome = JobStepOutCome.Succeeded;
-				if (this.OutCome != JobStepOutCome.Succeeded)
+
+                this.OutCome = task.Execute(m_cancelToken.Token);
+
+                if (this.OutCome != JobStepOutCome.Succeeded)
 				{
 					break;
 				}
 			}
-			
 			CompleteExecute();
 		}
 
-		private void SetupExecute()
+		private void StartExecute()
 		{
 			m_logger.Trace("Started :: Job ({0}) has started Execution", m_job.Name);
 			this.StartDateTime = DateTime.Now;
@@ -173,13 +174,13 @@ namespace Scheduler.Scheduling
 			m_db.SaveChanges();
 		}
 
-		private void ReportStatusActivity()
+		private void ReportStatusActivity(JobStatus status)
 		{
 			if(m_db == null)
 			{
 				return;
 			}
-			m_db.SetActivityStatus(this.JobId, this.Status);
+			m_db.SetActivityStatus(this.JobId, status);
 		}
 
 		public void Dispose()

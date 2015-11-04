@@ -89,6 +89,11 @@ namespace Scheduler.Scheduling
 		private void LoadFromPlugins()
 		{
 			var path = GetPluginPath();
+            if(Directory.Exists(path) == false)
+            {
+                m_logger.Warn("Specified Plugin Path does not exists: {0}", path);
+                return;
+            }
 			var dirInfo = new DirectoryInfo(path);
 			var files = dirInfo.GetFiles("*.dll");
 			foreach (var fi in files)

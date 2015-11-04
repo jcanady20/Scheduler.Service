@@ -483,7 +483,7 @@ WriteLiteral(@"<!-- Templates -->
                     <div class=""form-group"">
                         <label class=""control-label col-xs-2"">Name</label>
                         <div class=""col-xs-6"">
-                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: name, disable: isVisShipped"" autofocus=""autofocus"" />
+                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: name, disable: isUserDefined() === false"" autofocus=""autofocus"" />
                         </div>
                         <div class=""checkbox col-xs-2"">
                             <label>
@@ -494,31 +494,31 @@ WriteLiteral(@"<!-- Templates -->
                     <div class=""form-group"">
                         <label class=""control-label col-xs-2"">Type</label>
                         <div class=""col-xs-8"">
-                            <select class=""form-control"" data-bind=""options: subSystems, optionsText: 'displayName', optionsValue: 'subSystem', value: subSystem, disable: isVisShipped""></select>
+                            <select class=""form-control"" data-bind=""options: subSystems, optionsText: 'displayName', optionsValue: 'subSystem', value: subSystem, disable: isUserDefined() === false""></select>
                         </div>
                     </div>
                     <div class=""form-group"" data-bind=""visible: subSystem() === 'SqlTask'"">
                         <label class=""control-label col-xs-2"">Database</label>
                         <div class=""col-xs-8"">
-                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: databaseName, disable: isVisShipped"" />
+                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: databaseName, disable: isUserDefined() === false"" />
                         </div>
                     </div>
                     <div class=""form-group"" data-bind=""visible: subSystem() === 'SqlTask'"">
                         <label class=""control-label col-xs-offset-1 col-xs-3"">User Name</label>
                         <div class=""col-xs-6"">
-                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: userName, disable: isVisShipped"" />
+                            <input type=""text"" class=""form-control input-sm"" data-bind=""textInput: userName, disable: isUserDefined() === false"" />
                         </div>
                     </div>
                     <div class=""form-group"" data-bind=""visible: subSystem() === 'SqlTask'"">
                         <label class=""control-label col-xs-offset-1 col-xs-3"">Password</label>
                         <div class=""col-xs-6"">
-                            <input type=""password"" class=""form-control input-sm"" data-bind=""textInput: password, disable: isVisShipped"" />
+                            <input type=""password"" class=""form-control input-sm"" data-bind=""textInput: password, disable: isUserDefined() === false"" />
                         </div>
                     </div>
                     <div class=""form-group"">
                         <label class=""control-label col-xs-2"">Command</label>
                         <div class=""col-xs-8"">
-                            <textarea class=""form-control"" data-bind=""value: command, disable: isVisShipped""></textarea>
+                            <textarea class=""form-control"" data-bind=""value: command, disable: isUserDefined() === false""></textarea>
                         </div>
                     </div>
                 </form>
@@ -1230,7 +1230,7 @@ window.app = (function (window, $, ko, _, Backbone) {
         _slf.name = ko.observable();
         _slf.subSystem = ko.observable();
         _slf.command = ko.observable();
-        _slf.isVisShipped = ko.observable(false);
+        _slf.isUserDefined = ko.observable(true);
         _slf.databaseName = ko.observable();
         _slf.userName = ko.observable();
         _slf.password = ko.observable();

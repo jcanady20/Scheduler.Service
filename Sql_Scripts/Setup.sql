@@ -110,7 +110,7 @@ CREATE TABLE [Scheduler].[JobSteps]
 	[DatabaseName] VARCHAR(128),
 	[UserName] varchar(128),
 	[Password] varbinary(500),
-	[IsVisShipped] BIT NOT NULL CONSTRAINT [DF_IsVisShipped_JobSteps] DEFAULT(0),
+	[IsUserDefined] BIT NOT NULL CONSTRAINT [DF_IsUserDefined_JobSteps] DEFAULT(1),
 	CONSTRAINT [PK_JobSteps] PRIMARY KEY  NONCLUSTERED
 	(
 		[Id] ASC

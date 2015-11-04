@@ -50,7 +50,7 @@ namespace Scheduler.Logging
 		}
 		public void Error(Exception x)
 		{
-			_logger.Error(x.BuildExceptionMessage(), x);
+			_logger.Error(x, x.BuildExceptionMessage());
 		}
 		public void Error(string message, params object[] args)
 		{
@@ -58,7 +58,7 @@ namespace Scheduler.Logging
 		}
 		public void Fatal(Exception x)
 		{
-			_logger.Fatal(x.BuildExceptionMessage(), x);
+			_logger.Fatal(x, x.BuildExceptionMessage());
 		}
 		public void Log(LogLevel logLevel, string message, params object[] args)
 		{

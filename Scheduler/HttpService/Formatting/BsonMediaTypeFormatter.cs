@@ -75,7 +75,7 @@ namespace Scheduler.HttpService.Formatting
                     tcs.SetResult(output);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 tcs.SetResult(GetDefaultValueForType(type));
             }

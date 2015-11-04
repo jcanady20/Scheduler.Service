@@ -7,7 +7,7 @@ namespace Scheduler.Data.Entities
 	{
 		public JobStep()
 		{
-			IsVisShipped = false;
+            IsUserDefined = true;
 		}
 		public Guid Id { get; set; }
 		public Guid JobId { get; set; }
@@ -19,6 +19,6 @@ namespace Scheduler.Data.Entities
 		public string DatabaseName { get; set; }
 		public string UserName { get; set; }
 		public byte[] Password { get; set; }
-		public bool IsVisShipped { get; set; }
+		public bool IsUserDefined { get; set; }
 	}
 }

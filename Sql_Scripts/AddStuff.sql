@@ -27,8 +27,8 @@ SELECT
 INSERT INTO [Scheduler].[Jobs] ([Id], [Name], [Description], [StartStep])
 VALUES (@JobId, 'Purge Job History', 'Purges Job History based on Specified settings', 1);
 
-INSERT INTO [Scheduler].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isVisShipped])
-VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [Scheduler].[PurgeJobHistory]', 'ApplicationCenter', 1)
+INSERT INTO [Scheduler].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isUserDefined])
+VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [Scheduler].[PurgeJobHistory]', 'ApplicationCenter', 0)
 
 INSERT INTO [Scheduler].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDateTime], [EndDateTime], [LastRunOutCome])
 VALUES (@JobId,'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015 09:00:00', '12/31/2099 23:59:59', 5);
