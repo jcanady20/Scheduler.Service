@@ -33,9 +33,9 @@ namespace Scheduler.Scheduling
 		#endregion
 
 		#region Public Consts
-		public static readonly string EVENTLOGNAME = "VisualutionsScheduler";
-		public static readonly string EVENTLOGSOURCE = "VisualutionsSchedulerService";
-		public static readonly string SERVICENAME = "Visualutions Scheduler";
+		public static readonly string EVENTLOGNAME = "Scheduler";
+		public static readonly string EVENTLOGSOURCE = "SchedulerService";
+		public static readonly string SERVICENAME = "Scheduler";
 		#endregion
 
 		public SchedulerService()
@@ -53,7 +53,7 @@ namespace Scheduler.Scheduling
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-			m_logger = new NLogger("Visualutions.Scheduler.Scheduling.SchedulerService");
+			m_logger = new NLogger("Scheduler.Scheduling.SchedulerService");
 			m_cancel = false;
 		}
 		public string BaseAddress { get; private set; }

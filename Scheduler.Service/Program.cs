@@ -45,7 +45,7 @@ namespace Scheduler.Service
 				Console.ForegroundColor = ConsoleColor.White;
 				Console.BufferHeight = 300;
 				Console.BufferWidth = 100;
-				Console.Title = "Visualutions ServiceProvider";
+				Console.Title = "Schedule Service Host";
 
 				if (args.Length > 0)
 				{
@@ -162,53 +162,6 @@ namespace Scheduler.Service
 			return;
 		}
 
-		[Description("Install Service")]
-		static void InstallService()
-		{
-			try
-			{
-				// "/LogFile=" - to suppress install log creation
-				System.Configuration.Install.ManagedInstallerClass.InstallHelper(new string[] { "/LogFile=", System.Reflection.Assembly.GetExecutingAssembly().Location });
-			}
-			catch { }
-		}
-
-		[Description("Uninstall Service")]
-		static void UninstallService()
-		{
-			try
-			{
-				// "/LogFile=" - to suppress uninstall log creation
-				System.Configuration.Install.ManagedInstallerClass.InstallHelper(new string[] { "/u", "/LogFile=", System.Reflection.Assembly.GetExecutingAssembly().Location });
-			}
-			catch { }
-		}
-
-		[Description("Start Service Interactively")]
-		static void StartService()
-		{
-			m_service = new SchedulerService();
-			m_service.Start();
-		}
-
-		[Description("Stops the Service")]
-		static void StopService()
-		{
-			if (m_service != null && m_service.CanStop)
-				m_service.Stop();
-		}
-
-		[Description("Create the Eventlog used by the service")]
-		static void CreateEventLog()
-		{
-			var eventLogSource = SchedulerService.EVENTLOGSOURCE;
-			var eventLogName = SchedulerService.EVENTLOGNAME;
-			if(!EventLog.SourceExists(eventLogSource))
-			{
-				EventLog.CreateEventSource(eventLogSource, eventLogName);
-			}
-		}
-
 		[Description("List Local Drives")]
 		static void LocalDrives()
 		{
@@ -235,11 +188,6 @@ namespace Scheduler.Service
 			var baseAddress = Scheduler.HttpService.ServiceUrl.GetServiceUrl();
 			baseAddress += "/configuration";
 			Process.Start(baseAddress);
-		}
-
-		static void LogMessage(string msg)
-		{
-			Trace.WriteLine(msg);
 		}
 
 		static TimeSpan CalculateEta(DateTime startTime, int totalItems, int completeItems)
@@ -295,53 +243,6 @@ namespace Scheduler.Service
 				sb.Append(" ");
 				sb.Append(new string(lineBytes.Select(b => b < 32 ? '.' : (char)b).ToArray()));
 				Console.WriteLine(sb);
-			}
-		}
-
-		static void writeHeader<T>(T data)
-		{
-			if (data == null)
-			{
-				Console.WriteLine("Unable to create Header from Null Object");
-				return;
-			}
-			var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-			foreach (var prop in props)
-			{
-				Console.Write("{0, 8} ", prop.Name);
-			}
-			Console.WriteLine();
-		}
-
-		static void writeCollectionData<T>(IEnumerable<T> data)
-		{
-			if (data == null)
-			{
-				Console.WriteLine("Unable to write data from Null Object");
-				return;
-			}
-			var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-			var i = 0;
-			foreach (var t in data)
-			{
-				++i;
-				Console.Write("{0}: ", i);
-				writeData(t, props);
-				Console.WriteLine();
-			}
-		}
-
-		static void writeData<T>(T data, IEnumerable<PropertyInfo> propertyInfo = null)
-		{
-			if (data == null)
-			{
-				Console.WriteLine("Unable to write data from Null Object");
-				return;
-			}
-			var props = (propertyInfo != null) ? propertyInfo : typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-			foreach (var prop in props)
-			{
-				Console.Write("{0, 8} ", prop.GetValue(data));
 			}
 		}
 

@@ -15,9 +15,9 @@ namespace Scheduler.Scheduling
 			process.Account = ServiceAccount.LocalSystem;
 
 			serviceAdmin.StartType = ServiceStartMode.Automatic;
-			serviceAdmin.ServiceName = "Visualutions Inc. Scheduler Service";
-			serviceAdmin.DisplayName = "Visualutions Inc. Scheduler Service";
-			serviceAdmin.Description = "Visualutions Inc. Scheduler Service is used to manage events across Visualutions Applications";
+			serviceAdmin.ServiceName = "Scheduler Service";
+			serviceAdmin.DisplayName = "Scheduler Service";
+			serviceAdmin.Description = "Scheduler Service is used to scheudle events across Applications";
 
 			Installers.Add(process);
 			Installers.Add(serviceAdmin);

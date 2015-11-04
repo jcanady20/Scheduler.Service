@@ -35,7 +35,7 @@ namespace Scheduler.Scheduling
 			m_jobSchedule = jobSchedule;
 			m_stopwatch = new Stopwatch();
 			m_cancelToken = new CancellationTokenSource();
-			m_logger = new NLogger("Visualutions.Scheduler.Scheduling.JobExecutioner");
+			m_logger = new NLogger("Scheduler.Scheduling.JobExecutioner");
 			this.OutCome = JobStepOutCome.Unknown;
 			this.Status = JobStatus.WaitingForWorkerThread;
 			ReportQueuedDateTime();

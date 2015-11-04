@@ -75,7 +75,7 @@ WriteLiteral(" name=\"viewport\"");
 
 WriteLiteral(" content=\"width=device-width, initial-scale=1\"");
 
-WriteLiteral(">\r\n\t\t\r\n\t\t<title>Visualutions Inc. Scheduler</title>\r\n\t\t<style>\r\n");
+WriteLiteral(">\r\n\t\t\r\n\t\t<title>Scheduler Configuration</title>\r\n\t\t<style>\r\n");
 
 WriteLiteral("\t\t\t");
 

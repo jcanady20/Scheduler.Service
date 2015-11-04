@@ -22,7 +22,7 @@ namespace Scheduler.Scheduling
 		{
 			m_jobQueue = new Queue<IJobExecutioner>();
 			m_activeJobs = new List<IJobExecutioner>();
-			m_logger = new NLogger("Visualutions.Scheduler.Scheduling.JobEngine");
+			m_logger = new NLogger("Scheduler.Scheduling.JobEngine");
 			Start();
 		}
 
