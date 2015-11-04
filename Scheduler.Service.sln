@@ -16,6 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{477680
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.TESTS", "Scheduler.TESTS\Scheduler.TESTS.csproj", "{6D187180-4E90-430D-B4DA-EAE0EF81FF85}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7DFE6B43-762E-4511-87AA-DFBB1E88C53C}"
+	ProjectSection(SolutionItems) = preProject
+		Sql_Scripts\AddStuff.sql = Sql_Scripts\AddStuff.sql
+		Sql_Scripts\Functions.sql = Sql_Scripts\Functions.sql
+		Sql_Scripts\Job_CRUD_Procedures.sql = Sql_Scripts\Job_CRUD_Procedures.sql
+		Sql_Scripts\Purge_JobHistory_StoredProcedures.sql = Sql_Scripts\Purge_JobHistory_StoredProcedures.sql
+		Sql_Scripts\Setup.sql = Sql_Scripts\Setup.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
