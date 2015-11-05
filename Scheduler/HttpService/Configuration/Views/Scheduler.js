@@ -464,12 +464,16 @@ window.app = (function (window, $, ko, _, Backbone) {
                 if (data.startDateTime) {
                     var startDateTime = new Date(data.startDateTime);
                     _slf.startDate(startDateTime.getDateString());
-                    _slf.startTime(startDateTime.getOClockTime());
+                }
+                if (data.startTime) {
+                    _slf.startTime(data.startTime);
                 }
                 if (data.endDateTime) {
-                    var endDateTime = new Date(data.endDateTime);
-                    _slf.endDate(endDateTime.getDateString());
-                    _slf.endTime(endDateTime.getOClockTime());
+                    var endDate = new Date(data.endDateTime);
+                    _slf.endDate(endDate.getDateString());
+                }
+                if (data.endTime) {
+                    _slf.endTime(data.endTime);
                 }
             }
         };
@@ -528,15 +532,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             var copy = ko.toJS(_slf);
             //    remove functions
             removeFunctions(copy);
-            //    Recombine the startDate + startTime
-            copy.startDateTime = new Date(copy.startDate + " " + copy.startTime);
-            //    Recombine the endDate + endTime
-            copy.endDateTime = new Date(copy.endDate + " " + copy.endTime);
             //    Remove unused properties
-            delete copy["startDate"];
-            delete copy["startTime"];
-            delete copy["endDate"];
-            delete copy["endTime"];
             delete copy["description"];
             delete copy["weeklyIntervals"];
             delete copy["subDayIntervalLabel"];
