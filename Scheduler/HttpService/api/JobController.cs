@@ -175,22 +175,6 @@ namespace Scheduler.HttpService.api
 			}
 		}
 
-		[Route("report")]
-		[HttpPost]
-		public IHttpActionResult ReportResponse([FromBody]Data.Models.WebTaskResponse response)
-		{
-			try
-			{
-				Scheduler.Scheduling.WebTaskRespponseManager.Instance.ReportResponse(response);
-				return Ok();
-			}
-			catch(Exception e)
-			{
-				m_logger.Error(e);
-				return new ExceptionResult(e, this);
-			}
-		}
-
 		[Route("{id}")]
 		[HttpPut, HttpPatch]
 		public async Task<IHttpActionResult> Put(Guid id, [FromBody] Data.Entities.Job job)

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 using Scheduler.Data;
 using Scheduler.Data.Context;
@@ -13,13 +9,13 @@ using Scheduler.Data.Queries;
 using Scheduler.Logging;
 using Scheduler.Extensions;
 
-namespace Scheduler.Scheduling.Tasks
+namespace Scheduler.Tasks
 {
-	public abstract class BaseTask : IJobTask, IDisposable
+    public abstract class BaseTask : IJobTask, IDisposable
 	{
-		internal ILogger m_logger;
-		internal JobStep m_taskStep;
-		internal IContext m_db;
+		protected ILogger m_logger;
+        protected JobStep m_taskStep;
+        protected IContext m_db;
 		protected BaseTask()
 		{
 			m_logger = new NLogger();
@@ -53,8 +49,8 @@ namespace Scheduler.Scheduling.Tasks
 			sw.Start();
 			try
 			{
-				//	Step the Started DateTime value
-				this.Started = DateTime.Now;
+                //	Step the Started DateTime value
+                this.Started = DateTime.Now;
 				this.OnExecute();
 				this.OutCome = JobStepOutCome.Succeeded;
 				this.OutComeMessage = "The step succeeded.";
@@ -81,7 +77,16 @@ namespace Scheduler.Scheduling.Tasks
 
 		public abstract void OnExecute();
 
-		internal void ReportOutCome()
+        protected ILogger Log
+        {
+            get
+            {
+                return m_logger;
+            }
+        }
+
+
+        protected void ReportOutCome()
 		{
 			//	Add a JobHistory Entry for this JobStep
 			m_db.AddJobHistory(m_taskStep.JobId, m_taskStep.StepId, m_taskStep.Name, OutCome, OutComeMessage, this.Started, this.Duration);

@@ -1,13 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using Scheduler.Tasks;
 
 namespace Scheduler.Scheduling.Tasks
 {
-	[DisplayName("Sample Task")]
+    [DisplayName("Sample Task")]
 	[Description("Executes a task that Waits 10 seconds before completing")]
 	public class EmptyTask : BaseTask
 	{

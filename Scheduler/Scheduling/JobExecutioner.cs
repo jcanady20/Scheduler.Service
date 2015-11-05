@@ -9,6 +9,7 @@ using Scheduler.Data.Context;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Extensions;
 using Scheduler.Data.Queries;
+using Scheduler.Tasks;
 
 using Scheduler.Logging;
 

@@ -88,6 +88,14 @@
     <Compile Include="SerializationTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Scheduler.Data\Scheduler.Data.csproj">
+      <Project>{86626aa0-8cd0-402f-b436-b8e4cc556c2c}</Project>
+      <Name>Scheduler.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Tasks\Scheduler.Tasks.csproj">
+      <Project>{26af4c55-73f1-4d2a-b7fd-96412cc2d1d1}</Project>
+      <Name>Scheduler.Tasks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Scheduler\Scheduler.csproj">
       <Project>{dcda96c4-7c5c-4702-be6a-69409d89d616}</Project>
       <Name>Scheduler</Name>

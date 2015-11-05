@@ -75,10 +75,6 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.0\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -118,55 +114,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Configuration\ActivityMap.cs" />
-    <Compile Include="Data\Configuration\JobActivityMap.cs" />
-    <Compile Include="Data\Configuration\JobScheduleMap.cs" />
-    <Compile Include="Data\Configuration\JobMap.cs" />
-    <Compile Include="Data\Configuration\JobHistoryMap.cs" />
-    <Compile Include="Data\Configuration\JobStepMap.cs" />
-    <Compile Include="Data\Context\Context.cs" />
-    <Compile Include="Data\Context\ContextFactory.cs" />
-    <Compile Include="Data\Context\IContext.cs" />
-    <Compile Include="Data\Entities\Activity.cs" />
-    <Compile Include="Data\Entities\JobActivity.cs" />
-    <Compile Include="Data\Entities\JobSchedule.cs" />
-    <Compile Include="Data\Entities\Job.cs" />
-    <Compile Include="Data\Entities\JobHistory.cs" />
-    <Compile Include="Data\Entities\JobStep.cs" />
-    <Compile Include="Data\Enums\MonthlyInterval.cs" />
-    <Compile Include="Data\Enums\Months.cs" />
-    <Compile Include="Data\Enums\NextStepAction.cs" />
-    <Compile Include="Data\Enums\RelativeInterval.cs" />
-    <Compile Include="Data\Enums\FrequencyType.cs" />
-    <Compile Include="Data\Enums\RunRequestSource.cs" />
-    <Compile Include="Data\Enums\SubIntervalType.cs" />
-    <Compile Include="Data\Enums\JobCompletionAction.cs" />
-    <Compile Include="Data\Enums\JobStatus.cs" />
-    <Compile Include="Data\Enums\JobStepOutcome.cs" />
-    <Compile Include="Data\Enums\WeeklyInterval.cs" />
-    <Compile Include="Data\Extensions\JobScheduleExtensions.cs" />
-    <Compile Include="Data\Models\JobHistorySearch.cs" />
-    <Compile Include="Data\Models\PluginDetail.cs" />
-    <Compile Include="Data\Models\WebTaskResponse.cs" />
-    <Compile Include="Data\PagedList%27.cs" />
-    <Compile Include="Data\Queries\ActivityQueries.cs" />
-    <Compile Include="Data\Queries\JobHistoryQueries.cs" />
-    <Compile Include="Data\Queries\JobQueries.cs" />
-    <Compile Include="Data\Queries\JobScheduleQueries.cs" />
-    <Compile Include="Data\Queries\JobStepQueries.cs" />
-    <Compile Include="Diagnostics\IStopwatchWriter.cs" />
-    <Compile Include="Diagnostics\Stopwatch.cs" />
-    <Compile Include="Diagnostics\StopwatchCompleteEventArgs.cs" />
-    <Compile Include="Diagnostics\StopwatchListener.cs" />
-    <Compile Include="Extensions\DataSetExtensions.cs" />
-    <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Extensions\ExceptionExtensions.cs" />
-    <Compile Include="Extensions\IDbCommandExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableDataReader.cs" />
-    <Compile Include="Extensions\IEnumerableExtensions.cs" />
-    <Compile Include="Extensions\Int32Extensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="HttpService\api\BaseApiController.cs" />
     <Compile Include="HttpService\api\JobController.cs" />
     <Compile Include="HttpService\api\JobStepController.cs" />
@@ -188,27 +135,22 @@
       <DependentUpon>ConfigurationPage.tt</DependentUpon>
     </Compile>
     <Compile Include="HttpService\Configuration\Views\BaseView.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\NLogger.cs" />
     <Compile Include="Scheduling\ScheduleEngine.cs" />
-    <Compile Include="Scheduling\WebTaskRespponseManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduling\IJobExecutioner.cs" />
     <Compile Include="Scheduling\JobExecutioner.cs" />
-    <Compile Include="Scheduling\IJobTask.cs" />
-    <Compile Include="Scheduling\Tasks\EmptyTask.cs" />
-    <Compile Include="Scheduling\Tasks\ErrorTask.cs" />
-    <Compile Include="Scheduling\Tasks\SqlTask.cs" />
-    <Compile Include="Scheduling\Tasks\BaseTask.cs" />
-    <Compile Include="Scheduling\JobTaskFactory.cs" />
-    <Compile Include="Scheduling\Service\ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Scheduling\JobEngine.cs" />
     <Compile Include="Scheduling\Service\SchedulerService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scheduling\Tasks\WebTask.cs" />
+    <Compile Include="Scheduling\Service\ServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Scheduling\Tasks\EmptyTask.cs" />
+    <Compile Include="Scheduling\Tasks\ErrorTask.cs" />
+    <Compile Include="Scheduling\Tasks\OSTask.cs" />
+    <Compile Include="Scheduling\Tasks\SqlTask.cs" />
+    <Compile Include="Scheduling\JobTaskFactory.cs" />
+    <Compile Include="Scheduling\JobEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -226,6 +168,24 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Scheduler.Data\Scheduler.Data.csproj">
+      <Project>{86626aa0-8cd0-402f-b436-b8e4cc556c2c}</Project>
+      <Name>Scheduler.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Extensions\Scheduler.Extensions.csproj">
+      <Project>{f4a106fb-649a-4895-b6d1-438ac458e1ce}</Project>
+      <Name>Scheduler.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Logging\Scheduler.Logging.csproj">
+      <Project>{328e6593-2ebe-48a0-973f-0454ec750c36}</Project>
+      <Name>Scheduler.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Tasks\Scheduler.Tasks.csproj">
+      <Project>{26af4c55-73f1-4d2a-b7fd-96412cc2d1d1}</Project>
+      <Name>Scheduler.Tasks</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

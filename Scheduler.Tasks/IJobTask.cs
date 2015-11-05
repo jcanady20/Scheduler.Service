@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
-
 using Scheduler.Data;
 using Scheduler.Data.Context;
 using Scheduler.Data.Entities;
 
-namespace Scheduler.Scheduling
+namespace Scheduler.Tasks
 {
     public interface IJobTask : IDisposable
 	{
@@ -16,7 +15,7 @@ namespace Scheduler.Scheduling
 		Nullable<TimeSpan> Duration { get; }
 		JobStepOutCome OutCome { get; }
 		Nullable<DateTime> Completed { get; }
-		IJobTask Create(IContext db, JobStep step);
-		JobStepOutCome Execute(CancellationToken cancelToken);
+        IJobTask Create(IContext db, JobStep step);
+        JobStepOutCome Execute(CancellationToken cancelToken);
 	}
 }

@@ -339,11 +339,11 @@ window.app = (function (window, $, ko, _, Backbone) {
         _slf.name = ko.observable();
         _slf.subSystem = ko.observable();
         _slf.command = ko.observable();
-        _slf.isUserDefined = ko.observable(true);
+        _slf.dataSource = ko.observable();
         _slf.databaseName = ko.observable();
         _slf.userName = ko.observable();
         _slf.password = ko.observable();
-
+        _slf.isUserDefined = ko.observable(true);
         return _slf;
     };
     ViewModels.JobStepConfirmDelete = function () {

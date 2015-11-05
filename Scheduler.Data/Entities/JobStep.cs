@@ -16,6 +16,7 @@ namespace Scheduler.Data.Entities
 		public string Name { get; set; }
 		public string SubSystem { get; set; }
 		public string Command { get; set; }
+        public string DataSource { get; set; }
 		public string DatabaseName { get; set; }
 		public string UserName { get; set; }
 		public byte[] Password { get; set; }

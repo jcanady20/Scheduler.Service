@@ -8,6 +8,7 @@ using Scheduler.Data.Context;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Models;
 using Scheduler.Logging;
+using Scheduler.Tasks;
 
 namespace Scheduler.Scheduling
 {

@@ -103,6 +103,7 @@ CREATE TABLE [dbo].[JobSteps]
 	[Name] varchar(128) NOT NULL,
 	[Subsystem] VARCHAR(40) NOT NULL,
 	[Command] NVARCHAR(MAX),
+	[DataSource] varchar(250),
 	[DatabaseName] VARCHAR(128),
 	[UserName] varchar(128),
 	[Password] varbinary(500),

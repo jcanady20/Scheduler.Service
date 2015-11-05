@@ -7,8 +7,8 @@
     <ProjectGuid>{7FF28CC9-EDC5-4BDE-9725-BE3268E64F84}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Scheduler.Service</RootNamespace>
-    <AssemblyName>Scheduler.Service</AssemblyName>
+    <RootNamespace>Scheduler.Service.Host</RootNamespace>
+    <AssemblyName>Scheduler.Service.Host</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
