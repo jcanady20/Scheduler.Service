@@ -29,7 +29,6 @@ namespace Scheduler.Data.Context
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.HasDefaultSchema("Scheduler");
 			modelBuilder.Configurations.AddFromAssembly(typeof(Context).Assembly);
 			base.OnModelCreating(modelBuilder);
 		}

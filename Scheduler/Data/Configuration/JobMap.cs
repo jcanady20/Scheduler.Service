@@ -11,9 +11,9 @@ namespace Scheduler.Data.Configuration
 			Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
 			MapToStoredProcedures(x => {
-				x.Insert(i => i.HasName("[Scheduler].[Job_Insert]"));
-				x.Delete(d => d.HasName("[Scheduler].[Job_Delete]"));
-				x.Update(u => u.HasName("[Scheduler].[Job_Update]"));
+				x.Insert(i => i.HasName("[dbo].[Job_Insert]"));
+				x.Delete(d => d.HasName("[dbo].[Job_Delete]"));
+				x.Update(u => u.HasName("[dbo].[Job_Update]"));
 			});
 
 			Property(x => x.Name).IsRequired();

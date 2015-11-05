@@ -72,7 +72,7 @@ namespace Scheduler.TESTS
 
             //var now = DateTime.Now;
             var lastRunDate = new DateTime(2015, 03, 05, 12, 0, 0);
-            var nextRunDate = sut.CalculateNextRun(lastRunDate);
+            var result = sut.CalculateNextRun(lastRunDate);
         }
 
         [Fact(DisplayName = "Next Rune Date: Monthly")]

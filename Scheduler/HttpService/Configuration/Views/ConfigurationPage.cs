@@ -1908,7 +1908,7 @@ window.app = (function (window, $, ko, _, Backbone) {
                     _slf.collection.add(_slf.model);
                 }
 
-                _slf.remove();
+                _slf.OnClose();
             });
             resp.always(function () {
                 $("".btn-save"").button(""reset"");
