@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Configuration;
 using System.Reflection;
@@ -105,28 +106,42 @@ namespace Scheduler.Scheduling
 
 		private void LoadPluginFromFileInfo(FileInfo fileinfo)
 		{
-			var assembly = Assembly.LoadFile(fileinfo.FullName);
-			LoadTasksFromAssembly(assembly);
+            try
+            {
+                var assembly = Assembly.LoadFile(fileinfo.FullName);
+                LoadTasksFromAssembly(assembly);
+            }
+            catch(Exception e)
+            {
+                m_logger.Error(e);
+            }
 		}
 
 		private void LoadTasksFromAssembly(Assembly assembly)
 		{
-			foreach(var t in assembly.GetTypes())
+            if(assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            var types = assembly
+                .GetTypes()
+                .Where(x => typeof(IJobTask).IsAssignableFrom(x))
+                .Where(x => x.IsAbstract == false)
+                .Where(x => x.IsInterface == false);
+			foreach(var t in types)
 			{
-				if(typeof(IJobTask).IsAssignableFrom(t) && t.IsAbstract == false && t.IsInterface == false)
-				{
-					var displayName = t.GetCustomAttribute<DisplayNameAttribute>();
-					var description = t.GetCustomAttribute<DescriptionAttribute>();
-					var detail = new PluginDetail();
+				var displayName = t.GetCustomAttribute<DisplayNameAttribute>();
+				var description = t.GetCustomAttribute<DescriptionAttribute>();
+				var detail = new PluginDetail();
 
-					detail.DisplayName = (displayName != null) ? displayName.DisplayName : t.Name;
-					detail.Description = (description != null) ? description.Description : t.Name;
-					detail.SubSystem = t.Name;
+				detail.DisplayName = displayName?.DisplayName ?? t.Name;
+				detail.Description = description?.Description ?? t.Name;
+				detail.SubSystem = t.Name;
+                detail.Type = t;                
 
-					m_pluginDetails.Add(detail);
-
-					m_taskPlugins.Add(t.Name, t);
-				}
+                m_pluginDetails.Add(detail);
+				m_taskPlugins.Add(t.Name, t);
 			}
 		}
 

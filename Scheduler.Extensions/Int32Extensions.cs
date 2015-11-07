@@ -7,14 +7,7 @@ namespace Scheduler.Extensions
 	{
 		public static bool Between(this int value, int min, int max)
 		{
-			if (value >= min && value <= max)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+            return (value >= min && value <= max);
 		}
 
 		public static DateTime ToDate(this int dateInt)
@@ -22,16 +15,13 @@ namespace Scheduler.Extensions
 			return DateTime.ParseExact(dateInt.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
 		}
 
-		public static DateTime? ToDate(this int? dateInt)
+		public static Nullable<DateTime> ToDate(this Nullable<int> dateInt)
 		{
 			if (dateInt.HasValue)
 			{
 				return dateInt.Value.ToDate();
 			}
-			else
-			{
-				return (DateTime?)null;
-			}
+			return null;
 		}
 
 		public static int GetAgeInMonths(this int? dateInt, DateTime reportDate)

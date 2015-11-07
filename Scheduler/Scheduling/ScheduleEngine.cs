@@ -23,7 +23,7 @@ namespace Scheduler.Scheduling
         private bool m_paused;
         private bool m_canceled;
         private ILogger m_logger;
-        private static readonly TimeSpan WORKER_DELAY = TimeSpan.FromSeconds(1);
+        private static readonly TimeSpan WORKER_DELAY = TimeSpan.FromMinutes(1);
         private ICollection<JobSchedule> m_jobSchedules;
         #endregion
 

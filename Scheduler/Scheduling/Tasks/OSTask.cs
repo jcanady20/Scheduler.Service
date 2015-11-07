@@ -7,7 +7,7 @@ namespace Scheduler.Scheduling.Tasks
 {
     [DisplayName("Operating System Task")]
     [Description("Run an executable program")]
-    public class OSTask : BaseTask
+    public class OSTask : JobTaskBase
     {
         public OSTask()
         { }

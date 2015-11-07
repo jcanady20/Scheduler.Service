@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using PShell = System.Management.Automation;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Scheduler.Tasks.PowerShell
 {
-    public class PSTask : BaseTask
+    [DisplayName("PowerShell Task")]
+    [Description("Executes a PowerShell Script. Execution only.")]
+    public class PSTask : JobTaskBase
     {
         public override void OnExecute()
         {

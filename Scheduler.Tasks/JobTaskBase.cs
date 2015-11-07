@@ -11,12 +11,12 @@ using Scheduler.Extensions;
 
 namespace Scheduler.Tasks
 {
-    public abstract class BaseTask : IJobTask, IDisposable
+    public abstract class JobTaskBase : IJobTask, IDisposable
 	{
 		protected ILogger m_logger;
         protected JobStep m_taskStep;
         protected IContext m_db;
-		protected BaseTask()
+		protected JobTaskBase()
 		{
 			m_logger = new NLogger();
 			this.OutCome = JobStepOutCome.Unknown;

@@ -82,6 +82,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ExtensionsTests\Int32ExtensionTests.cs" />
     <Compile Include="JobTaskTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NextRunDateTests.cs" />
@@ -91,6 +92,14 @@
     <ProjectReference Include="..\Scheduler.Data\Scheduler.Data.csproj">
       <Project>{86626aa0-8cd0-402f-b436-b8e4cc556c2c}</Project>
       <Name>Scheduler.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Diagnostics\Scheduler.Diagnostics.csproj">
+      <Project>{78ce1dbc-3ed5-413d-af42-1740816a58b6}</Project>
+      <Name>Scheduler.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Extensions\Scheduler.Extensions.csproj">
+      <Project>{f4a106fb-649a-4895-b6d1-438ac458e1ce}</Project>
+      <Name>Scheduler.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Scheduler.Tasks\Scheduler.Tasks.csproj">
       <Project>{26af4c55-73f1-4d2a-b7fd-96412cc2d1d1}</Project>

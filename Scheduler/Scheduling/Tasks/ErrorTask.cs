@@ -6,7 +6,7 @@ namespace Scheduler.Scheduling.Tasks
 {
     [DisplayName("Error Task")]
 	[Description("Throws an Exception when Executed. Used to Test error Handling and logging.")]
-	public class ErrorTask : BaseTask
+	public class ErrorTask : JobTaskBase
 	{
 		public override void OnExecute()
 		{

@@ -5,7 +5,7 @@ namespace Scheduler.Scheduling.Tasks
 {
     [DisplayName("Sample Task")]
 	[Description("Executes a task that Waits 10 seconds before completing")]
-	public class EmptyTask : BaseTask
+	public class EmptyTask : JobTaskBase
 	{
 		public override void OnExecute()
 		{

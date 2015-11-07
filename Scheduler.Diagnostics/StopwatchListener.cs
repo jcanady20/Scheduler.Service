@@ -34,14 +34,9 @@ namespace Scheduler.Diagnostics
             }
         }
 
-        private void DequeueAllItems()
+        private void DequeueAllItems(int maxItems = 50)
         {
-            var currentCount = _queue.Count();
-            if(currentCount == 0)
-            {
-                return;
-            }
-            for (int i = 0; i < currentCount; i++)
+            for (int i = 0; i < maxItems; i++)
             {
                 Stopwatch sw = null;
                 if (_queue.TryDequeue(out sw))

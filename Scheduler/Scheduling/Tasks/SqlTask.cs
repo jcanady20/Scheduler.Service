@@ -10,7 +10,7 @@ namespace Scheduler.Scheduling.Tasks
 {
     [DisplayName("Transact-SQL script")]
 	[Description("Transact-SQL script")]
-	public class SqlTask : BaseTask
+	public class SqlTask : JobTaskBase
 	{
 		public SqlTask()
 		{
