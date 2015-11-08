@@ -14,7 +14,7 @@ using Scheduler.Tasks;
 using Scheduler.Logging;
 
 
-namespace Scheduler.Scheduling
+namespace Scheduler.Jobs
 {
     public class JobExecutioner : IJobExecutioner
 	{
@@ -26,16 +26,18 @@ namespace Scheduler.Scheduling
 		private Stopwatch m_stopwatch;
 		private JobSchedule m_jobSchedule;
 		private CancellationTokenSource m_cancelToken;
+        private TaskManager m_taskManager;
 		private JobStatus m_status;
 		#endregion
 
-		public JobExecutioner(Job job, JobSchedule jobSchedule)
+		public JobExecutioner(Job job, JobSchedule jobSchedule, TaskManager taskManager)
 		{
 			m_db = ContextFactory.CreateContext();
 			m_job = job;
 			m_jobSchedule = jobSchedule;
 			m_stopwatch = new Stopwatch();
 			m_cancelToken = new CancellationTokenSource();
+            m_taskManager = taskManager;
 			m_logger = new NLogger("Scheduler.Scheduling.JobExecutioner");
 			this.OutCome = JobStepOutCome.Unknown;
 			this.Status = JobStatus.WaitingForWorkerThread;
@@ -120,7 +122,7 @@ namespace Scheduler.Scheduling
 			var tasks = m_job.JobSteps.OrderBy(x => x.StepId);
 			foreach(var t in tasks)
 			{
-				yield return JobTaskFactory.Instance.CreateTask(m_db, t);
+				yield return m_taskManager.CreateTask(m_db, t);
 			}
 		}
 
@@ -130,7 +132,7 @@ namespace Scheduler.Scheduling
 			msg = String.Format("The job {0}.", this.OutCome);
 			if (m_jobSchedule != null)
 			{
-				msg += String.Format("The job was Invoked by Schedule ({0})", m_jobSchedule.Name);
+				msg += String.Format("The job was Invoked by Schedule ({0})", m_jobSchedule.Schedule.Name);
 			}
 			var lastStepName = (this.m_lastJobTask != null) ? this.m_lastJobTask.Name : "";
 			var lastStepId = (this.m_lastJobTask != null) ? this.m_lastJobTask.StepId : 0;
@@ -151,7 +153,7 @@ namespace Scheduler.Scheduling
 			if (m_jobSchedule != null)
 			{
 				//	Record the Last Run Details to the JobSchedule object
-				m_db.UpdateJobScheduleLastRun(m_jobSchedule.Id, this.CompletedDateTime.Value);
+				m_db.UpdateJobScheduleLastRun(m_job.Id, m_jobSchedule.Schedule.Id, this.CompletedDateTime.Value);
 			}
 			//	Add a Job History Entry
 			m_db.AddJobHistory(m_job.Id, 0, "(Job OutCome)", this.OutCome, this.GetOutComeMessage(), this.CompletedDateTime.Value, this.Duration.Value);
@@ -169,7 +171,7 @@ namespace Scheduler.Scheduling
 			item.LastRunDuration = this.Duration.Value;
 			if (m_jobSchedule != null)
 			{
-				item.NextRunDateTime = m_jobSchedule.CalculateNextRun(DateTime.Now);
+				item.NextRunDateTime = m_jobSchedule.Schedule.CalculateNextRun(DateTime.Now);
 			}
 			
 			m_db.SaveChanges();

@@ -2,18 +2,15 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 using System.Threading;
 
 using Scheduler.Extensions;
 using Scheduler.Logging;
-using Scheduler.Data;
 using Scheduler.Data.Entities;
-using Scheduler.Data.Context;
-using Scheduler.Data.Extensions;
+using Scheduler.Tasks;
 
 
-namespace Scheduler.Scheduling
+namespace Scheduler.Jobs
 {
     public class JobEngine
 	{
@@ -78,6 +75,8 @@ namespace Scheduler.Scheduling
 			}
 		}
 
+        public TaskManager TaskManager { get; private set; }
+
         public void Add(Job job, JobSchedule jobSchedule)
         {
             if (m_activeJobs.Any(x => x.JobId == job.Id))
@@ -85,7 +84,7 @@ namespace Scheduler.Scheduling
                 return;
             }
             m_logger.Info("Enqueueing {0}", job.Name);
-            var je = new JobExecutioner(job, jobSchedule);
+            var je = new JobExecutioner(job, jobSchedule, this.TaskManager);
             m_activeJobs.Add(je);
             m_jobQueue.Enqueue(je);
         }

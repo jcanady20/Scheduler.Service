@@ -10,6 +10,7 @@ using Scheduler.Data;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Extensions;
 using Scheduler.Data.Context;
+using Scheduler.Jobs;
 
 namespace Scheduler.Scheduling
 {
