@@ -7,10 +7,7 @@ namespace Scheduler.Data.Configuration
 	{
 		public JobScheduleMap()
 		{
-			HasKey(x => x.Id);
-			Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-			Property(x => x.Name).IsRequired();
-			Property(x => x.Name).HasMaxLength(60);
+			HasKey(x => new { x.JobId, x.ScheduleId });
 		}
 	}
 }

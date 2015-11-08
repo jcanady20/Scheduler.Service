@@ -19,8 +19,9 @@ namespace Scheduler.Data.Context
 		DbSet<Entities.JobSchedule> JobSchedules { get; set; }
 		DbSet<Entities.Activity> Activity { get; set; }
 		DbSet<Entities.JobActivity> JobActivity { get; set; }
+        DbSet<Entities.Schedule> Schedules { get; set; }
 
-		DbContextConfiguration Configuration { get; }
+        DbContextConfiguration Configuration { get; }
 		Database Database { get; }
 		void SetModified(object entity);
 		DbEntityValidationResult GetValidationResult(object entity);

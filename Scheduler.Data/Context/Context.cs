@@ -25,9 +25,10 @@ namespace Scheduler.Data.Context
 		public DbSet<Entities.JobSchedule> JobSchedules { get; set; }
 		public DbSet<Entities.Activity> Activity { get; set; }
 		public DbSet<Entities.JobActivity> JobActivity { get; set; }
-		#endregion
+        public DbSet<Entities.Schedule> Schedules { get; set; }
+        #endregion
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Configurations.AddFromAssembly(typeof(Context).Assembly);
 			base.OnModelCreating(modelBuilder);

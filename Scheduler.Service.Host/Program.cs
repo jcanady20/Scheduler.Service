@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.ServiceProcess;
-using Scheduler.Scheduling;
 using System.Text.RegularExpressions;
 
 namespace Scheduler.Service
@@ -177,7 +176,7 @@ namespace Scheduler.Service
 		[Description("Open Scheduler Configuration")]
 		static void OpenConfig()
 		{
-			var baseAddress = Scheduler.HttpService.ServiceUrl.GetServiceUrl();
+			var baseAddress = Scheduler.Http.ServiceUrl.GetServiceUrl();
 			baseAddress += "/configuration";
 			Process.Start(baseAddress);
 		}

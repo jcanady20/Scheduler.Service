@@ -16,7 +16,7 @@ namespace Scheduler.TESTS
         {
             var startDate = new DateTime(2015, 03, 26, 9, 0, 0);
             var endDate = startDate.AddDays(2).AddHours(12);
-            var sut = new JobSchedule();
+            var sut = new Schedule();
             sut.Type = FrequencyType.Daily;
             sut.Interval = 1;
             sut.SubdayType = SubIntervalType.Minutes;
@@ -39,7 +39,7 @@ namespace Scheduler.TESTS
             var minute = 0;
             var second = 0;
             var startDate = new DateTime(2015, 02, 26, hour, minute, second);
-            var sut = new JobSchedule();
+            var sut = new Schedule();
             sut.Type = FrequencyType.Daily;
             sut.Interval = 1;
             sut.SubdayType = SubIntervalType.SpecificTime;
@@ -61,7 +61,7 @@ namespace Scheduler.TESTS
         public void weekly()
         {
             var startDate = new DateTime(2015, 02, 26, 10, 0, 0);
-            var sut = new JobSchedule();
+            var sut = new Schedule();
             sut.Type = FrequencyType.Weekly;
             sut.Interval = 6;
             sut.SubdayType = SubIntervalType.SpecificTime;
@@ -83,7 +83,7 @@ namespace Scheduler.TESTS
             var minute = 0;
             var second = 0;
             var startDate = new DateTime(2015, 02, 26, hour, minute, second);
-            var sut = new JobSchedule();
+            var sut = new Schedule();
             sut.Type = FrequencyType.Monthly;
             sut.Interval = dayOftheMonth;
             sut.SubdayType = SubIntervalType.SpecificTime;
@@ -105,7 +105,7 @@ namespace Scheduler.TESTS
         public void monthlyR()
         {
             var startDate = new DateTime(2015, 02, 26, 10, 0, 0);
-            var sut = new JobSchedule();
+            var sut = new Schedule();
             sut.Type = FrequencyType.MonthlyRelative;
             sut.Interval = 10;
             sut.SubdayType = SubIntervalType.SpecificTime;

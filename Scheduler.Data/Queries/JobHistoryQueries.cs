@@ -3,6 +3,7 @@ using System.Linq;
 
 using Scheduler.Data.Context;
 using Scheduler.Data.Entities;
+using System.Threading.Tasks;
 
 namespace Scheduler.Data.Queries
 {
@@ -49,5 +50,21 @@ namespace Scheduler.Data.Queries
 			db.JobHistory.Add(jh);
 			db.SaveChanges();
 		}
-	}
+
+        public static async Task AddJobHistoryAsync(this IContext db, Guid jobId, int stepId, string stepName, JobStepOutCome outcome, string message, Nullable<DateTime> runDateTime = null, Nullable<TimeSpan> duration = null)
+        {
+            var jh = new JobHistory()
+            {
+                JobId = jobId,
+                StepId = stepId,
+                StepName = stepName,
+                RunStatus = outcome,
+                Message = message,
+                RunDuration = duration,
+                RunDateTime = runDateTime,
+            };
+            db.JobHistory.Add(jh);
+            await db.SaveChangesAsync();
+        }
+    }
 }

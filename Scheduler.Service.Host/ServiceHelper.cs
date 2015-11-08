@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using Scheduler.Scheduling;
+using Scheduler.Service;
 
 namespace Scheduler.Service
 {

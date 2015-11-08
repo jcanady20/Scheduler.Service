@@ -4,6 +4,7 @@ namespace Scheduler.Data
 {
 	public enum JobStatus
 	{
+        Cacnceled = 0,
 		Executing = 1,
 		WaitingForWorkerThread,
 		BetweenRetries,

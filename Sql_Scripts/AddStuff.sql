@@ -1,4 +1,4 @@
-/*	Test JOb that Executes and Empty Task (Waits 10seconds then reports Success) */
+/*	Test Job that Executes and Empty Task (Waits 10seconds then reports Success) */
 SET NOCOUNT ON;
 DECLARE @JobId UNIQUEIDENTIFIER, @ScheduleId UNIQUEIDENTIFIER
 DECLARE @dbname sysname = DB_NAME();
@@ -12,11 +12,14 @@ VALUES (@JobId, 'Test Task', 'Test Task');
 INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename])
 VALUES (@JobId, 1, 'Step 1', 'EmptyTask', '', @dbname)
 
-INSERT INTO [dbo].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
-VALUES (@JobId, 'Daily Schedule',  4, 1, 4, 5, 0, 0, '02/26/2015', ' 09:00:00', '12/31/2099', '21:00:00');
+INSERT INTO [dbo].[Schedules] ([Id], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
+VALUES (@ScheduleId, 'Daily Schedule',  4, 1, 4, 5, 0, 0, '02/26/2015', ' 09:00:00', '12/31/2099', '21:00:00');
+
+INSERT INTO [dbo].[JobSchedules] ([JobId], [ScheduleId])
+VALUES (@JobId, @ScheduleId)
 GO
 
-/*	Purge Job History */
+/*	Create a Startup JOb that Purges the Job History Table */
 SET NOCOUNT ON;
 DECLARE @JobId UNIQUEIDENTIFIER, @ScheduleId UNIQUEIDENTIFIER
 DECLARE @dbname sysname = DB_NAME();
@@ -30,8 +33,11 @@ VALUES (@JobId, 'Purge Job History', 'Purges Job History based on Specified sett
 INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isUserDefined])
 VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [dbo].[PurgeJobHistory]', @dbname, 0)
 
-INSERT INTO [dbo].[JobSchedules] ([JobId], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
-VALUES (@JobId,'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015', '09:00:00', '12/31/2099', '23:59:59');
+INSERT INTO [dbo].[Schedules] ([Id], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
+VALUES (@ScheduleId, 'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015', '09:00:00', '12/31/2099', '23:59:59');
+
+INSERT INTO [dbo].[JobSchedules] ([JobId], [ScheduleId])
+VALUES (@JobId, @ScheduleId)
 GO
 
 SET NOCOUNT ON;

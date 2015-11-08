@@ -21,5 +21,7 @@ namespace Scheduler.Data.Entities
 		public string UserName { get; set; }
 		public byte[] Password { get; set; }
 		public bool IsUserDefined { get; set; }
+        public int RetryAttempts { get; set; }
+        public int RetryInterval { get; set; }
 	}
 }

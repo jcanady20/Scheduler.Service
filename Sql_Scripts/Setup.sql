@@ -46,7 +46,30 @@ CREATE TABLE [dbo].[Jobs]
 	[Name] varchar(60) NOT NULL,
 	[Enabled] Bit NOT NULL Constraint [DF_Enabled_Jobs] DEFAULT(1),
 	[Description] varchar(500),
+	[StartStepId] INT NOT NULL CONSTRAINT [DF_StartStepId_Jobs] DEFAULT(1),
 	Constraint [PK_Jobs] PRIMARY KEY NONCLUSTERED
+	(
+		[Id]
+	)
+)
+GO
+
+CREATE TABLE [dbo].[Schedules]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL  CONSTRAINT [DF_Id_Schedules] DEFAULT(NEWID()),
+	[Name] varchar(60) NOT NULL,
+	[Enabled] BIT NOT NULL Constraint [DF_Enabled_Schedules] DEFAULT(1),
+	[Type] INT NOT NULL CONSTRAINT [DF_Type_Schedules] DEFAULT(4),
+	[Interval] INT NOT NULL,
+	[SubdayType] INT NOT NULL CONSTRAINT [DF_SubdayType_Schedules] DEFAULT(8),
+	[SubdayInterval] INT NOT NULL,
+	[RelativeInterval] INT NOT NULL,
+	[RecurrenceFactor] INT NOT NULL CONSTRAINT [DF_RecurrenceFactor_Schedules] DEFAULT(0),
+	[StartDate] DATETIME NOT NULL CONSTRAINT [DF_StartDate_Schedules] DEFAULT('01/01/1980'),
+	[StartTime] TIME NOT NULL CONSTRAINT [DF_StartTime_Schedules] DEFAULT('00:00:00'),
+	[EndDate] DATE NOT NULL CONSTRAINT [DF_EndDate_Schedules] DEFAULT('12/31/9999'),
+	[EndTime] TIME NOT NULL CONSTRAINT [DF_EndTime_Schedules] DEFAULT('23:59:59'),
+	CONSTRAINT [PK_Schedules] PRIMARY KEY NONCLUSTERED
 	(
 		[Id]
 	)
@@ -55,24 +78,12 @@ GO
 
 CREATE TABLE [dbo].[JobSchedules]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL  CONSTRAINT [DF_Id_JobSchedules] DEFAULT(NEWID()),
 	[JobId] UNIQUEIDENTIFIER NOT NULL,
-	[Name] varchar(60) NOT NULL,
-	[Enabled] BIT NOT NULL Constraint [DF_Enabled_JobSchedules] DEFAULT(1),
-	[Type] INT NOT NULL CONSTRAINT [DF_Type_JobSchedules] DEFAULT(4),
-	[Interval] INT NOT NULL,
-	[SubdayType] INT NOT NULL CONSTRAINT [DF_SubdayType_JobSchedules] DEFAULT(8),
-	[SubdayInterval] INT NOT NULL,
-	[RelativeInterval] INT NOT NULL,
-	[RecurrenceFactor] INT NOT NULL CONSTRAINT [DF_RecurrenceFactor_JobSchedules] DEFAULT(0),
-	[StartDate] DATETIME NOT NULL CONSTRAINT [DF_StartDate_JobSchedules] DEFAULT('01/01/1980'),
-	[StartTime] TIME NOT NULL CONSTRAINT [DF_StartTime_JobSchedules] DEFAULT('00:00:00'),
-	[EndDate] DATE NOT NULL CONSTRAINT [DF_EndDate_JobSchedules] DEFAULT('12/31/9999'),
-	[EndTime] TIME NOT NULL CONSTRAINT [DF_EndTime_JobSchedules] DEFAULT('23:59:59'),
-	[LastRunDateTime] DATETIME NOT NULL CONSTRAINT [DF_LastRunDateTime_JobSchedules] DEFAULT('01/01/1980 00:00:00'),
+	[ScheduleId] UNIQUEIDENTIFIER NOT NULL,
+	[LastRunDateTime] DATETIME NOT NULL CONSTRAINT [DF_LastRunDateTime] DEFAULT('01/01/1980 00:00:00'),
 	CONSTRAINT [PK_JobSchedules] PRIMARY KEY NONCLUSTERED
 	(
-		[Id]
+		[JobId], [ScheduleId]
 	)
 )
 GO
@@ -108,6 +119,8 @@ CREATE TABLE [dbo].[JobSteps]
 	[UserName] varchar(128),
 	[Password] varbinary(500),
 	[IsUserDefined] BIT NOT NULL CONSTRAINT [DF_IsUserDefined_JobSteps] DEFAULT(1),
+	[RetryAttempts] INT NOT NULL CONSTRAINT [DF_RetryAttempts_JobSteps] DEFAULT(0),
+	[RetryInterval] INT NOT NULL CONSTRAINT [DF_RetryInterval_JobSteps] DEFAULT(0),
 	CONSTRAINT [PK_JobSteps] PRIMARY KEY  NONCLUSTERED
 	(
 		[Id] ASC

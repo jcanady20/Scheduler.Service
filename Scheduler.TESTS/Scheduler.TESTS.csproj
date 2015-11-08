@@ -105,10 +105,6 @@
       <Project>{26af4c55-73f1-4d2a-b7fd-96412cc2d1d1}</Project>
       <Name>Scheduler.Tasks</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Scheduler\Scheduler.csproj">
-      <Project>{dcda96c4-7c5c-4702-be6a-69409d89d616}</Project>
-      <Name>Scheduler</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
