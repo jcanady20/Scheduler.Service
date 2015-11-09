@@ -29,8 +29,7 @@ namespace Scheduler.Tasks
             m_taskPlugins = new Dictionary<string, Type>();
             m_pluginDetails = new List<PluginDetail>();
             m_logger = logger;
-            LoadFromCurrentAssembly();
-            LoadFromPlugins();
+            LoadTasks();
         }
 
         public IEnumerable<PluginDetail> TaskPlugins

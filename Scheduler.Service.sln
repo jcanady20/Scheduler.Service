@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Service", "Schedu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Http", "Scheduler.Http\Scheduler.Http.csproj", "{DCDA96C4-7C5C-4702-BE6A-69409D89D616}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Http.Configuration", "Scheduler.Http.Configuration\Scheduler.Http.Configuration.csproj", "{44936409-C0CE-4B57-A380-D087B129ED78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{DCDA96C4-7C5C-4702-BE6A-69409D89D616}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCDA96C4-7C5C-4702-BE6A-69409D89D616}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCDA96C4-7C5C-4702-BE6A-69409D89D616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44936409-C0CE-4B57-A380-D087B129ED78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44936409-C0CE-4B57-A380-D087B129ED78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44936409-C0CE-4B57-A380-D087B129ED78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44936409-C0CE-4B57-A380-D087B129ED78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
