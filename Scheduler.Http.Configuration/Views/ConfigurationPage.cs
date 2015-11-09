@@ -123,7 +123,20 @@ WriteLiteral(@" />
 
 WriteLiteral(" class=\"container-fluid\"");
 
-WriteLiteral(">\r\n\t\t\t<div");
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"row\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"col-xs-offset-1 col-xs-10\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"page-header\"");
+
+WriteLiteral(">\r\n                        <h1>Scheduler Configuration</h1>\r\n                    " +
+"</div>\r\n                </div>\r\n            </div>\r\n\t\t\t<div");
 
 WriteLiteral(" class=\"row\"");
 
@@ -131,7 +144,7 @@ WriteLiteral(" style=\"margin-top: 26px;\"");
 
 WriteLiteral(">\r\n\t\t\t\t<div");
 
-WriteLiteral(" class=\"col-xs-12\"");
+WriteLiteral(" class=\"col-xs-offset-1 col-xs-10\"");
 
 WriteLiteral(" id=\"main-content\"");
 
@@ -140,15 +153,15 @@ WriteLiteral("></div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\r\n");
 WriteLiteral("\t\t");
 
             
-            #line 33 "ConfigurationPage.cshtml"
+            #line 40 "ConfigurationPage.cshtml"
 WriteLiteral(@"<!-- Templates -->
 <script id=""job-edit-tmpl"" type=""text/x-jquery-tmpl"">
     <div class=""container-fluid"">
         <div class=""row"">
             <div class=""col-xs-12"">
-                <a href=""#/jobs"" class=""close pull-right"" title=""Cancel""><i class=""fa fa-fw fa-times""></i></a>
-                <h4 class=""panel-title""><%= name %></h4>
-                <hr />
+                <div class=""page-header"">
+                    <h3><%= name %></h3>
+                </div>
             </div>
         </div>
         <div class=""row"">
@@ -157,6 +170,9 @@ WriteLiteral(@"<!-- Templates -->
                     <a href=""#/jobs/edit/<%= id %>"" class=""list-group-item lstgrp-general""><i class=""fa fa-fw fa-2x fa-info""></i>General</a>
                     <a href=""#/jobs/steps/<%= id %>"" class=""list-group-item lstgrp-steps""><i class=""fa fa-fw fa-2x fa-tasks""></i>Steps</a>
                     <a href=""#/jobs/schedules/<%= id %>"" class=""list-group-item lstgrp-schedules""><i class=""fa fa-fw fa-2x fa-calendar""></i>Schedules</a>
+                </div>
+                <div class=""list-group"">
+                    <a href=""#/jobs"" class=""list-group-item""><i class=""fa fa-fw fa-chevron-left""></i>Back</a>
                 </div>
             </div>
             <div class=""col-xs-9"" id=""job-content""></div>
@@ -285,7 +301,7 @@ WriteLiteral(@"<!-- Templates -->
                     <th class=""visible-lg visible-md"">Last OutCome</th>
                     <th class=""visible-lg"">Last Run Date</th>
                     <th class=""visible-lg"">Last Run Duration</th>
-                    <th>&nbsp;</th>
+                    <th style=""text-align: center;"">Actions</th>
                 </tr>
             </thead>
             <tbody id=""tbl-body""></tbody>
@@ -298,11 +314,11 @@ WriteLiteral(@"<!-- Templates -->
         <td style=""text-align: left; vertical-align: middle;""><a href=""#/jobs/edit/<%= id %>"" title=""Edit <%= name %>""><%= name %></a></td>
         <td><i class=""<% if(enabled === true) { print('fa fa-check'); } %>""></i></td>
         <td><%= status %></td>
-        <td class=""visible-lg""><% if(startDateTime) { print(moment(startDateTime).format(""L LTS"")); } %></td>
-        <td class=""visible-lg""><% if(completedDateTime) { print(moment(completedDateTime).format(""L LTS"")); } %></td>
-        <td><% if(nextRunDateTime) { print(moment(nextRunDateTime).format(""L LTS"")); } %></td>
+        <td class=""visible-lg""><% if(startDateTime) { print(moment.utc(startDateTime).format(""L LTS"")); } %></td>
+        <td class=""visible-lg""><% if(completedDateTime) { print(moment.utc(completedDateTime).format(""L LTS"")); } %></td>
+        <td><% if(nextRunDateTime) { print(moment.utc(nextRunDateTime).format(""L LTS"")); } else { print('--'); } %></td>
         <td class=""visible-lg visible-md""><%= lastRunOutCome %></td>
-        <td class=""visible-lg""><% if(lastRunDateTime) { print(moment(lastRunDateTime).format(""L LTS"")); } %></td>
+        <td class=""visible-lg""><% if(lastRunDateTime) { print(moment.utc(lastRunDateTime).format(""L LTS"")); } %></td>
         <td class=""visible-lg""><%= lastRunDuration %></td>
         <td style=""text-align: right;"">
             <div class=""btn-group btn-group-sm"">
@@ -464,7 +480,7 @@ WriteLiteral(@"<!-- Templates -->
         <td><%= stepName %></td>
         <td><%= message %></td>
         <td><%= runStatus %></td>
-        <td><% print(moment(runDateTime).format(""L LTS"")) %></td>
+        <td><% print(moment.utc(runDateTime).format(""L LTS"")) %></td>
         <td><%= runDuration %></td>
     </tr>
 </script>
@@ -894,7 +910,7 @@ WriteLiteral("></script>\r\n\t\t<script>\r\n\t\t\t//<!--\r\n");
 WriteLiteral("\t\t\t");
 
             
-            #line 44 "ConfigurationPage.cshtml"
+            #line 51 "ConfigurationPage.cshtml"
 WriteLiteral(@"/*jshint bitwise: false, strict: false, browser: true, jquery: true, -W069*/
 /*global $, jQuery, alert, ko, console, moment, Backbone, _*/
 //    Returns the A/P Meridian indication for the Time
@@ -1518,6 +1534,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             var tmpl = _.template($(""#jobactivity-item-tmpl"").html());
             this.collection.forEach(function (item) {
                 var m = item.toJSON();
+                _log(m);
                 var r = tmpl(m);
                 var x = $(r).data(""model"", m);
                 $(this.childContainer).append(x);
@@ -2066,7 +2083,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             ""click .btn-deleteSchedule"": ""onDeleteScheduleClick"",
         }
     });
-     
+
     Views.JobScheduleEditor = Backbone.View.extend({
         viewName: ""ScheduleEditor"",
         className: ""modal fade"",

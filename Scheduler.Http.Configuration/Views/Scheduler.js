@@ -621,6 +621,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             var tmpl = _.template($("#jobactivity-item-tmpl").html());
             this.collection.forEach(function (item) {
                 var m = item.toJSON();
+                _log(m);
                 var r = tmpl(m);
                 var x = $(r).data("model", m);
                 $(this.childContainer).append(x);
@@ -1169,7 +1170,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             "click .btn-deleteSchedule": "onDeleteScheduleClick",
         }
     });
-     
+
     Views.JobScheduleEditor = Backbone.View.extend({
         viewName: "ScheduleEditor",
         className: "modal fade",

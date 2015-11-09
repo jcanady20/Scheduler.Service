@@ -3,9 +3,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <a href="#/jobs" class="close pull-right" title="Cancel"><i class="fa fa-fw fa-times"></i></a>
-                <h4 class="panel-title"><%= name %></h4>
-                <hr />
+                <div class="page-header">
+                    <h3><%= name %></h3>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -14,6 +14,9 @@
                     <a href="#/jobs/edit/<%= id %>" class="list-group-item lstgrp-general"><i class="fa fa-fw fa-2x fa-info"></i>General</a>
                     <a href="#/jobs/steps/<%= id %>" class="list-group-item lstgrp-steps"><i class="fa fa-fw fa-2x fa-tasks"></i>Steps</a>
                     <a href="#/jobs/schedules/<%= id %>" class="list-group-item lstgrp-schedules"><i class="fa fa-fw fa-2x fa-calendar"></i>Schedules</a>
+                </div>
+                <div class="list-group">
+                    <a href="#/jobs" class="list-group-item"><i class="fa fa-fw fa-chevron-left"></i>Back</a>
                 </div>
             </div>
             <div class="col-xs-9" id="job-content"></div>
@@ -142,7 +145,7 @@
                     <th class="visible-lg visible-md">Last OutCome</th>
                     <th class="visible-lg">Last Run Date</th>
                     <th class="visible-lg">Last Run Duration</th>
-                    <th>&nbsp;</th>
+                    <th style="text-align: center;">Actions</th>
                 </tr>
             </thead>
             <tbody id="tbl-body"></tbody>
@@ -155,11 +158,11 @@
         <td style="text-align: left; vertical-align: middle;"><a href="#/jobs/edit/<%= id %>" title="Edit <%= name %>"><%= name %></a></td>
         <td><i class="<% if(enabled === true) { print('fa fa-check'); } %>"></i></td>
         <td><%= status %></td>
-        <td class="visible-lg"><% if(startDateTime) { print(moment(startDateTime).format("L LTS")); } %></td>
-        <td class="visible-lg"><% if(completedDateTime) { print(moment(completedDateTime).format("L LTS")); } %></td>
-        <td><% if(nextRunDateTime) { print(moment(nextRunDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg"><% if(startDateTime) { print(moment.utc(startDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg"><% if(completedDateTime) { print(moment.utc(completedDateTime).format("L LTS")); } %></td>
+        <td><% if(nextRunDateTime) { print(moment.utc(nextRunDateTime).format("L LTS")); } else { print('--'); } %></td>
         <td class="visible-lg visible-md"><%= lastRunOutCome %></td>
-        <td class="visible-lg"><% if(lastRunDateTime) { print(moment(lastRunDateTime).format("L LTS")); } %></td>
+        <td class="visible-lg"><% if(lastRunDateTime) { print(moment.utc(lastRunDateTime).format("L LTS")); } %></td>
         <td class="visible-lg"><%= lastRunDuration %></td>
         <td style="text-align: right;">
             <div class="btn-group btn-group-sm">
@@ -321,7 +324,7 @@
         <td><%= stepName %></td>
         <td><%= message %></td>
         <td><%= runStatus %></td>
-        <td><% print(moment(runDateTime).format("L LTS")) %></td>
+        <td><% print(moment.utc(runDateTime).format("L LTS")) %></td>
         <td><%= runDuration %></td>
     </tr>
 </script>
