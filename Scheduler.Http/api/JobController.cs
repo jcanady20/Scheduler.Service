@@ -92,7 +92,7 @@ namespace Scheduler.Http.api
 			}
 		}
 
-		[Route("steps/{id}")]
+		[Route("{id}/steps")]
 		[HttpGet]
 		public async Task<IHttpActionResult> GetJobSteps(Guid id)
 		{
@@ -108,7 +108,7 @@ namespace Scheduler.Http.api
 			}
 		}
 
-		[Route("schedules/{id}")]
+		[Route("{id}/schedules")]
 		[HttpGet]
 		public async Task<IHttpActionResult> GetJobSchedules(Guid id)
 		{
@@ -124,7 +124,7 @@ namespace Scheduler.Http.api
 			}
 		}
 
-		[Route("start/{id}")]
+		[Route("{id}/start")]
 		[HttpGet]
 		public async Task<IHttpActionResult> ExecuteJob(Guid id)
 		{
@@ -143,7 +143,7 @@ namespace Scheduler.Http.api
 			}
 		}
 
-        [Route("cacnel/{id}")]
+        [Route("{id}/cacnel")]
         [HttpPost]
         public IHttpActionResult CacnelJob(Guid id)
         {

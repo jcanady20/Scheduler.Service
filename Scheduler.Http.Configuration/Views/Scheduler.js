@@ -239,7 +239,6 @@ window.app = (function (window, $, ko, _, Backbone) {
             this.totalPages = response.totalPages;
             this.totalCount = response.totalCount;
             return response.entities;
-
         }
     });
     Collections.JobSteps = Backbone.Collection.extend({
@@ -250,7 +249,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             _.extend(this, _.pick(options, "jobId"));
         },
         url: function () {
-            return m_apiUrl + "jobs/steps/" + this.jobId;
+            return m_apiUrl + "jobs/" + this.jobId + "/steps";
         }
     });
     Collections.JobSchedules = Backbone.Collection.extend({
@@ -261,7 +260,7 @@ window.app = (function (window, $, ko, _, Backbone) {
         },
         url: function () {
             if (this.jobId !== null) {
-                return m_apiUrl + "jobs/schedules/" + this.jobId;
+                return m_apiUrl + "jobs/" + this.jobId + "/schedules";
             }
         }
     });
@@ -270,7 +269,6 @@ window.app = (function (window, $, ko, _, Backbone) {
             return m_apiUrl + "jobs/subsystems";
         }
     });
-
 
     ViewModels.Base = function () {
         var _slf = this;
@@ -539,9 +537,6 @@ window.app = (function (window, $, ko, _, Backbone) {
             //    return the js object to the caller
             return copy;
         };
-        _slf.saveClick = function () {
-            console.log(_slf.toJS());
-        };
         return _slf;
     };
 
@@ -653,7 +648,13 @@ window.app = (function (window, $, ko, _, Backbone) {
         onStartJobClick: function (e) {
             var tr = $(e.currentTarget).closest("tr");
             var m = tr.data("model");
-            var url = m_apiUrl + "jobs/start/" + m.id;
+            var url = m_apiUrl + "jobs/" + m.id + "/start";
+            $.getJSON(url);
+        },
+        onCacnelJobClick: function (e) {
+            var tr = $(e.currentTarget).closest("tr");
+            var m = tr.data("model");
+            var url = m_apiUrl + "jobs/" + m.id + "/cancel";
             $.getJSON(url);
         },
         events: {
@@ -1168,7 +1169,7 @@ window.app = (function (window, $, ko, _, Backbone) {
             "click .btn-deleteSchedule": "onDeleteScheduleClick",
         }
     });
-
+     
     Views.JobScheduleEditor = Backbone.View.extend({
         viewName: "ScheduleEditor",
         className: "modal fade",

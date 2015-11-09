@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="api\BaseApiController.cs" />
     <Compile Include="api\JobController.cs" />
+    <Compile Include="api\JobScheduleController.cs" />
     <Compile Include="api\JobStepController.cs" />
     <Compile Include="api\ScheduleController.cs" />
     <Compile Include="App_Start\Configuration.cs" />
