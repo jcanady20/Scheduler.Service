@@ -57,6 +57,34 @@ namespace Scheduler.Extensions
 			}
 		}
 
+        public static IEnumerable<T> Pipe<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach(var item in source)
+            { 
+                action(item);
+                yield return item;
+            };
+        }
+
+        public static IEnumerable<R> Pipe<T, R>(this IEnumerable<T> source, Func<T, R> transform)
+        {
+            foreach(var item in source)
+            {
+                yield return transform(item);
+            }
+        }
+
+        public static IEnumerable<T> Filter<T>(this IEnumerable<T> source, Predicate<T> filter)
+        {
+            foreach(var item in source)
+            {
+                if(filter(item))
+                {
+                    yield return item;
+                }
+            }
+        }
+
         public static DataTable ToDataTable<T>(this IEnumerable<T> array)
         {
             DataTable table = new DataTable();

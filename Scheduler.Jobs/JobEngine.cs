@@ -30,8 +30,9 @@ namespace Scheduler.Jobs
 		{
 			m_jobQueue = new ConcurrentQueue<IJobExecutioner>();
 			m_activeJobs = new List<IJobExecutioner>();
-			m_logger = new NLogger("Scheduler.Scheduling.JobEngine");
-			Start();
+            m_logger = new NLogger("Scheduler.Scheduling.JobEngine");
+            TaskManager = new TaskManager(m_logger);
+            Start();
 		}
 
         public static JobEngine Instance
@@ -89,6 +90,15 @@ namespace Scheduler.Jobs
             m_jobQueue.Enqueue(je);
         }
 
+        public void CancelExecution(IJobExecutioner jobExecution)
+        {
+            if(jobExecution == null)
+            {
+                throw new ArgumentNullException(nameof(jobExecution));
+            }
+            jobExecution.Cancel();
+        }
+
         public void Start()
 		{
             m_logger.Trace("Starting Job Engine");
@@ -144,6 +154,10 @@ namespace Scheduler.Jobs
                 IJobExecutioner exec = null;
                 if(m_jobQueue.TryDequeue(out exec))
                 {
+                    if(exec.Status == Data.JobStatus.Cacnceled)
+                    {
+                        continue;
+                    }
                     ExecuteJob(exec);
                 }
 

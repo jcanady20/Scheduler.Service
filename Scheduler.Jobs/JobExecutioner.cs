@@ -65,6 +65,7 @@ namespace Scheduler.Jobs
 
 		public void Cancel()
 		{
+            Status = JobStatus.Cacnceled;
 			m_cancelToken.Cancel();
 		}
 
@@ -74,6 +75,10 @@ namespace Scheduler.Jobs
 
 			foreach(var task in JobTasks())
 			{
+                if(task == null)
+                {
+                    continue;
+                }
 				if (m_cancelToken.IsCancellationRequested)
 				{
 					CancelExecute();

@@ -29,6 +29,8 @@ namespace Scheduler.Tasks
             m_taskPlugins = new Dictionary<string, Type>();
             m_pluginDetails = new List<PluginDetail>();
             m_logger = logger;
+            LoadFromCurrentAssembly();
+            LoadFromPlugins();
         }
 
         public IEnumerable<PluginDetail> TaskPlugins
@@ -72,7 +74,7 @@ namespace Scheduler.Tasks
 
         private void LoadFromCurrentAssembly()
         {
-            var assembly = this.GetType().Assembly;
+            var assembly = typeof(TaskManager).Assembly;
             LoadTasksFromAssembly(assembly);
         }
 
@@ -112,12 +114,13 @@ namespace Scheduler.Tasks
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            assembly
+            var types = assembly
                 .GetTypes()
                 .Where(x => typeof(IJobTask).IsAssignableFrom(x))
                 .Where(x => x.IsAbstract == false)
-                .Where(x => x.IsInterface == false)
-                .ForEach(t => {
+                .Where(x => x.IsInterface == false);
+
+            types.ForEach(t => {
                     var displayName = t.GetCustomAttribute<DisplayNameAttribute>();
                     var description = t.GetCustomAttribute<DescriptionAttribute>();
                     var detail = new PluginDetail();

@@ -82,7 +82,7 @@ namespace Scheduler.Http.api
 		{
 			try
 			{
-                var items = await Task.FromResult(Scheduling.JobEngine.Instance.TaskManager.TaskPlugins.ToList());
+                var items = await Task.FromResult(Scheduler.Jobs.JobEngine.Instance.TaskManager.TaskPlugins.ToList());
 				return Ok(items);
 			}
 			catch(Exception e)
@@ -145,7 +145,7 @@ namespace Scheduler.Http.api
 
         [Route("cacnel/{id}")]
         [HttpPost]
-        public async Task<IHttpActionResult> CacnelJob(Guid id)
+        public IHttpActionResult CacnelJob(Guid id)
         {
             try
             {

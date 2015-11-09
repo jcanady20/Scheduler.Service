@@ -23,6 +23,7 @@ GO
 SET NOCOUNT ON;
 DECLARE @JobId UNIQUEIDENTIFIER, @ScheduleId UNIQUEIDENTIFIER
 DECLARE @dbname sysname = DB_NAME();
+DECLARE @serverName sysname = @@SERVERNAME
 SELECT
 	@JobId = NEWID(),
 	@ScheduleId = NEWID();
@@ -30,8 +31,8 @@ SELECT
 INSERT INTO [dbo].[Jobs] ([Id], [Name], [Description])
 VALUES (@JobId, 'Purge Job History', 'Purges Job History based on Specified settings');
 
-INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [databasename], [isUserDefined])
-VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [dbo].[PurgeJobHistory]', @dbname, 0)
+INSERT INTO [dbo].[JobSteps] ([JobId], [StepId], [Name], [Subsystem], [Command], [DataSource], [databasename], [isUserDefined])
+VALUES (@JobId, 1, 'Step 1', 'SqlTask', 'EXEC [dbo].[PurgeJobHistory]', @serverName, @dbname, 0)
 
 INSERT INTO [dbo].[Schedules] ([Id], [Name], [Type], [Interval], [SubdayType], [SubdayInterval], [RelativeInterval], [RecurrenceFactor], [StartDate], [StartTime], [EndDate], [EndTime])
 VALUES (@ScheduleId, 'On StartUp Schedule',  64, 1, 0, 0, 0, 0, '02/26/2015', '09:00:00', '12/31/2099', '23:59:59');

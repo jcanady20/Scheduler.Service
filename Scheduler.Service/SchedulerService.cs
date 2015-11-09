@@ -5,6 +5,7 @@ using Scheduler.Logging;
 using Scheduler.Http;
 using Scheduler.Extensions;
 using Scheduler.Scheduling;
+using Scheduler.Jobs;
 
 namespace Scheduler.Service
 {

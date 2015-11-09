@@ -7,7 +7,7 @@ namespace Scheduler.Data.Configuration
     {
         public ScheduleMap()
         {
-            ToTable("Schedule");
+            ToTable("Schedules");
             HasKey(x => x.Id);
             Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
