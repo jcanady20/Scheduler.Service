@@ -149,7 +149,7 @@ namespace Scheduler.Tasks
             }
             var t = m_taskPlugins[taskStep.SubSystem];
             task = (IJobTask)Activator.CreateInstance(t);
-            return task.Create(db, taskStep);
+            return task.Create(db, taskStep, m_logger);
         }
     }
 }

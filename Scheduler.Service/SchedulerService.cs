@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 using Scheduler.Http;
 using Scheduler.Extensions;
 using Scheduler.Scheduling;
@@ -90,7 +91,7 @@ namespace Scheduler.Service
 			this.Stop();
 			base.OnShutdown();
 		}
-        
+
 		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			var exception = e.ExceptionObject as Exception;

@@ -6,6 +6,7 @@ using System.Threading;
 
 using Scheduler.Extensions;
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 using Scheduler.Data;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Extensions;

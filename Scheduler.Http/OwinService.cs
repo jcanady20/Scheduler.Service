@@ -7,6 +7,7 @@ using Microsoft.Owin.Hosting;
 using System.Threading.Tasks;
 
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http
 {

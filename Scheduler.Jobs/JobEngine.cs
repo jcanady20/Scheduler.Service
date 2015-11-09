@@ -6,6 +6,7 @@ using System.Threading;
 
 using Scheduler.Extensions;
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 using Scheduler.Data.Entities;
 using Scheduler.Tasks;
 
@@ -146,7 +147,7 @@ namespace Scheduler.Jobs
                 Sleep();
             }
 		}
-        
+
 		private void DeQueueAllJobs()
 		{
             do
@@ -186,7 +187,7 @@ namespace Scheduler.Jobs
 				m_activeJobs.Remove(job);
 			}
 		}
-        
+
         private void Sleep()
         {
             Thread.Sleep(WORKER_DELAY);

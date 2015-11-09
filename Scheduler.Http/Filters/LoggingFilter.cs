@@ -3,6 +3,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.Filters
 {

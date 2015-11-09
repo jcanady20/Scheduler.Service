@@ -18,7 +18,6 @@ namespace Scheduler.Tasks
         protected IContext m_db;
 		protected JobTaskBase()
 		{
-			m_logger = new NLogger();
 			this.OutCome = JobStepOutCome.Unknown;
 			this.Id = Guid.NewGuid();
 		}
@@ -32,8 +31,9 @@ namespace Scheduler.Tasks
 		public string OutComeMessage { get; private set; }
 		public Nullable<DateTime> Completed { get; private set; }
 
-		public IJobTask Create(IContext db, JobStep step)
+		public IJobTask Create(IContext db, JobStep step, ILogger logger)
 		{
+            m_logger = logger;
 			m_db = db;
 			m_taskStep = step;
 			this.Name = step.Name;
@@ -84,7 +84,6 @@ namespace Scheduler.Tasks
                 return m_logger;
             }
         }
-
 
         protected void ReportOutCome()
 		{

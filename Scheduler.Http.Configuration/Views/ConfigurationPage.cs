@@ -1545,7 +1545,13 @@ window.app = (function (window, $, ko, _, Backbone) {
         onStartJobClick: function (e) {
             var tr = $(e.currentTarget).closest(""tr"");
             var m = tr.data(""model"");
-            var url = m_apiUrl + ""jobs/start/"" + m.id;
+            var url = m_apiUrl + ""jobs/"" + m.id + ""/start"";
+            $.getJSON(url);
+        },
+        onCacnelJobClick: function (e) {
+            var tr = $(e.currentTarget).closest(""tr"");
+            var m = tr.data(""model"");
+            var url = m_apiUrl + ""jobs/"" + m.id + ""/cancel"";
             $.getJSON(url);
         },
         events: {

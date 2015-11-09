@@ -5,6 +5,7 @@ using Scheduler.Data.Context;
 using System.Data.Entity.Validation;
 using System.Web.Http.ModelBinding;
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.api
 {

@@ -12,6 +12,7 @@ using Scheduler.Data.Queries;
 using Scheduler.Tasks;
 
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 
 
 namespace Scheduler.Jobs
@@ -59,7 +60,7 @@ namespace Scheduler.Jobs
 				{
 					m_status = value;
 					ReportStatusActivity(value);
-				}				
+				}
 			}
 		}
 
@@ -178,7 +179,7 @@ namespace Scheduler.Jobs
 			{
 				item.NextRunDateTime = m_jobSchedule.Schedule.CalculateNextRun(DateTime.Now);
 			}
-			
+
 			m_db.SaveChanges();
 		}
 

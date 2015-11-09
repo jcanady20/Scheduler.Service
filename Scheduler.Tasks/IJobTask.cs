@@ -3,6 +3,7 @@ using System.Threading;
 using Scheduler.Data;
 using Scheduler.Data.Context;
 using Scheduler.Data.Entities;
+using Scheduler.Logging;
 
 namespace Scheduler.Tasks
 {
@@ -15,7 +16,7 @@ namespace Scheduler.Tasks
 		Nullable<TimeSpan> Duration { get; }
 		JobStepOutCome OutCome { get; }
 		Nullable<DateTime> Completed { get; }
-        IJobTask Create(IContext db, JobStep step);
+        IJobTask Create(IContext db, JobStep step, ILogger logger);
         JobStepOutCome Execute(CancellationToken cancelToken);
 	}
 }

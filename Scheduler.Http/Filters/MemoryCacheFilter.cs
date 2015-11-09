@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net;
 
 using Scheduler.Logging;
+using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.Filters
 {

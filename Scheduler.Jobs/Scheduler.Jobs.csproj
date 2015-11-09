@@ -59,6 +59,10 @@
       <Project>{f4a106fb-649a-4895-b6d1-438ac458e1ce}</Project>
       <Name>Scheduler.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Scheduler.Logging.NLog\Scheduler.Logging.NLog.csproj">
+      <Project>{3e966c6c-f72d-40f7-be74-aed76b626c9a}</Project>
+      <Name>Scheduler.Logging.NLog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Scheduler.Logging\Scheduler.Logging.csproj">
       <Project>{328e6593-2ebe-48a0-973f-0454ec750c36}</Project>
       <Name>Scheduler.Logging</Name>
