@@ -2,7 +2,7 @@
 using NLog;
 using Scheduler.Extensions;
 
-namespace Scheduler.Logging
+namespace Scheduler.Logging.NLog
 {
     public class NLogger : ILogger
 	{
