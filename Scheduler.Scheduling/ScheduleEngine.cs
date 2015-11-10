@@ -6,7 +6,6 @@ using System.Threading;
 
 using Scheduler.Extensions;
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 using Scheduler.Data;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Extensions;
@@ -29,7 +28,7 @@ namespace Scheduler.Scheduling
         public ScheduleEngine()
         {
             m_jobEngine = JobEngine.Instance;
-            m_logger = new NLogger();
+            m_logger = LogProvider.Instance.Logger;
         }
 
         public ScheduleEngine(JobEngine jobEngine, ILogger logger)

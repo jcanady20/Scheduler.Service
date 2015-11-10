@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.ServiceProcess;
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 using Scheduler.Http;
 using Scheduler.Extensions;
 using Scheduler.Scheduling;
@@ -36,7 +35,7 @@ namespace Scheduler.Service
 			this.CanHandleSessionChangeEvent = false;
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-			m_logger = new NLogger("Scheduler.Scheduling.SchedulerService");
+            m_logger = LogProvider.Instance.Logger;
 
             m_scheduleEngine = new ScheduleEngine();
         }

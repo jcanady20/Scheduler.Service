@@ -156,10 +156,6 @@
       <Project>{e49b16c0-e7ed-4924-b7fc-84cdc107f0f2}</Project>
       <Name>Scheduler.Jobs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Scheduler.Logging.NLog\Scheduler.Logging.NLog.csproj">
-      <Project>{3e966c6c-f72d-40f7-be74-aed76b626c9a}</Project>
-      <Name>Scheduler.Logging.NLog</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Scheduler.Logging\Scheduler.Logging.csproj">
       <Project>{328e6593-2ebe-48a0-973f-0454ec750c36}</Project>
       <Name>Scheduler.Logging</Name>

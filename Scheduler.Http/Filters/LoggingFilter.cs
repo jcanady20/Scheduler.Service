@@ -3,7 +3,6 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.Filters
 {
@@ -14,7 +13,7 @@ namespace Scheduler.Http.Filters
         public LoggingFilter()
         {
             m_stopWatch = new Stopwatch();
-            m_logger = new NLogger();
+            m_logger = Logging.LogProvider.Instance.Logger;
         }
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

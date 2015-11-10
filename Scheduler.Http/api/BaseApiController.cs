@@ -5,7 +5,6 @@ using Scheduler.Data.Context;
 using System.Data.Entity.Validation;
 using System.Web.Http.ModelBinding;
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.api
 {
@@ -15,7 +14,7 @@ namespace Scheduler.Http.api
 		internal IContext m_db;
 		internal BaseApiController()
 		{
-			m_logger = new NLogger();
+            m_logger = LogProvider.Instance.Logger;
 			m_db = ContextFactory.CreateContext();
 		}
 

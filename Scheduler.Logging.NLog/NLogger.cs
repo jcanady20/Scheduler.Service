@@ -48,13 +48,17 @@ namespace Scheduler.Logging.NLog
 		{
 			_logger.Warn(message, args);
 		}
-		public void Error(Exception x)
+		public void Error(Exception exception, string message = null)
 		{
-			_logger.Error(x, x.BuildExceptionMessage());
+            if(String.IsNullOrEmpty(message))
+            {
+                message = exception.BuildExceptionMessage();
+            }
+			_logger.Error(exception, message);
 		}
-		public void Error(string message, params object[] args)
+		public void Error(Exception exception, string message, params object[] args)
 		{
-			_logger.Error(message, args);
+			_logger.Error(exception, message, args);
 		}
 		public void Fatal(Exception x)
 		{

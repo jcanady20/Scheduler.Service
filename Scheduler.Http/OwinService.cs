@@ -7,7 +7,6 @@ using Microsoft.Owin.Hosting;
 using System.Threading.Tasks;
 
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http
 {
@@ -19,7 +18,7 @@ namespace Scheduler.Http
 		private IDisposable m_owin;
 		private OwinService()
 		{
-			m_logger = new NLogger();
+            m_logger = Logging.LogProvider.Instance.Logger;
 			BaseAddress = ServiceUrl.GetServiceUrl();
 		}
 		public static OwinService Instance

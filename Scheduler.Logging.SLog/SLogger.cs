@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Scheduler.Extensions;
 using System.Linq;
 using System.Text;
-using Serilog.Core;
-using Serilog.Configuration;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Scheduler.Logging.SLog
 {
@@ -14,71 +13,54 @@ namespace Scheduler.Logging.SLog
         private Serilog.ILogger m_logger;
         public SLogger()
         {
-            CreateLogger();
-        }
-
-        private void CreateLogger()
-        {
             m_logger = new Serilog.LoggerConfiguration()
-                .ReadFrom.KeyValuePairs(GetApplicationSettings())
-                .CreateLogger();
+                 .ReadFrom.AppSettings()
+                 .CreateLogger();
         }
 
         public void Debug(string message)
         {
-            throw new NotImplementedException();
+            m_logger.Debug(message);
         }
         public void Debug(string message, params object[] args)
         {
-            throw new NotImplementedException();
+            m_logger.Debug(message, args);
         }
 
-        public void Error(Exception x)
+        public void Error(Exception exception, string message)
         {
-            throw new NotImplementedException();
+            m_logger.Error(exception, message);
         }
-        public void Error(string message, params object[] args)
+        public void Error(Exception exception, string message, params object[] args)
         {
-            throw new NotImplementedException();
+            m_logger.Error(exception, message, args);
         }
 
         public void Info(string message)
         {
-            throw new NotImplementedException();
+            m_logger.Information(message);
         }
         public void Info(string message, params object[] args)
         {
-            throw new NotImplementedException();
+            m_logger.Information(message, args);
         }
 
         public void Trace(string message)
         {
-            throw new NotImplementedException();
+            m_logger.Verbose(message);
         }
         public void Trace(string message, params object[] args)
         {
-            throw new NotImplementedException();
+            m_logger.Verbose(message, args);
         }
 
         public void Warn(string message)
         {
-            throw new NotImplementedException();
+            m_logger.Warning(message);
         }
         public void Warn(string message, params object[] args)
         {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<KeyValuePair<string, string>> GetApplicationSettings()
-        {
-            var appSettings = System.Configuration.ConfigurationManager.AppSettings;
-            foreach(var key in appSettings.Keys)
-            {
-                foreach(var val in appSettings.GetValues(key.ToString()))
-                {
-                    yield return new KeyValuePair<string, string>(key.ToString(), val);
-                }
-            }
+            m_logger.Warning(message, args);
         }
     }
 }

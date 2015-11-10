@@ -57,7 +57,7 @@ namespace Scheduler.Tasks
 			}
 			catch(Exception e)
 			{
-				m_logger.Error("Error :: Encountered an error while Executing Step {0} ({1}) for {2}", m_taskStep.StepId, m_taskStep.Name, m_taskStep.SubSystem);
+				m_logger.Error(e, "Error :: Encountered an error while Executing Step {0} ({1}) for {2}", m_taskStep.StepId, m_taskStep.Name, m_taskStep.SubSystem);
 				m_logger.Error(e);
 				this.OutCome = JobStepOutCome.Failed;
 				this.OutComeMessage = "The step Failed. " + e.BuildExceptionMessage();

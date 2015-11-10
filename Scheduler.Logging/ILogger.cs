@@ -12,7 +12,7 @@ namespace Scheduler.Logging
 		void Trace(string message, params object[] args);
 		void Warn(string message);
 		void Warn(string message, params object[] args);
-		void Error(Exception x);
-		void Error(string message, params object[] args);
+		void Error(Exception exception, string message = null);
+		void Error(Exception exception, string message, params object[] args);
 	}
 }

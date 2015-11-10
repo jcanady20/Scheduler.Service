@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Net;
 
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 
 namespace Scheduler.Http.Filters
 {
@@ -18,7 +17,7 @@ namespace Scheduler.Http.Filters
         private string m_cacheKey;
         public CacheFilter(string cacheKey)
         {
-            m_logger = new NLogger();
+            m_logger = Logging.LogProvider.Instance.Logger;
             m_cacheKey = cacheKey;
         }
 

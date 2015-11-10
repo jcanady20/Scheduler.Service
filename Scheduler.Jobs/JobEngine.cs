@@ -6,7 +6,6 @@ using System.Threading;
 
 using Scheduler.Extensions;
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
 using Scheduler.Data.Entities;
 using Scheduler.Tasks;
 
@@ -31,7 +30,7 @@ namespace Scheduler.Jobs
 		{
 			m_jobQueue = new ConcurrentQueue<IJobExecutioner>();
 			m_activeJobs = new List<IJobExecutioner>();
-            m_logger = new NLogger("Scheduler.Scheduling.JobEngine");
+            m_logger = Logging.LogProvider.Instance.Logger;
             TaskManager = new TaskManager(m_logger);
             Start();
 		}

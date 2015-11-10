@@ -12,8 +12,6 @@ using Scheduler.Data.Queries;
 using Scheduler.Tasks;
 
 using Scheduler.Logging;
-using Scheduler.Logging.NLog;
-
 
 namespace Scheduler.Jobs
 {
@@ -39,7 +37,7 @@ namespace Scheduler.Jobs
 			m_stopwatch = new Stopwatch();
 			m_cancelToken = new CancellationTokenSource();
             m_taskManager = taskManager;
-			m_logger = new NLogger("Scheduler.Scheduling.JobExecutioner");
+            m_logger = Logging.LogProvider.Instance.Logger;
 			this.OutCome = JobStepOutCome.Unknown;
 			this.Status = JobStatus.WaitingForWorkerThread;
 			ReportQueuedDateTime();
