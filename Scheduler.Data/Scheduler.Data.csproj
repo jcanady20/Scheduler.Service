@@ -83,7 +83,6 @@
     <Compile Include="Extensions\ScheduleExtensions.cs" />
     <Compile Include="Models\JobHistorySearch.cs" />
     <Compile Include="Models\PluginDetail.cs" />
-    <Compile Include="Models\WebTaskResponse.cs" />
     <Compile Include="PagedList%27.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\ActivityQueries.cs" />

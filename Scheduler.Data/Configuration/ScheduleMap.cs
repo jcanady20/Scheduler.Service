@@ -10,6 +10,8 @@ namespace Scheduler.Data.Configuration
             ToTable("Schedules");
             HasKey(x => x.Id);
             Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            HasMany(x => x.JobSchedules).WithRequired().HasForeignKey(x => x.ScheduleId).WillCascadeOnDelete();
         }
     }
 }

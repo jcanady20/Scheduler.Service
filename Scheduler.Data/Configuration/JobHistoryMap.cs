@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 
 namespace Scheduler.Data.Configuration
 {
@@ -13,6 +14,7 @@ namespace Scheduler.Data.Configuration
 			Property(x => x.Message).HasMaxLength(1024);
 			Property(x => x.StepName).HasMaxLength(128);
 			Property(x => x.StepName).IsRequired();
+            //Property(x => x.JobId).HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("IDX_JobId_JobHistory")));
 		}
 	}
 }

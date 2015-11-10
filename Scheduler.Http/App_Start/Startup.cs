@@ -8,6 +8,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
 using Scheduler.Http.Configuration;
+using System.Net;
 
 namespace Scheduler.Http.App_Start
 {
@@ -15,11 +16,14 @@ namespace Scheduler.Http.App_Start
 	{
 		public void Configuration(IAppBuilder app)
 		{
+            HttpListener listener = (HttpListener)app.Properties["System.Net.HttpListener"];
+            listener.AuthenticationSchemes = AuthenticationSchemes.IntegratedWindowsAuthentication;
+            
 			app.UseCors(CorsOptions.AllowAll);
 			HttpConfiguration httpConfig = new Configuration();
 
 			httpConfig.MessageHandlers.Add(new MessageHandlers.WebApiCorsHandler());
-			app.UseWebApi(httpConfig);
+            app.UseWebApi(httpConfig);
 
 			app.UseConfigurationPage(new Microsoft.Owin.PathString("/configuration"));
 		}

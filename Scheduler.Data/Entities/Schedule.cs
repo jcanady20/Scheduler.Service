@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Scheduler.Data.Entities
 {
@@ -26,5 +28,8 @@ namespace Scheduler.Data.Entities
         public TimeSpan StartTime { get; set; }
         public DateTime EndDate { get; set; }
         public TimeSpan EndTime { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<JobSchedule> JobSchedules { get; set; }
     }
 }

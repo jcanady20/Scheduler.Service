@@ -62,7 +62,6 @@ namespace Scheduler.Scheduling
         {
             m_paused = false;
         }
-
         private void DoWork()
         {
             while(m_canceled == false)

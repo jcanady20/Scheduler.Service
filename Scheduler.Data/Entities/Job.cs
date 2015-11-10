@@ -16,6 +16,8 @@ namespace Scheduler.Data.Entities
 		[JsonIgnore]
 		public virtual ICollection<JobSchedule> JobSchedules { get; set; }
 		[JsonIgnore]
-		public ICollection<JobStep> JobSteps { get; set; }
+		public virtual ICollection<JobStep> JobSteps { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<JobHistory> JobHistory { get; set; }
 	}
 }
