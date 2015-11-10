@@ -7,7 +7,7 @@ using System.Web.Http.Results;
 using Scheduler.Data.Queries;
 
 
-namespace Scheduler.Http.api
+namespace Scheduler.Http.Api
 {
     [RoutePrefix("api/jobs")]
 	public class JobController : BaseApiController

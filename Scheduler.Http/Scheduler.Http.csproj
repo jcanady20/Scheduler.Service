@@ -114,11 +114,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\BaseApiController.cs" />
-    <Compile Include="api\JobController.cs" />
-    <Compile Include="api\JobScheduleController.cs" />
-    <Compile Include="api\JobStepController.cs" />
-    <Compile Include="api\ScheduleController.cs" />
+    <Compile Include="Api\BaseApiController.cs" />
+    <Compile Include="Api\JobController.cs" />
+    <Compile Include="Api\JobScheduleController.cs" />
+    <Compile Include="Api\JobStepController.cs" />
+    <Compile Include="Api\ScheduleController.cs" />
     <Compile Include="App_Start\Configuration.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Filters\LoggingFilter.cs" />

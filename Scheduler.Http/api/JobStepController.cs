@@ -10,7 +10,7 @@ using System.Web.Http.Results;
 using Scheduler.Data;
 using Scheduler.Data.Entities;
 
-namespace Scheduler.Http.api
+namespace Scheduler.Http.Api
 {
 	[RoutePrefix("api/steps")]
 	public class JobStepController : BaseApiController

@@ -6,7 +6,7 @@ using System.Data.Entity.Validation;
 using System.Web.Http.ModelBinding;
 using Scheduler.Logging;
 
-namespace Scheduler.Http.api
+namespace Scheduler.Http.Api
 {
     public class BaseApiController : ApiController
 	{

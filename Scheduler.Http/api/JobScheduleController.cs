@@ -9,7 +9,7 @@ using Scheduler.Data;
 using Scheduler.Data.Entities;
 using Scheduler.Data.Models;
 
-namespace Scheduler.Http.api
+namespace Scheduler.Http.Api
 {
     [RoutePrefix("api/jobschedules")]
     public class JobScheduleController : BaseApiController

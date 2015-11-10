@@ -10,7 +10,7 @@ using System.Data.Entity;
 using Scheduler.Data;
 using Scheduler.Data.Entities;
 
-namespace Scheduler.Http.api
+namespace Scheduler.Http.Api
 {
 	[RoutePrefix("api/schedules")]
 	public class ScheduleController : BaseApiController
