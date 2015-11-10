@@ -12,8 +12,8 @@ namespace Scheduler.Data.Entities
         {
             LastRunDateTime = DateTime.MinValue;
         }
-        public Guid JobId { get; set; }
-        public Guid ScheduleId { get; set; }
+        public int JobId { get; set; }
+        public int ScheduleId { get; set; }
         public DateTime LastRunDateTime { get; set; }
 
         public virtual Job Job { get; set; }

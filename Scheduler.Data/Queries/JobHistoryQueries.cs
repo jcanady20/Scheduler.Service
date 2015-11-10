@@ -35,7 +35,7 @@ namespace Scheduler.Data.Queries
 
 		}
 
-		public static void AddJobHistory(this IContext db, Guid jobId, int stepId, string stepName, JobStepOutCome outcome, string message, Nullable<DateTime> runDateTime = null, Nullable<TimeSpan> duration = null)
+		public static void AddJobHistory(this IContext db, int jobId, int stepId, string stepName, JobStepOutCome outcome, string message, Nullable<DateTime> runDateTime = null, Nullable<TimeSpan> duration = null)
 		{
 			var jh = new JobHistory()
 			{
@@ -51,7 +51,7 @@ namespace Scheduler.Data.Queries
 			db.SaveChanges();
 		}
 
-        public static async Task AddJobHistoryAsync(this IContext db, Guid jobId, int stepId, string stepName, JobStepOutCome outcome, string message, Nullable<DateTime> runDateTime = null, Nullable<TimeSpan> duration = null)
+        public static async Task AddJobHistoryAsync(this IContext db, int jobId, int stepId, string stepName, JobStepOutCome outcome, string message, Nullable<DateTime> runDateTime = null, Nullable<TimeSpan> duration = null)
         {
             var jh = new JobHistory()
             {

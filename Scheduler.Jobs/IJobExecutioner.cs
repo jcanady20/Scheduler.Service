@@ -5,7 +5,7 @@ namespace Scheduler.Jobs
 {
     public interface IJobExecutioner : IDisposable
 	{
-		Guid JobId { get; }
+		int JobId { get; }
 		string Name { get; }
 		JobStepOutCome OutCome { get; }
 		Nullable<DateTime> StartDateTime { get; }

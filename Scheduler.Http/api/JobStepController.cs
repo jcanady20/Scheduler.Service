@@ -17,7 +17,7 @@ namespace Scheduler.Http.api
 	{
 		[Route("{id}")]
 		[HttpGet]
-		public async Task<IHttpActionResult> Get(Guid id)
+		public async Task<IHttpActionResult> Get(int id)
 		{
 			try
 			{
@@ -87,7 +87,7 @@ namespace Scheduler.Http.api
 
 		[Route("{id}")]
 		[HttpDelete]
-		public async Task<IHttpActionResult> Delete(Guid id)
+		public async Task<IHttpActionResult> Delete(int id)
 		{
 			try
 			{

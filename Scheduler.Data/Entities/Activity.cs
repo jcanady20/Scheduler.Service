@@ -7,7 +7,7 @@ namespace Scheduler.Data.Entities
 {
 	public class Activity
 	{
-		public Guid JobId { get; set; }
+		public int JobId { get; set; }
 		public RunRequestSource RunSource { get; set; }
 		public JobStatus Status { get; set; }
 		public int LastExecutedStep { get; set; }

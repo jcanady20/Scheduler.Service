@@ -8,7 +8,7 @@ namespace Scheduler.Data.Entities
 	public class JobActivity
 	{
 		public string Name { get; set; }
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public bool Enabled { get; set; }
 		public string RunSource { get; set; }
 		public string Status { get; set; }

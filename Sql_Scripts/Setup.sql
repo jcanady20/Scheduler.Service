@@ -42,7 +42,7 @@ GO
 
 CREATE TABLE [dbo].[Jobs]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_Id_Jobs] DEFAULT(NEWID()),
+	[Id] INT NOT NULL IDENTITY(1,1),
 	[Name] varchar(60) NOT NULL,
 	[Enabled] Bit NOT NULL Constraint [DF_Enabled_Jobs] DEFAULT(1),
 	[Description] varchar(500),
@@ -56,7 +56,7 @@ GO
 
 CREATE TABLE [dbo].[Schedules]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL  CONSTRAINT [DF_Id_Schedules] DEFAULT(NEWID()),
+	[Id] INT NOT NULL  IDENTITY(1,1),
 	[Name] varchar(60) NOT NULL,
 	[Enabled] BIT NOT NULL Constraint [DF_Enabled_Schedules] DEFAULT(1),
 	[Type] INT NOT NULL CONSTRAINT [DF_Type_Schedules] DEFAULT(4),
@@ -69,7 +69,7 @@ CREATE TABLE [dbo].[Schedules]
 	[StartTime] TIME NOT NULL CONSTRAINT [DF_StartTime_Schedules] DEFAULT('00:00:00'),
 	[EndDate] DATE NOT NULL CONSTRAINT [DF_EndDate_Schedules] DEFAULT('12/31/9999'),
 	[EndTime] TIME NOT NULL CONSTRAINT [DF_EndTime_Schedules] DEFAULT('23:59:59'),
-	CONSTRAINT [PK_Schedules] PRIMARY KEY NONCLUSTERED
+	CONSTRAINT [PK_Schedules] PRIMARY KEY CLUSTERED
 	(
 		[Id]
 	)
@@ -78,10 +78,10 @@ GO
 
 CREATE TABLE [dbo].[JobSchedules]
 (
-	[JobId] UNIQUEIDENTIFIER NOT NULL,
-	[ScheduleId] UNIQUEIDENTIFIER NOT NULL,
+	[JobId] INT NOT NULL,
+	[ScheduleId] INT NOT NULL,
 	[LastRunDateTime] DATETIME NOT NULL CONSTRAINT [DF_LastRunDateTime] DEFAULT('01/01/1980 00:00:00'),
-	CONSTRAINT [PK_JobSchedules] PRIMARY KEY NONCLUSTERED
+	CONSTRAINT [PK_JobSchedules] PRIMARY KEY CLUSTERED
 	(
 		[JobId], [ScheduleId]
 	)
@@ -91,7 +91,7 @@ GO
 CREATE TABLE [dbo].[JobHistory]
 (
 	[Id] INT NOT NULL IDENTITY(1,1),
-	[JobId] UNIQUEIDENTIFIER NOT NULL,
+	[JobId] INT NOT NULL,
 	[StepId] INT NULL,
 	[StepName] varchar(128) NOT NULL,
 	[Message] varchar(1024) NULL,
@@ -107,8 +107,8 @@ GO
 
 CREATE TABLE [dbo].[JobSteps]
 (
-	[Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_Id_JobSteps] DEFAULT(NEWID()),
-	[JobId] UNIQUEIDENTIFIER NOT NULL,
+	[Id] INT NOT NULL IDENTITY(1,1),
+	[JobId] INT NOT NULL,
 	[StepId] INT NOT NULL,
 	[Enabled] BIT NOT NULL CONSTRAINT [DF_Enabled_JobSteps] DEFAULT(1),
 	[Name] varchar(128) NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE [dbo].[JobSteps]
 	[IsUserDefined] BIT NOT NULL CONSTRAINT [DF_IsUserDefined_JobSteps] DEFAULT(1),
 	[RetryAttempts] INT NOT NULL CONSTRAINT [DF_RetryAttempts_JobSteps] DEFAULT(0),
 	[RetryInterval] INT NOT NULL CONSTRAINT [DF_RetryInterval_JobSteps] DEFAULT(0),
-	CONSTRAINT [PK_JobSteps] PRIMARY KEY  NONCLUSTERED
+	CONSTRAINT [PK_JobSteps] PRIMARY KEY  CLUSTERED
 	(
 		[Id] ASC
 	)
@@ -146,7 +146,7 @@ GO
 
 CREATE TABLE [dbo].[Activity]
 (
-	[JobId] UNIQUEIDENTIFIER NOT NULL,
+	[JobId] INT NOT NULL,
 	[RunSource] INT NOT NULL CONSTRAINT [DF_RunSource_Activity] DEFAULT(1),
 	[Status] INT NOT NULL CONSTRAINT [DF_Status_Activity] DEFAULT(5),
 	[LastExecutedStep] INT NOT NULL CONSTRAINT [DF_LastExecutedStep_Activity] DEFAULT(0),
@@ -160,7 +160,7 @@ CREATE TABLE [dbo].[Activity]
 	[LastOutComeMessage] varchar(1024),
 	[LastRunDateTime] DATETIME,
 	[LastRunDuration] TIME,
-	CONSTRAINT [PK_Activity] PRIMARY KEY NONCLUSTERED
+	CONSTRAINT [PK_Activity] PRIMARY KEY CLUSTERED
 	(
 		[JobId] ASC
 	)

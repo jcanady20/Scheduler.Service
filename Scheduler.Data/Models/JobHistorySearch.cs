@@ -9,7 +9,7 @@ namespace Scheduler.Data.Models
 			Page = 1;
 			PageSize = 10;
 		}
-		public Guid JobId { get; set; }
+		public int JobId { get; set; }
 		public string Term { get; set; }
 		public int Page { get; set; }
 		public int PageSize { get; set; }

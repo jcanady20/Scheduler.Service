@@ -5,7 +5,7 @@ END
 GO
 
 CREATE PROCEDURE [dbo].[PurgeJobHistoryByJobId]
-	@JobId UniqueIdentifier,
+	@JobId INT,
 	@MaxRecords INT
 AS
 BEGIN
@@ -53,7 +53,7 @@ BEGIN
 			SELECT DISTINCT [JobId]
 			FROM [dbo].[JobHistory]
 
-		DECLARE @id UNIQUEIDENTIFIER
+		DECLARE @id INT
 		OPEN _cp
 
 		FETCH NEXT FROM _cp INTO @id

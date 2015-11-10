@@ -8,7 +8,7 @@ namespace Scheduler.Data.Queries
 {
 	public static class ActivityQueries
 	{
-		public static Activity GetActivity(this IContext db, Guid jobId)
+		public static Activity GetActivity(this IContext db, int jobId)
 		{
 			var item = db.Activity.Find(jobId);
 			if(item == null)
@@ -20,14 +20,14 @@ namespace Scheduler.Data.Queries
 			return item;
 		}
 
-		public static void SetActivityStatus(this IContext db, Guid jobId, JobStatus status)
+		public static void SetActivityStatus(this IContext db, int jobId, JobStatus status)
 		{
 			var record = db.GetActivity(jobId);
 			record.Status = status;
 			db.SaveChanges();
 		}
 
-		public static void SetActivityLastStepDetails(this IContext db, Guid jobId, int step, DateTime executedDateTime, TimeSpan duration)
+		public static void SetActivityLastStepDetails(this IContext db, int jobId, int step, DateTime executedDateTime, TimeSpan duration)
 		{
 			var record = db.GetActivity(jobId);
 			record.LastExecutedStep = step;
@@ -36,7 +36,7 @@ namespace Scheduler.Data.Queries
 			db.SaveChanges();
 		}
 
-		public static async Task<Activity> GetActivityAsync(this IContext db, Guid jobId)
+		public static async Task<Activity> GetActivityAsync(this IContext db, int jobId)
 		{
 			var item = await db.Activity.FindAsync(jobId);
 			if(item == null)
@@ -48,14 +48,14 @@ namespace Scheduler.Data.Queries
 			return item;
 		}
 
-		public static async Task SetActivityStatusAsync(this IContext db, Guid jobId, JobStatus status)
+		public static async Task SetActivityStatusAsync(this IContext db, int jobId, JobStatus status)
 		{
 			var item = await db.GetActivityAsync(jobId);
 			item.Status = status;
 			await db.SaveChangesAsync();
 		}
 
-		public static async Task SetActivityLastStepDetailsAsync(this IContext db, Guid jobId, int step, DateTime executedDateTime, TimeSpan duration)
+		public static async Task SetActivityLastStepDetailsAsync(this IContext db, int jobId, int step, DateTime executedDateTime, TimeSpan duration)
 		{
 			var item = await db.GetActivityAsync(jobId);
 			item.LastExecutedStep = step;

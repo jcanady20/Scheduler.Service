@@ -8,7 +8,7 @@ namespace Scheduler.Data.Entities
 {
 	public class Job
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool Enabled { get; set; }
 		public string Description { get; set; }

@@ -43,7 +43,7 @@ namespace Scheduler.Jobs
 			ReportQueuedDateTime();
 		}
 
-		public Guid JobId { get { return m_job.Id; } }
+		public int JobId { get { return m_job.Id; } }
 		public string Name { get { return m_job.Name; } }
 		public JobStepOutCome OutCome { get; private set; }
 		public Nullable<DateTime> StartDateTime { get; private set; }

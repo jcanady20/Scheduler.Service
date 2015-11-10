@@ -9,8 +9,8 @@ namespace Scheduler.Data.Entities
 		{
             IsUserDefined = true;
 		}
-		public Guid Id { get; set; }
-		public Guid JobId { get; set; }
+		public int Id { get; set; }
+		public int JobId { get; set; }
 		public bool Enabled { get; set; }
 		public int StepId { get; set; }
 		public string Name { get; set; }

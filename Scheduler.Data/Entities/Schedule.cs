@@ -6,7 +6,6 @@ namespace Scheduler.Data.Entities
     {
         public Schedule()
         {
-            Id = Guid.NewGuid();
             Enabled = true;
             Type = Data.FrequencyType.Daily;
             SubdayType = SubIntervalType.Minutes;
@@ -14,7 +13,7 @@ namespace Scheduler.Data.Entities
             StartDate = new DateTime(1980, 1, 1, 0, 0, 0);
             EndDate = new DateTime(2099, 12, 31, 23, 59, 59);
         }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public bool Enabled { get; set; }
         public FrequencyType Type { get; set; }

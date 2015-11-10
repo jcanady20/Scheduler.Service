@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Logging.NLog", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Logging.SLog", "Scheduler.Logging.SLog\Scheduler.Logging.SLog.csproj", "{AB26564C-C80C-4503-8E0A-37DD6BE67E49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Data.Repository", "Scheduler.Data.Repository\Scheduler.Data.Repository.csproj", "{54AC9739-33B0-40A7-A547-E88FE546D94E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{AB26564C-C80C-4503-8E0A-37DD6BE67E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB26564C-C80C-4503-8E0A-37DD6BE67E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB26564C-C80C-4503-8E0A-37DD6BE67E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54AC9739-33B0-40A7-A547-E88FE546D94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54AC9739-33B0-40A7-A547-E88FE546D94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54AC9739-33B0-40A7-A547-E88FE546D94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54AC9739-33B0-40A7-A547-E88FE546D94E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

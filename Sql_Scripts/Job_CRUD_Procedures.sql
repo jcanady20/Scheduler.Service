@@ -6,7 +6,7 @@ END
 GO
 
 CREATE PROCEDURE [dbo].[Job_Delete]
-	@id UNIQUEIDENTIFIER
+	@id INT
 AS
 BEGIN
 
@@ -57,7 +57,7 @@ END
 GO
 
 CREATE PROCEDURE [dbo].[Job_Update]
-	@id UNIQUEIDENTIFIER,
+	@id INT,
 	@name varchar(60),
 	@description varchar(500),
 	@enabled bit

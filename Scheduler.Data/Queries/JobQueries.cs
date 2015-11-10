@@ -12,7 +12,7 @@ namespace Scheduler.Data.Queries
 			return db.Jobs.Include(x => x.JobSchedules).Where(x => x.Enabled == true);
 		}
 
-		public static IQueryable<Data.Entities.Schedule> GetJobSchedules(this IContext db, Guid jobId)
+		public static IQueryable<Data.Entities.Schedule> GetJobSchedules(this IContext db, int jobId)
 		{
 			return db.JobSchedules.Include(x => x.Schedule).Where(x => x.JobId == jobId).Select(r => r.Schedule);
 		}
