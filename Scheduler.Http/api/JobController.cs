@@ -214,7 +214,7 @@ namespace Scheduler.Http.Api
 			}
 		}
 
-		[Route("{id}")]
+		[Route("activity/{id}")]
 		[HttpDelete]
 		public async Task<IHttpActionResult> Delete(int id)
 		{
