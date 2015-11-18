@@ -28,8 +28,8 @@ namespace Scheduler.TESTS
 
             var lastRunDate = DateTime.Now;
             var result = sut.CalculateNextRun(lastRunDate);
-            var exp = sut.MaxDateTime();
-            Assert.Equal(exp, result);
+            var expected = sut.MaxDateTime();
+            Assert.Equal(expected, result);
         }
 
         [Fact(DisplayName = "Next Rune Date: Daily.Specified Time")]
@@ -49,18 +49,22 @@ namespace Scheduler.TESTS
             sut.EndDate = DateTime.MaxValue.Date;
             sut.EndTime = DateTime.MaxValue.TimeOfDay;
 
-            var dtn = DateTime.Now;
-            var tmw = dtn.AddDays(1);
-            var lrd = new DateTime(dtn.Year, dtn.Month, dtn.Day, hour, minute, second);
-            var exp = new DateTime(tmw.Year, tmw.Month, tmw.Day, hour, minute, second);
-            var result = sut.CalculateNextRun(lrd);
-            Assert.Equal(exp, result);
+            var dateTimeNow = DateTime.Now;
+            var tmw = dateTimeNow.AddDays(1);
+            var lastRunDate = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, hour, minute, second);
+            var expected = new DateTime(tmw.Year, tmw.Month, tmw.Day, hour, minute, second);
+            var result = sut.CalculateNextRun(lastRunDate);
+            Assert.Equal(expected, result);
         }
 
         [Fact(DisplayName = "Next Rune Date: Weekly")]
         public void weekly()
         {
-            var startDate = new DateTime(2015, 02, 26, 10, 0, 0);
+            var hour = 10;
+            var minute = 0;
+            var second = 0;
+
+            var startDate = new DateTime(2015, 02, 26, hour, minute, second);
             var sut = new Schedule();
             sut.Type = FrequencyType.Weekly;
             sut.Interval = 6;
@@ -71,8 +75,11 @@ namespace Scheduler.TESTS
             sut.EndTime = DateTime.MaxValue.TimeOfDay;
 
             //var now = DateTime.Now;
-            var lastRunDate = new DateTime(2015, 03, 05, 12, 0, 0);
-            var result = sut.CalculateNextRun(lastRunDate);
+            var dtn = DateTime.Now;
+            var tmw = dtn.AddDays(sut.RecurrenceFactor * 7);
+            var lrd = new DateTime(2015, 03, 05, hour, minute, second);
+            
+            var result = sut.CalculateNextRun(lrd);
         }
 
         [Fact(DisplayName = "Next Rune Date: Monthly")]

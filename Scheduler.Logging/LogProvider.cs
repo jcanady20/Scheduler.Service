@@ -75,5 +75,12 @@ namespace Scheduler.Logging
             m_logger = (ILogger)Activator.CreateInstance(type);
             return m_logger;
         }
+
+        public static ILogger LoggerInstance()
+        {
+            var logger = LogProvider.Instance.CreateLogger();
+
+            return logger;
+        }
     }
 }

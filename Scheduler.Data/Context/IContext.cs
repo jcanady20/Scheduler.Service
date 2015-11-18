@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Threading;
@@ -10,7 +8,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace Scheduler.Data.Context
 {
-	public interface IContext : IDisposable
+    public interface IContext : IDisposable
 	{
 		
 		DbSet<Entities.Job> Jobs { get; set; }
