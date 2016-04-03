@@ -45,6 +45,7 @@ namespace Scheduler.Logging
             }
         }
         private ILogger CreateLogger()
+
         {
             if(m_logger != null)
             {
@@ -61,7 +62,7 @@ namespace Scheduler.Logging
             //  Load the requested assembly from the file path
             var assembly = Assembly.LoadFile(filePath);
             //  Get the First Class that implements the ILogger Interface
-            //  Only support One  ILogger Implementation per Assembly
+            //  Only support One ILogger Implementation per Assembly
             var type = assembly.
                 GetTypes()
                 .Where(x => typeof(ILogger).IsAssignableFrom(x))
@@ -75,7 +76,6 @@ namespace Scheduler.Logging
             m_logger = (ILogger)Activator.CreateInstance(type);
             return m_logger;
         }
-
         public static ILogger LoggerInstance()
         {
             var logger = LogProvider.Instance.CreateLogger();

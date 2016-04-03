@@ -154,7 +154,7 @@ WriteLiteral("\t\t");
 
             
             #line 40 "ConfigurationPage.cshtml"
-WriteLiteral(@"<!-- Templates -->
+    WriteLiteral(@"<!-- Templates -->
 <script id=""job-edit-tmpl"" type=""text/x-jquery-tmpl"">
     <div class=""container-fluid"">
         <div class=""row"">
@@ -911,7 +911,7 @@ WriteLiteral("\t\t\t");
 
             
             #line 51 "ConfigurationPage.cshtml"
-WriteLiteral(@"/*jshint bitwise: false, strict: false, browser: true, jquery: true, -W069*/
+        WriteLiteral(@"/*jshint bitwise: false, strict: false, browser: true, jquery: true, -W069*/
 /*global $, jQuery, alert, ko, console, moment, Backbone, _*/
 //    Returns the A/P Meridian indication for the Time
 //    AM/PM
@@ -1453,7 +1453,7 @@ window.app = (function (window, $, ko, _, Backbone) {
         return _slf;
     };
 
-    //    Views
+    //  Views
     Views.Empty = Backbone.View.extend({
         viewName: ""Empty"",
         tagName: ""div"",

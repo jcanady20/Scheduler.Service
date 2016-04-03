@@ -540,7 +540,7 @@ window.app = (function (window, $, ko, _, Backbone) {
         return _slf;
     };
 
-    //    Views
+    //  Views
     Views.Empty = Backbone.View.extend({
         viewName: "Empty",
         tagName: "div",
