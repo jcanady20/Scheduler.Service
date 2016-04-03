@@ -27,7 +27,7 @@ namespace Scheduler.Http.Filters
             var elapsed = m_stopWatch.Elapsed;
             var method = context.Request.Method.Method;
             var actionName = actionContext.ActionDescriptor.ActionName;
-            var mediaType = context.Request.Content.Headers?.ContentType?.MediaType ?? "Unknown";
+            var mediaType = context.Response.Content.Headers?.ContentType?.MediaType ?? "Unknown";
             m_logger.Info("[{0}] -- Action: {1:15} -- {2} -- Elapsed:[{3}:{4}:{5}]", method, actionName, mediaType, elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             base.OnActionExecuted(context);
         }

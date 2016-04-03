@@ -15,6 +15,8 @@ namespace Scheduler.Data.Context
 		public Context() : base() { }
 		public Context(string nameOfConnectionString) : base(nameOfConnectionString)
 		{
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
 			Database.SetInitializer<Context>(null);
 		}
 		
