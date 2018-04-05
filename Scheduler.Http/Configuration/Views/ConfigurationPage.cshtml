@@ -1,0 +1,55 @@
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="EXPIRES" content="0">
+		<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+		<meta http-equiv="PRAGMA" content="NO-CACHE">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Scheduler Configuration</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300' rel='stylesheet' type='text/css' />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+		<style>
+            body {
+                font-family: 'Roboto', sans-serif !important;
+            }
+			.gridView {	height: 200px; background-color: #434343; background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent); background-size: 50px 50px; box-shadow: 4px 4px 5px #888888; }.shadowed { -webkit-filter: drop-shadow(6px 6px 15px rgba(0,0,0,0.5)); filter: url(#drop-shadow); -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=6, OffY=6, Color='#444')"; filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=6, OffY=6, Color='#444')"; }.panel-shadowed { box-shadow: 3px 3px 16px rgba(0,0,0,0.5); }
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="page-header">
+                        <h1>Scheduler Configuration</h1>
+                    </div>
+                </div>
+            </div>
+			<div class="row" style="margin-top: 26px;">
+				<div class="col-xs-offset-1 col-xs-10" id="main-content"></div>
+			</div>
+		</div>
+
+		@(@"[[_templates.html]]")
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+        <Script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></Script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+		<script>
+			//<!--
+			@(@"[[Scheduler.js]]")
+			//-->
+		</script>
+	</body>
+</html>
