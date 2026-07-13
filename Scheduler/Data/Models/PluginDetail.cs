@@ -1,11 +1,9 @@
-﻿using System;
-namespace Scheduler.Data.Models
+namespace Scheduler.Data.Models;
+
+public class PluginDetail
 {
-    public class PluginDetail
-	{
-		public string DisplayName { get; set; }
-		public string Description { get; set; }
-		public string SubSystem { get; set; }
-        public Type Type { get; set; }
-	}
+  public string DisplayName { get; set; }
+  public string Description { get; set; }
+  public string SubSystem { get; set; }
+  public Type Type { get; set; }
 }

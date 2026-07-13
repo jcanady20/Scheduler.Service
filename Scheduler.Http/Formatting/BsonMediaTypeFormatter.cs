@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections;
 using System.Net.Http;
@@ -10,95 +10,94 @@ using Newtonsoft.Json.Bson;
 using System.Net;
 
 
-namespace Scheduler.Http.Formatting
+namespace Scheduler.Http.Formatting;
+
+public class BsonMediaTypeFormatter : MediaTypeFormatter
 {
-    public class BsonMediaTypeFormatter : MediaTypeFormatter
+    private JsonSerializerSettings _jsonSerializerSettings;
+    private const string _bsonMediaType = "application/bson";
+
+    public BsonMediaTypeFormatter()
     {
-        private JsonSerializerSettings _jsonSerializerSettings;
-        private const string _bsonMediaType = "application/bson";
+        SupportedMediaTypes.Add(new MediaTypeHeaderValue(_bsonMediaType));
+        _jsonSerializerSettings = CreateDefaultSerializerSettings();
+    }
 
-        public BsonMediaTypeFormatter()
+    public JsonSerializerSettings SerializerSettings
+    {
+        get { return _jsonSerializerSettings; }
+        set
         {
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue(_bsonMediaType));
-            _jsonSerializerSettings = CreateDefaultSerializerSettings();
-        }
-
-        public JsonSerializerSettings SerializerSettings
-        {
-            get { return _jsonSerializerSettings; }
-            set
+            if (value == null)
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Serializer cannot be null");
-                }
-                _jsonSerializerSettings = value;
+                throw new ArgumentNullException("Serializer cannot be null");
             }
+            _jsonSerializerSettings = value;
         }
+    }
 
-        public JsonSerializerSettings CreateDefaultSerializerSettings()
+    public JsonSerializerSettings CreateDefaultSerializerSettings()
+    {
+        return new JsonSerializerSettings
         {
-            return new JsonSerializerSettings
-            {
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                TypeNameHandling = TypeNameHandling.None
-            };
-        }
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.None
+        };
+    }
 
-        public override bool CanReadType(Type type)
+    public override bool CanReadType(Type type)
+    {
+        if (type == null) throw new ArgumentNullException("type");
+        return true;
+    }
+
+    public override bool CanWriteType(Type type)
+    {
+        if (type == null) throw new ArgumentNullException("type");
+        return true;
+    }
+
+    public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
+    {
+        var tcs = new TaskCompletionSource<object>();
+        if (content != null && content.Headers.ContentLength == 0) return null;
+
+        try
         {
-            if (type == null) throw new ArgumentNullException("type");
-            return true;
-        }
+            var reader = new BsonReader(readStream);
 
-        public override bool CanWriteType(Type type)
-        {
-            if (type == null) throw new ArgumentNullException("type");
-            return true;
-        }
+            if (typeof(IEnumerable).IsAssignableFrom(type)) reader.ReadRootValueAsArray = true;
 
-        public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
-        {
-            var tcs = new TaskCompletionSource<object>();
-            if (content != null && content.Headers.ContentLength == 0) return null;
-
-            try
-            {
-                var reader = new BsonReader(readStream);
-
-                if (typeof(IEnumerable).IsAssignableFrom(type)) reader.ReadRootValueAsArray = true;
-
-                using (reader)
-                {
-                    var jsonSerializer = JsonSerializer.Create(_jsonSerializerSettings);
-                    var output = jsonSerializer.Deserialize(reader, type);
-                    tcs.SetResult(output);
-                }
-            }
-            catch (Exception)
-            {
-                tcs.SetResult(GetDefaultValueForType(type));
-            }
-
-            return tcs.Task;
-        }
-
-        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
-        {
-            if (type == null) throw new ArgumentNullException("type");
-            if (writeStream == null) throw new ArgumentNullException("stream");
-
-            var tcs = new TaskCompletionSource<object>();
-
-            using (var bsonWriter = new BsonWriter(writeStream) { CloseOutput = false })
+            using (reader)
             {
                 var jsonSerializer = JsonSerializer.Create(_jsonSerializerSettings);
-                jsonSerializer.Serialize(bsonWriter, value);
-                bsonWriter.Flush();
-                tcs.SetResult(null);
+                var output = jsonSerializer.Deserialize(reader, type);
+                tcs.SetResult(output);
             }
-
-            return tcs.Task;
         }
+        catch (Exception)
+        {
+            tcs.SetResult(GetDefaultValueForType(type));
+        }
+
+        return tcs.Task;
+    }
+
+    public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
+    {
+        if (type == null) throw new ArgumentNullException("type");
+        if (writeStream == null) throw new ArgumentNullException("stream");
+
+        var tcs = new TaskCompletionSource<object>();
+
+        using (var bsonWriter = new BsonWriter(writeStream) { CloseOutput = false })
+        {
+            var jsonSerializer = JsonSerializer.Create(_jsonSerializerSettings);
+            jsonSerializer.Serialize(bsonWriter, value);
+            bsonWriter.Flush();
+            tcs.SetResult(null);
+        }
+
+        return tcs.Task;
     }
 }

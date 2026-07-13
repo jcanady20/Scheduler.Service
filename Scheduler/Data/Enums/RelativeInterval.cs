@@ -1,21 +1,19 @@
-﻿using System;
 using System.ComponentModel;
 
-namespace Scheduler.Data
+namespace Scheduler.Data;
+
+public enum RelativeInterval
 {
-	public enum RelativeInterval
-	{
-		[Description("Not Used")]
-		NotUsed = 0,
-		[Description("First Day")]
-		First = 1,
-		[Description("Second Day")]
-		Second = 2,
-		[Description("Third")]
-		Third = 4,
-		[Description("Fourth Day")]
-		Fourth = 8,
-		[Description("Last Day")]
-		Last = 16,
-	}
+  [Description("Not Used")]
+  NotUsed = 0,
+  [Description("First Day")]
+  First = 1,
+  [Description("Second Day")]
+  Second = 2,
+  [Description("Third")]
+  Third = 4,
+  [Description("Fourth Day")]
+  Fourth = 8,
+  [Description("Last Day")]
+  Last = 16,
 }

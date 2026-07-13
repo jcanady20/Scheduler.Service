@@ -1,26 +1,25 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.ServiceProcess;
 
 
-namespace Scheduler.Service
+namespace Scheduler.Service;
+
+[RunInstaller(true)]
+public class ServiceInstall : System.Configuration.Install.Installer
 {
-    [RunInstaller(true)]
-	public class ServiceInstall : System.Configuration.Install.Installer
-	{
-		public ServiceInstall()
-		{
-			ServiceProcessInstaller process = new ServiceProcessInstaller();
-			ServiceInstaller serviceAdmin = new ServiceInstaller();
+  public ServiceInstall()
+  {
+    ServiceProcessInstaller process = new ServiceProcessInstaller();
+    ServiceInstaller serviceAdmin = new ServiceInstaller();
 
-			process.Account = ServiceAccount.LocalSystem;
+    process.Account = ServiceAccount.LocalSystem;
 
-			serviceAdmin.StartType = ServiceStartMode.Automatic;
-			serviceAdmin.ServiceName = "Scheduler Service";
-			serviceAdmin.DisplayName = "Scheduler Service";
-			serviceAdmin.Description = "Scheduler Service is used to schedule events across Applications";
+    serviceAdmin.StartType = ServiceStartMode.Automatic;
+    serviceAdmin.ServiceName = "Scheduler Service";
+    serviceAdmin.DisplayName = "Scheduler Service";
+    serviceAdmin.Description = "Scheduler Service is used to schedule events across Applications";
 
-			Installers.Add(process);
-			Installers.Add(serviceAdmin);
-		}
-	}
+    Installers.Add(process);
+    Installers.Add(serviceAdmin);
+  }
 }

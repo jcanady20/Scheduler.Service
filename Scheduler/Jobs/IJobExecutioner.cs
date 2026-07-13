@@ -1,18 +1,16 @@
-﻿using System;
 using Scheduler.Data;
 
-namespace Scheduler.Jobs
+namespace Scheduler.Jobs;
+
+public interface IJobExecutioner : IDisposable
 {
-    public interface IJobExecutioner : IDisposable
-	{
-		int JobId { get; }
-		string Name { get; }
-		JobStepOutCome OutCome { get; }
-		Nullable<DateTime> StartDateTime { get; }
-		Nullable<DateTime> CompletedDateTime { get; }
-		Nullable<TimeSpan> Duration { get; }
-		JobStatus Status { get; }
-		void Cancel();
-		void Execute();
-	}
+  int JobId { get; }
+  string Name { get; }
+  JobStepOutCome OutCome { get; }
+  Nullable<DateTime> StartDateTime { get; }
+  Nullable<DateTime> CompletedDateTime { get; }
+  Nullable<TimeSpan> Duration { get; }
+  JobStatus Status { get; }
+  void Cancel();
+  void Execute();
 }

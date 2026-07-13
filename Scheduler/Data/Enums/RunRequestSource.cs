@@ -1,12 +1,9 @@
-﻿using System;
+namespace Scheduler.Data;
 
-namespace Scheduler.Data
+public enum RunRequestSource
 {
-	public enum RunRequestSource
-	{
-		Scheduler = 1,
-		Boot = 3,
-		User = 4,
-		OnIdle = 6,
-	}
+  Scheduler = 1,
+  Boot = 3,
+  User = 4,
+  OnIdle = 6,
 }

@@ -1,7 +1,6 @@
-﻿namespace Scheduler.Diagnostics
+namespace Scheduler.Diagnostics;
+
+public interface IStopwatchWriter
 {
-    public interface IStopwatchWriter
-    {
-        void Write(Stopwatch stopwatch);
-    }
+  void Write(Stopwatch stopwatch);
 }

@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Sql_Scripts/AddStuff.sql" />
+    <File Path="Sql_Scripts/Purge_JobHistory_StoredProcedures.sql" />
+    <File Path="Sql_Scripts/Setup.sql" />
+  </Folder>
+  <Project Path="Scheduler/Scheduler.csproj" />
+    <Project Path="Scheduler.Http/Scheduler.Http.csproj" />
+  <Project Path="Scheduler.Http.Configuration/Scheduler.Http.Configuration.csproj" />
+    <Project Path="Scheduler.Service.Host/Scheduler.Service.Host.csproj" />
+    <Project Path="tests/Scheduler.Tests/Scheduler.Tests.csproj" />
+</Solution>

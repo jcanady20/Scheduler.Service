@@ -1,16 +1,13 @@
-﻿using System;
+namespace Scheduler.Data;
 
-namespace Scheduler.Data
+public enum JobStatus
 {
-	public enum JobStatus
-	{
-        Cacnceled = 0,
-		Executing = 1,
-		WaitingForWorkerThread,
-		BetweenRetries,
-		Idle,
-		Suspended,
-		WaitForStepToFinish,
-		PerformingCompletionAction,
-	}
+  Cacnceled = 0,
+  Executing = 1,
+  WaitingForWorkerThread,
+  BetweenRetries,
+  Idle,
+  Suspended,
+  WaitForStepToFinish,
+  PerformingCompletionAction,
 }
