@@ -20,10 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Scheduler.Data\Scheduler.Data.csproj" />
-    <ProjectReference Include="..\Scheduler.Diagnostics\Scheduler.Diagnostics.csproj" />
-    <ProjectReference Include="..\Scheduler.Extensions\Scheduler.Extensions.csproj" />
-    <ProjectReference Include="..\Scheduler.Tasks\Scheduler.Tasks.csproj" />
+    <ProjectReference Include="..\..\src\Scheduler\Scheduler.csproj" />
   </ItemGroup>
 
 </Project>
